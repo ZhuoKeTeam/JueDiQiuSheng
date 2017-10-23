@@ -17,28 +17,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
-def SUPPORT_VERSION = "26.1.0"
+def SUPPORT_VERSION = "25.1.0"
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
     //  必备库
-    implementation "com.android.support:design:${SUPPORT_VERSION}"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:design:${SUPPORT_VERSION}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
 //    butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //  图片加载封装
-    implementation 'com.github.ZhuoKeTeam:WapperFrescoHelper:1.0.0'
+    compile 'com.github.ZhuoKeTeam:WapperFrescoHelper:1.0.0'
 //    okhttp
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    compile 'com.squareup.okhttp3:okhttp:3.9.0'
 //    utilcode， 可参考：https://github.com/Blankj/AndroidUtilCode
-    implementation 'com.blankj:utilcode:1.9.3'
+    compile 'com.blankj:utilcode:1.9.3'
 //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
-    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
+//    compile 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
 
 
 
@@ -47,8 +51,8 @@ dependencies {
 
 
     testCompile 'com.squareup.okhttp3:mockwebserver:3.9.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+//    testcompile 'junit:junit:4.12'
+//    androidTestcompile('com.android.support.test.espresso:espresso-core:3.0.1', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
 }
