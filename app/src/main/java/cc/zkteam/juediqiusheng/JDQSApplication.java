@@ -14,6 +14,7 @@ public class JDQSApplication extends Application {
 
     Context mContext;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
