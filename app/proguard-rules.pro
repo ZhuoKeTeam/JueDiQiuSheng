@@ -36,3 +36,7 @@
 -keep class com.jingewenku.abrahamcaijin.commonutil.** { *; }
 -keepclassmembers class com.jingewenku.abrahamcaijin.commonutil.** { *; }
 -dontwarn com.jingewenku.abrahamcaijin.commonutil.**
+
+#Alibaba Router
+-keep public class com.alibaba.android.arouter.routes.**{*;}
+-keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}

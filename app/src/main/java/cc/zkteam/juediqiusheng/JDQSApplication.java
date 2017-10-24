@@ -20,6 +20,6 @@ public class JDQSApplication extends Application {
         super.onCreate();
         mContext = this;
         Utils.init(this);
-        ZKBase.init(mContext);
+        ZKBase.init(this);
     }
 }
