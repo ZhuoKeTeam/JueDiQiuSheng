@@ -25,7 +25,8 @@ public class WQViewModule extends ViewModel {
             @Override
             public void run() {
 
-                if (count < 5) {
+//                对数据模型更新后，对应的界面也会自动刷新，可以取代 handler
+                while (count < 5) {
                     wqLiveData.setPostText(String.valueOf(count));
                     count++;
                     try {
@@ -34,6 +35,13 @@ public class WQViewModule extends ViewModel {
                         e.printStackTrace();
                     }
                 }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                wqLiveData.setPostText("测试完成！");
 
             }
         }).start();
