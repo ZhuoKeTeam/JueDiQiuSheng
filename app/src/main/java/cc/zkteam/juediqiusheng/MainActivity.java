@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * ------------------------------------------
+         * -----可以通过 Log 查看相关状态------------
+         * ------------------------------------------
+         */
+
         // 对 LiveData 进行测试
         LiveData<String> zkLiveData = new ZKLiveData();
 //        //这个方法向LiveData中添加观察者，LiveData 则通过 LifecycleOwner 来判断，当前传入的观察者是否是活跃的
@@ -67,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 对 组件的生命周期进行测试
+        // 对 组件 的生命周期进行测试
         new ZKText(getLifecycle());
 
+        // 对 ZKViewModule 进行测试
         ZKViewModule module = ViewModelProviders.of(this).get(ZKViewModule.class);
         module.getText().observe(this, new Observer<String>() {
             @Override
