@@ -1,37 +1,34 @@
-package cc.zkteam.juediqiusheng.lifecycle.components;
+package cc.zkteam.juediqiusheng.lifecycle.components.demo;
 
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
+import cc.zkteam.juediqiusheng.MainActivity;
+
 /**
- * WQLiveData
- * Created by WangQing on 2017/10/26.
+ * ZKLiveData，泛型传入 String 字符串
+ *
+ * Created by WangQing on 2017/10/27.
  */
 
-public class WQLiveData extends LiveData<String> {
+public class ZKLiveData extends LiveData<String> {
 
-    private static final String TAG = "WQLiveData";
-    int countLiveData = 0;
+    private static final String TAG = MainActivity.TAG;
 
-    public WQLiveData() {
+    public ZKLiveData() {
     }
-
-
 
     @Override
     protected void onActive() {
         super.onActive();
         Log.d(TAG, "onActive() called");
-        // TODO: 2017/10/26 可以在此请求数据或者加载数据等操作
-
-
+        //2017/10/26 可以在此请求数据或者加载数据等操作
 //        setValue(String.valueOf(countLiveData += 2));
     }
 
     @Override
     protected void onInactive() {
         super.onInactive();
-
         Log.d(TAG, "onInactive() called");
 //        setValue(String.valueOf(countLiveData--));
     }

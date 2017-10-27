@@ -1,22 +1,23 @@
-package cc.zkteam.juediqiusheng.lifecycle.components;
+package cc.zkteam.juediqiusheng.lifecycle.components.demo;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
+import cc.zkteam.juediqiusheng.MainActivity;
+
 /**
- * WQText 文本组件
- * 通过继承 LifecycleObserver， 保证我们可以通过注解或者接口直接查询 UI 的生命周期
+ * ZKText 的生命周期测试
  *
- * Created by WangQing on 2017/10/26.
+ * Created by WangQing on 2017/10/27.
  */
 
-public class WQText implements LifecycleObserver {
-    private static final String TAG = "WQText";
+public class ZKText implements LifecycleObserver {
+    private static final String TAG = MainActivity.TAG;
     private Lifecycle lifecycle;
 
-    public WQText(Lifecycle lifecycle) {
+    public ZKText(Lifecycle lifecycle) {
         lifecycle.addObserver(this);
         this.lifecycle = lifecycle;
     }
