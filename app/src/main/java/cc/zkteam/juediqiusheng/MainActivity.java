@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         WQViewModule module = ViewModelProviders.of(this).get(WQViewModule.class);
         module.getText().observe(this, new Observer<String>() {
             @Override
+            
             public void onChanged(@Nullable String s) {
                 // update UI
                 Log.d(TAG, "WQViewModule onChanged() called with: s = [" + s + "]");
