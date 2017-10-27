@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         ARouter.getInstance()
-            .build("/module/pic/details")
+            .build("/module/category")
             .withString("url","https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
             .navigation();
       }
