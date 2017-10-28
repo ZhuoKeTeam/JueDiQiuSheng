@@ -16,7 +16,9 @@ versions.butterknife = "8.8.1"
 versions.arouter = "1.2.2"
 versions.arouter_compiler = "1.1.3"
 versions.junit = "4.12"
+versions.retrofit = "2.3.0"
 ext.versions = versions
+
 
 
 def support = [:]
@@ -64,6 +66,9 @@ deps.arouter = "com.alibaba:arouter-api:$versions.arouter"
 deps.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
 
 deps.junit = "junit:junit:$versions.junit"
+
+deps.retrofit2 = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+deps.retrofit2_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
 
 deps.support = support
 deps.lifecycle = lifecycle

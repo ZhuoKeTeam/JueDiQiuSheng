@@ -5,7 +5,8 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
-import cc.zkteam.juediqiusheng.MainActivity;
+import cc.zkteam.juediqiusheng.activity.MainActivity;
+
 
 /**
  * ZKText 的生命周期测试

@@ -3,7 +3,8 @@ package cc.zkteam.juediqiusheng.lifecycle.components.demo;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
-import cc.zkteam.juediqiusheng.MainActivity;
+import cc.zkteam.juediqiusheng.activity.MainActivity;
+
 
 /**
  * ZKLiveData，泛型传入 String 字符串

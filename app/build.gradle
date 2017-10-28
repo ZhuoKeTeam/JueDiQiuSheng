@@ -40,25 +40,38 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.cardview
     implementation deps.constraint_layout
+
+    // retrofit2
+    implementation deps.retrofit2
+    implementation deps.retrofit2_gson
+
+
     // kotlin支持
     implementation deps.kotlin
     implementation deps.anko
+
     //Router,参考地址：https://github.com/alibaba/ARouter#fork-destination-box
     implementation deps.arouter
     kapt deps.arouter_compiler
+
     implementation deps.butterknife
     kapt deps.butterknife_compiler
+
     implementation deps.zk_fresco
     implementation deps.okhttp
+
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.java8
     implementation deps.lifecycle.extensions
+
     //utilcode， 可参考：https://github.com/Blankj/AndroidUtilCode
     implementation deps.utilcode
     //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
-    //    compile 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
+    //    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
+
     testImplementation deps.junit
-    //    // Espresso UI Testing
+
+//    Espresso UI Testing
     androidTestImplementation espresso.core
     //    androidTestImplementation espresso.contrib
     //    androidTestImplementation espresso.intents
