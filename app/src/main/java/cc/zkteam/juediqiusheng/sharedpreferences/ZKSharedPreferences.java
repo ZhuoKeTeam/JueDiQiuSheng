@@ -3,7 +3,6 @@ package cc.zkteam.juediqiusheng.sharedpreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.CallSuper;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.text.TextUtils;
 
 import java.util.Map;
@@ -157,7 +156,9 @@ public abstract class ZKSharedPreferences implements IZKSharedPreferences {
      */
     private void saveEditor(SharedPreferences.Editor editor) {
         try {
-            SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+//            SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+//            SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+            editor.apply();
         } catch (Exception e) {
             e.printStackTrace();
         }
