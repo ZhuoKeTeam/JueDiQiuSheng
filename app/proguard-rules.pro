@@ -40,3 +40,7 @@
 #Alibaba Router
 -keep public class com.alibaba.android.arouter.routes.**{*;}
 -keep class * implements com.alibaba.android.arouter.facade.template.ISyringe{*;}
+
+#retrofit2
+-dontwarn okio.**
+-dontwarn javax.annotation.**

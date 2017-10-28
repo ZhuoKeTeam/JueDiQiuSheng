@@ -35,6 +35,9 @@ android {
 def SUPPORT_VERSION = "25.1.0"
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
     compile "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
     //  必备库
     compile "com.android.support:design:${SUPPORT_VERSION}"
@@ -58,7 +61,6 @@ dependencies {
     compile 'com.blankj:utilcode:1.9.3'
 //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
 //    compile 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
-
 
     testCompile 'com.squareup.okhttp3:mockwebserver:3.9.0'
 //    testcompile 'junit:junit:4.12'
