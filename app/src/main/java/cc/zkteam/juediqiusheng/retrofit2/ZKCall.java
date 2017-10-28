@@ -2,7 +2,7 @@ package cc.zkteam.juediqiusheng.retrofit2;
 
 import java.io.IOException;
 
-import cc.zkteam.juediqiusheng.retrofit2.bean.BaseBean;
+import cc.zkteam.juediqiusheng.bean.BaseBean;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;

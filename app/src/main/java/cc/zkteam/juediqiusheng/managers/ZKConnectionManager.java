@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.retrofit2;
+package cc.zkteam.juediqiusheng.managers;
 
 import android.util.Log;
 
@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import cc.zkteam.juediqiusheng.Constant;
+import cc.zkteam.juediqiusheng.api.ZKApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

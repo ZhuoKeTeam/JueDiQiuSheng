@@ -1,7 +1,7 @@
-package cc.zkteam.juediqiusheng.retrofit2;
+package cc.zkteam.juediqiusheng.api;
 
-import cc.zkteam.juediqiusheng.retrofit2.bean.BaseBean;
-import cc.zkteam.juediqiusheng.retrofit2.bean.CategoryBean;
+import cc.zkteam.juediqiusheng.bean.BaseBean;
+import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -11,8 +11,11 @@ import retrofit2.http.GET;
  */
 
 public interface ZKApi {
-//    http://www.zkteam.cc/JueDiQiuSheng/categoryJson
 
+    /**
+     * 请求分类接口
+     * @return 分类的数据
+     */
     @GET("JueDiQiuSheng/categoryJson")
     Call<BaseBean<CategoryBean>> categoryData();
 

@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng;
+package cc.zkteam.juediqiusheng.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,10 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.List;
 
+import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
-import cc.zkteam.juediqiusheng.retrofit2.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.retrofit2.bean.CategoryBean;
+import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
+import cc.zkteam.juediqiusheng.bean.CategoryBean;
 
 public class MainActivity extends AppCompatActivity {
 

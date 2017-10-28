@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.retrofit2.bean;
+package cc.zkteam.juediqiusheng.bean;
 
 /**
  * CategoryBean

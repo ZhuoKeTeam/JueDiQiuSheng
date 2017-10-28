@@ -2,7 +2,7 @@ package cc.zkteam.juediqiusheng.retrofit2;
 
 import java.util.List;
 
-import cc.zkteam.juediqiusheng.retrofit2.bean.BaseBean;
+import cc.zkteam.juediqiusheng.bean.BaseBean;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
