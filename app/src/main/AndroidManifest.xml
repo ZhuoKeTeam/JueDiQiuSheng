@@ -25,7 +25,6 @@
     </activity>
 
     <activity android:name=".module.pic.details.JDQSSeeBigPicActivity"/>
-    <activity android:name=".module.pic.main.JDQSPicMainActivity"/>
   </application>
 
 </manifest>

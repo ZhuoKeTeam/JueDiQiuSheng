@@ -1,7 +1,5 @@
 package cc.zkteam.juediqiusheng.bean;
 
-import java.util.List;
-
 /**
  * CodeBean base 的信息
  * Created by WangQing on 2017/10/27.
@@ -10,7 +8,7 @@ import java.util.List;
 public class BaseBean<T> {
     private int code;
     private String message;
-    private List<T> result;
+    private T result;
 
     public int getCode() {
         return code;
@@ -28,11 +26,11 @@ public class BaseBean<T> {
         this.message = message;
     }
 
-    public List<T> getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(List<T> result) {
+    public void setResult(T result) {
         this.result = result;
     }
 }

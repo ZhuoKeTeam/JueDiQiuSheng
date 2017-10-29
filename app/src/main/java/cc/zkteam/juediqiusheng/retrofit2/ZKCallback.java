@@ -1,7 +1,5 @@
 package cc.zkteam.juediqiusheng.retrofit2;
 
-import java.util.List;
-
 import cc.zkteam.juediqiusheng.bean.BaseBean;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +16,7 @@ public abstract class ZKCallback<T> implements Callback<BaseBean<T>> {
         BaseBean<T> baseBean = response.body();
 
         if (baseBean != null) {
-            List<T> results = baseBean.getResult();
+            T results = baseBean.getResult();
             onResponse(results);
         } else {
             onFailure(new Throwable("baseBean is null!"));
@@ -30,7 +28,7 @@ public abstract class ZKCallback<T> implements Callback<BaseBean<T>> {
         onFailure(throwable);
     }
 
-    public abstract void onResponse(List<T> resultList);
+    public abstract void onResponse(T result);
 
     public abstract void onFailure(Throwable throwable);
 }
