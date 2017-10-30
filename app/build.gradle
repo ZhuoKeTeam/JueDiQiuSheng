@@ -45,13 +45,13 @@ dependencies {
     implementation deps.retrofit2
     implementation deps.retrofit2_gson
 
-
     // kotlin支持
     implementation deps.kotlin
     implementation deps.anko
 
     //Router,参考地址：https://github.com/alibaba/ARouter#fork-destination-box
     implementation deps.arouter
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     kapt deps.arouter_compiler
 
     implementation deps.butterknife
