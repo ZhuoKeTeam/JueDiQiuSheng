@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "WQLiveData";
 
+
 //    Handler handler = new Handler() {
 //        @Override
 //        public void handleMessage(Message msg) {
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    };
 
-    private TextView textView;
+    private TextView textView, goRecycleViewTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,15 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance()
                         .build("/module/pic/details")
                         .withString("url", "https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
+                        .navigation();
+            }
+        });
+        goRecycleViewTv = (TextView) findViewById(R.id.go_recycle_view_tv);
+        goRecycleViewTv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ARouter.getInstance()
+                        .build("/waterfall/WaterfallActivity")
                         .navigation();
             }
         });
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         WQViewModule module = ViewModelProviders.of(this).get(WQViewModule.class);
         module.getText().observe(this, new Observer<String>() {
             @Override
-            
+
             public void onChanged(@Nullable String s) {
                 // update UI
                 Log.d(TAG, "WQViewModule onChanged() called with: s = [" + s + "]");

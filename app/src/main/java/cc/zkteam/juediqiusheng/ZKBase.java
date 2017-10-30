@@ -6,9 +6,10 @@ import android.content.Context;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 
-import cc.zkteam.juediqiusheng.exception.ZKBaseNullPointerException;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.facebook.drawee.backends.pipeline.Fresco;
+
+import cc.zkteam.juediqiusheng.exception.ZKBaseNullPointerException;
 
 /**
  * JMBase 初始化相关
@@ -17,7 +18,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 public final class ZKBase {
 
   @SuppressLint("StaticFieldLeak")
-  private static Context context;
+  public static Context context;
   public static boolean isDebug = BuildConfig.DEBUG;
 
   private ZKBase() {
