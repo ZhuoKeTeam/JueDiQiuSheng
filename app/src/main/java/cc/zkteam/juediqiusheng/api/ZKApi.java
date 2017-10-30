@@ -1,9 +1,10 @@
 package cc.zkteam.juediqiusheng.api;
 
+import java.util.List;
+
 import cc.zkteam.juediqiusheng.bean.BaseBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.bean.PicCategoryBean;
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
@@ -20,7 +21,7 @@ public interface ZKApi {
    * @return 分类的数据
    */
   @GET("JueDiQiuSheng/categoryJson")
-  Call<BaseBean<CategoryBean>> categoryData();
+  Call<BaseBean<List<CategoryBean>>> categoryData();
 
   /**
    * 图片分类

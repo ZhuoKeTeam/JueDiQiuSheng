@@ -59,11 +59,9 @@
         app:menu="@menu/navigation"/>
 
 </android.support.constraint.ConstraintLayout>
-  <fragment
-    android:id="@+id/pic_main_fm"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="cc.zkteam.juediqiusheng.module.pic.main.JDQSPicMainFragment"/>
-
-    </android.support.constraint.ConstraintLayout>
+    <!--<fragment-->
+    <!--android:id="@+id/pic_main_fm"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:name="cc.zkteam.juediqiusheng.module.pic.main.JDQSPicMainFragment"/>-->
 

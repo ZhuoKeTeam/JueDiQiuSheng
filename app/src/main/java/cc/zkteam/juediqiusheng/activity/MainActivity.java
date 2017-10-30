@@ -163,10 +163,10 @@ public class MainActivity extends BaseActivity {
      */
     private void testRequestApi() {
         ZKConnectionManager.getInstance().getZKApi().categoryData()
-                .enqueue(new ZKCallback<CategoryBean>() {
+                .enqueue(new ZKCallback<List<CategoryBean>>() {
                     @Override
-                    public void onResponse(List<CategoryBean> resultList) {
-                        Log.d(TAG, "onResponse() called with: resultList = [" + resultList + "]");
+                    public void onResponse(List<CategoryBean> result) {
+                        Log.d(TAG, "onResponse() called with: resultList = [" + result + "]");
                     }
 
                     @Override
