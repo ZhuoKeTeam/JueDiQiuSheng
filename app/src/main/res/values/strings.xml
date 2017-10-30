@@ -5,4 +5,5 @@
     <string name="title_game">攻略</string>
     <string name="title_picture">图片</string>
     <string name="title_question">问答</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
