@@ -10,6 +10,7 @@ import cc.zkteam.juediqiusheng.R
 import cc.zkteam.juediqiusheng.bean.PicCategoryBean
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager
 import cc.zkteam.juediqiusheng.module.pic.main.adapter.PicMainAdapter
+import cc.zkteam.juediqiusheng.module.pic.main.adapter.RecommendAdapter
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback
 import com.alibaba.android.arouter.facade.annotation.Route
 import kotlinx.android.synthetic.main.fragment_pic_main_layout.*

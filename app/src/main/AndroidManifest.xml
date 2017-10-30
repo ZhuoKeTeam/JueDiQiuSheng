@@ -25,6 +25,7 @@
     </activity>
 
     <activity android:name=".module.pic.details.JDQSSeeBigPicActivity"/>
+    <activity android:name=".module.recommend.JDQSRecommendActivity"/>
   </application>
 
 </manifest>
