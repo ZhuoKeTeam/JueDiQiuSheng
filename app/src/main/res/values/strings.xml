@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">JueDiQiuSheng</string>
   <string name="images_details">Images Details</string>
+    <string name="title_recommend">推荐</string>
+    <string name="title_game">攻略</string>
+    <string name="title_picture">图片</string>
+    <string name="title_question">问答</string>
 </resources>
