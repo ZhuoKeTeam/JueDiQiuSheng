@@ -18,6 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp"
+        android:overScrollMode="never"
         />
 
 
@@ -59,9 +60,4 @@
         app:menu="@menu/navigation"/>
 
 </android.support.constraint.ConstraintLayout>
-    <!--<fragment-->
-    <!--android:id="@+id/pic_main_fm"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:name="cc.zkteam.juediqiusheng.module.pic.main.JDQSPicMainFragment"/>-->
 
