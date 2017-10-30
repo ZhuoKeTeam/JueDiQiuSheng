@@ -4,7 +4,7 @@
     <item
         android:id="@+id/navigation_recommend"
         android:icon="@drawable/ic_scanner_black_24dp"
-        android:title="@string/title_game"/>
+        android:title="@string/title_recommend"/>
 
     <item
         android:id="@+id/navigation_game"
