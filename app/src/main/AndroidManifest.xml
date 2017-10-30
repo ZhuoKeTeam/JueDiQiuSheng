@@ -23,8 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".module.pic.details.JDQSSeeBigPicActivity"/>
+        <activity android:name=".activity.SortActivity">
+        </activity>
+        <activity android:name=".activity.SortDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import cc.zkteam.juediqiusheng.bean.BaseBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.bean.PicCategoryBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
+import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -36,5 +37,11 @@ public interface ZKApi {
      */
     @GET("JueDiQiuSheng/recommendedItemJson")
     Call<BaseBean<List<RecommendedBean>>> getRecommended(@Query("jid") String jId, @Query("pageCount") String pageCount);
+
+    /**
+     * 分类详情
+     */
+    @GET("JueDiQiuSheng/itemJson")
+    Call<BaseBean<List<SortDetailBean>>> getSortDetail(@Query("jid") String jId, @Query("pageCount") String pageCount);
 
 }

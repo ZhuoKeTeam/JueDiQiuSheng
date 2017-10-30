@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -37,7 +36,6 @@ public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
     public TextView mTextView;
-
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -120,15 +118,17 @@ public class MainActivity extends BaseActivity {
     };
 
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initViews() {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-
         mTextView = (TextView) findViewById(R.id.jump);
         mTextMessage = (TextView) findViewById(R.id.message);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -137,12 +137,16 @@ public class MainActivity extends BaseActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
+    }
+
+    @Override
+    protected void initListener() {
+
         mViewPager.addOnPageChangeListener(onPageChangeListener);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-
-        mTextView.setOnClickListener(new OnClickListener() {
+        mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ARouter.getInstance()
@@ -151,7 +155,10 @@ public class MainActivity extends BaseActivity {
                         .navigation();
             }
         });
+    }
 
+    @Override
+    protected void initData() {
         // 演示如何快速使用网络请求
         testRequestApi();
 
