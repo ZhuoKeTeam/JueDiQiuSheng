@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
+apply plugin: 'com.jakewharton.butterknife'
 kapt {
     arguments {
         arg("moduleName", project.getName())
@@ -32,7 +32,7 @@ android {
 
 }
 
-def SUPPORT_VERSION = "25.1.0"
+def SUPPORT_VERSION = "26.+"
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
@@ -49,7 +49,7 @@ dependencies {
 
 //    butterknife
     compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     //  图片加载封装
     compile 'com.github.ZhuoKeTeam:WapperFrescoHelper:1.0.0'
 //    okhttp
@@ -65,4 +65,5 @@ dependencies {
 //    androidTestcompile('com.android.support.test.espresso:espresso-core:3.0.1', {
 //        exclude group: 'com.android.support', module: 'support-annotations'
 //    })
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
