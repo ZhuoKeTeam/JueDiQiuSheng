@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="cc.zkteam.juediqiusheng">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cc.zkteam.juediqiusheng">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".JDQSApplication"
@@ -17,16 +17,17 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+        </activity>
+        <activity android:name=".module.pic.details.JDQSSeeBigPicActivity" />
+        <activity android:name=".activity.SortActivity" />
+        <activity android:name=".activity.SortDetailActivity" />
+        <activity android:name=".activity.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".module.pic.details.JDQSSeeBigPicActivity"/>
-        <activity android:name=".activity.SortActivity">
-        </activity>
-        <activity android:name=".activity.SortDetailActivity">
         </activity>
     </application>
 
