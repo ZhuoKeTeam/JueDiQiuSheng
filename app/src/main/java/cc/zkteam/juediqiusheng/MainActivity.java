@@ -1,7 +1,12 @@
 package cc.zkteam.juediqiusheng;
 
-import android.support.v7.app.AppCompatActivity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -44,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
                 ARouter.getInstance()
                         .build("/module/pic/details")
                         .withString("url", "https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
+                        .navigation();
+            }
+        });
+
+        findViewById(R.id.tv_category).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ARouter.getInstance()
+                        .build("/module/category")
                         .navigation();
             }
         });
