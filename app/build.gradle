@@ -59,6 +59,7 @@ dependencies {
 
     implementation deps.zk_fresco
     implementation deps.okhttp
+    implementation deps.floatmenu
 
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.java8

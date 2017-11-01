@@ -17,6 +17,7 @@ versions.arouter = "1.2.2"
 versions.arouter_compiler = "1.1.3"
 versions.junit = "4.12"
 versions.retrofit = "2.3.0"
+versions.floatmenu = "2.0.1"
 ext.versions = versions
 
 
@@ -69,6 +70,7 @@ deps.junit = "junit:junit:$versions.junit"
 
 deps.retrofit2 = "com.squareup.retrofit2:retrofit:$versions.retrofit"
 deps.retrofit2_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.floatmenu = "com.yw.game.floatmenu:FloatMenu:$versions.floatmenu"
 
 deps.support = support
 deps.lifecycle = lifecycle

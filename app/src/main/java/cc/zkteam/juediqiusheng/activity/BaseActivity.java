@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.yw.game.floatmenu.FloatLogoMenu;
+
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.managers.ZKFloatMenuManager;
 
 /**
  * BaseActivity
@@ -21,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Toolbar mToolbar;
     protected TextView mTitle;
     protected Context mContext;
+    public FloatLogoMenu mFloatMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initListener();
         initData();
     }
+
+
 
     //获取资源ID
     protected abstract int getLayoutId();
@@ -66,4 +72,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onLeftClick() {
         finish();
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mFloatMenu == null) {
+            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this);
+        }
+        mFloatMenu.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ZKFloatMenuManager.getInstance().hideFloat();
+    }
+
+    @Override
+    protected void onDestroy() {
+        ZKFloatMenuManager.getInstance().destroyFloat();
+        super.onDestroy();
+    }
+
+
+
 }
