@@ -2,6 +2,7 @@ package cc.zkteam.juediqiusheng.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.DialogFragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.webkit.WebViewClient;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.L;
+
+import static android.webkit.WebView.setWebContentsDebuggingEnabled;
 
 public class WebViewDialogFragment extends DialogFragment {
 
@@ -56,12 +59,15 @@ public class WebViewDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_webview_fragment, container, false);
 
         WebView webView = (WebView) view.findViewById(R.id.webView);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            http://blog.csdn.net/zhulin2609/article/details/51437821  基于webkit核心的webview端调试
+            setWebContentsDebuggingEnabled(true);
+        }
 
         initWebSettings(webView);
 
-
-//        webView.loadUrl("http://xianliao.me/website/11501?mobile=1");
-        webView.loadUrl("http://www.baidu.com");
+        webView.loadUrl("http://xianliao.me/website/11501?mobile=1");
+//        webView.loadUrl("http://www.baidu.com");
 
         return view;
     }
@@ -92,6 +98,13 @@ public class WebViewDialogFragment extends DialogFragment {
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
+//        http://www.cnblogs.com/yuzhongwusan/p/4211681.html  android 中 webview 怎么用 localStorage?
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setAppCacheMaxSize(1024*1024*8);
+        String appCachePath = webView.getContext().getCacheDir().getAbsolutePath();
+        webSettings.setAppCachePath(appCachePath);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAppCacheEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

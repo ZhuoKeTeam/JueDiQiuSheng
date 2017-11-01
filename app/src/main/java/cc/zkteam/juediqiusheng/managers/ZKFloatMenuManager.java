@@ -26,7 +26,7 @@ public class ZKFloatMenuManager {
 
     private ArrayList<FloatItem> itemList = new ArrayList<>();
 
-    private String HOME = "首页";
+    private String HOME = "闲聊么";
     private String[] MENU_ITEMS = {HOME};
     private int[] menuIcons = new int[]{R.drawable.yw_menu_account};
 
