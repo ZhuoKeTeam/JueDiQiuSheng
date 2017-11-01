@@ -29,7 +29,7 @@ import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.module.recommend.JDQSRecommendFragment;
+import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 
 public class MainActivity extends BaseActivity {
@@ -116,7 +116,6 @@ public class MainActivity extends BaseActivity {
             return false;
         }
     };
-
 
 
     @Override
@@ -287,7 +286,6 @@ public class MainActivity extends BaseActivity {
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
 
-
         }
     }
 
@@ -305,10 +303,10 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-          if (position == 2){
-            return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
-          }else if (position == 3) {
-                return new JDQSRecommendFragment();
+            if (position == 2) {
+                return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
+            } else if (position == 3) {
+                return QuestionFragment.newInstance("a", "b");
             } else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
