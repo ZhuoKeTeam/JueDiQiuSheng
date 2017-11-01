@@ -1,13 +1,22 @@
 package cc.zkteam.juediqiusheng.waterfall;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ScreenUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import cc.zkteam.juediqiusheng.R;
 
@@ -19,20 +28,48 @@ public class RecycleAdapter extends BaseQuickAdapter<ItemBean, BaseViewHolder> {
 
     private final Context mContext;
 
+    private Map<Integer, Integer> randomHeight = new HashMap<>();
+
     public RecycleAdapter(@LayoutRes int layoutResId, Context mContext) {
         super(layoutResId);
         this.mContext = mContext;
     }
 
     @Override
+    public void setNewData(@Nullable List<ItemBean> data) {
+        super.setNewData(data);
+        randomHeight.clear();
+        randomHeight(data);
+    }
+
+    @Override
+    public void addData(@NonNull Collection<? extends ItemBean> newData) {
+        super.addData(newData);
+        randomHeight(newData);
+    }
+
+    private void randomHeight(@Nullable Collection<? extends ItemBean> newData) {
+        if (newData == null) {
+            return;
+        }
+        Iterator iterator = newData.iterator();
+        while (iterator.hasNext()) {
+            ItemBean itemBean = (ItemBean) iterator.next();
+            int height = new Random().nextInt(200) + 400;//[100,500)的随机数
+            randomHeight.put(itemBean.getId(), height);
+        }
+    }
+
+    @Override
     protected void convert(BaseViewHolder baseViewHolder, ItemBean itemBean) {
         ImageView imageView = baseViewHolder.getView(R.id.pic_img);
-        int width = ((Activity) imageView.getContext()).getWindowManager().getDefaultDisplay().getWidth();
+        int width = ScreenUtils.getScreenWidth() / 2;
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        //设置图片的相对于屏幕的宽高比
-        params.width = width / 3;
-        params.height = (int) (200 + Math.random() * 400);
+        params.width = width;
+        if(randomHeight.containsKey(itemBean.getId())){
+            params.height = randomHeight.get(itemBean.getId());
+        }
         imageView.setLayoutParams(params);
-        ImageUtils.load(mContext, itemBean.getImgUrl(), imageView);
+        ImageUtils.load(mContext, itemBean.getPicUrl(), imageView);
     }
 }
