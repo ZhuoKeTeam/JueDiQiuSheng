@@ -1,0 +1,99 @@
+
+ext.deps = [:]
+def versions = [:]
+//versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.0.0-rc1"
+versions.arch = "1.0.0-rc1"
+versions.android_gradle_plugin = "3.0.0"
+versions.kotlin_version = "1.1.51"
+versions.anko_version = "0.10.1"
+versions.support = "27.0.0"
+versions.constraint_layout = "1.0.2"
+versions.espresso = "3.0.1"
+versions.utilcode = "1.9.3"
+versions.okhttp = "3.9.0"
+versions.fresco = "1.0.0"
+versions.butterknife = "8.8.1"
+versions.arouter = "1.2.2"
+versions.arouter_compiler = "1.1.3"
+versions.junit = "4.12"
+versions.retrofit = "2.3.0"
+versions.floatmenu = "2.0.1"
+ext.versions = versions
+
+
+
+def support = [:]
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.annotations = "com.android.support:support-annotations:$versions.support"
+support.recyclerview = "com.android.support:recyclerview-v7:$versions.support"
+support.cardview = "com.android.support:cardview-v7:$versions.support"
+support.v4 = "com.android.support:support-v4:$versions.support"
+support.core_utils = "com.android.support:support-core-utils:$versions.support"
+ext.support = support
+
+
+
+def espresso = [:]
+espresso.core = "com.android.support.test.espresso:espresso-core:$versions.espresso"
+espresso.contrib = "com.android.support.test.espresso:espresso-contrib:$versions.espresso"
+espresso.intents = "com.android.support.test.espresso:espresso-intents:$versions.espresso"
+ext.espresso = espresso
+
+def lifecycle = [:]
+lifecycle.runtime = "android.arch.lifecycle:runtime:$versions.arch"
+lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.arch"
+lifecycle.java8 = "android.arch.lifecycle:common-java8:$versions.arch"
+lifecycle.compiler = "android.arch.lifecycle:compiler:$versions.arch"
+
+ext.lifecycle = lifecycle
+
+
+
+def deps = [:]
+deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+deps.kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version"
+deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
+deps.utilcode = "com.blankj:utilcode:$versions.utilcode"
+deps.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
+
+deps.zk_fresco = "com.github.ZhuoKeTeam:WapperFrescoHelper:$versions.fresco"
+
+deps.butterknife = "com.jakewharton:butterknife:$versions.butterknife"
+deps.butterknife_compiler = "com.jakewharton:butterknife-compiler:$versions.butterknife"
+deps.anko = "org.jetbrains.anko:anko:$versions.anko_version"
+deps.kotlin = "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin_version"
+deps.arouter = "com.alibaba:arouter-api:$versions.arouter"
+deps.arouter_compiler = "com.alibaba:arouter-compiler:$versions.arouter_compiler"
+
+deps.junit = "junit:junit:$versions.junit"
+
+deps.retrofit2 = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+deps.retrofit2_gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+deps.floatmenu = "com.yw.game.floatmenu:FloatMenu:$versions.floatmenu"
+
+deps.support = support
+deps.lifecycle = lifecycle
+ext.deps = deps
+
+
+
+
+def build_versions = [:]
+build_versions.min_sdk = 16
+build_versions.target_sdk = 26
+build_versions.build_tools = "26.0.2"
+ext.build_versions = build_versions
+
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.mavenCentral()
+    handler.maven { url 'https://jitpack.io'}
+    //阿里的maven仓国内镜像，如果gradle下载很慢，建议使用该仓库
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//    handler.maven { url 'https://maven.google.com'}
+
+}
+ext.addRepos = this.&addRepos

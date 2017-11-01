@@ -40,12 +40,10 @@ public class StrategyActivity extends AppCompatActivity {
 //        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-        mAdapter = new CommonAdapter<String>(this, R.layout.item_list, mDatas)
-        {
+        mAdapter = new CommonAdapter<String>(this, R.layout.item_list, mDatas) {
             @Override
-            protected void convert(ViewHolder holder, String s, int position)
-            {
-                holder.setText(R.id.id_item_list_title, s );
+            protected void convert(ViewHolder holder, String s, int position) {
+                holder.setText(R.id.id_item_list_title, s);
             }
         };
 
@@ -55,18 +53,13 @@ public class StrategyActivity extends AppCompatActivity {
 
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
         mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
-        mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener()
-        {
+        mLoadMoreWrapper.setOnLoadMoreListener(new LoadMoreWrapper.OnLoadMoreListener() {
             @Override
-            public void onLoadMoreRequested()
-            {
-                new Handler().postDelayed(new Runnable()
-                {
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
-                    public void run()
-                    {
-                        for (int i = 0; i < 10; i++)
-                        {
+                    public void run() {
+                        for (int i = 0; i < 10; i++) {
                             mDatas.add("吃鸡攻略" + i);
                         }
                         mLoadMoreWrapper.notifyDataSetChanged();
@@ -77,53 +70,44 @@ public class StrategyActivity extends AppCompatActivity {
         });
 
         mRecyclerView.setAdapter(mLoadMoreWrapper);
-        mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener()
-        {
+        mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position)
-            {
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Toast.makeText(StrategyActivity.this, "pos = " + position, Toast.LENGTH_SHORT).show();
                 mAdapter.notifyItemRemoved(position);
             }
 
             @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position)
-            {
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
                 return false;
             }
         });
     }
 
-    private void initEmptyView()
-    {
+    private void initEmptyView() {
         mEmptyWrapper = new EmptyWrapper(mAdapter);
         mEmptyWrapper.setEmptyView(LayoutInflater.from(this).inflate(R.layout.empty_view, mRecyclerView, false));
     }
 
-    private void initHeaderAndFooter()
-    {
+    private void initHeaderAndFooter() {
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
 
-        ImageView imageView=new ImageView(this);
+        ImageView imageView = new ImageView(this);
         imageView.setImageResource(R.mipmap.ic_launcher);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"轮播图",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "轮播图", Toast.LENGTH_SHORT).show();
             }
         });
         mHeaderAndFooterWrapper.addHeaderView(imageView);
     }
 
-    private void initDatas()
-    {
-        for (int i = 'A'; i <= 'z'; i++)
-        {
-            mDatas.add("吃鸡攻略"+(char) i + "");
+    private void initDatas() {
+        for (int i = 'A'; i <= 'z'; i++) {
+            mDatas.add("吃鸡攻略" + (char) i + "");
         }
     }
-
-
 
 
 }
