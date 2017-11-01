@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.api;
 
+import cc.zkteam.juediqiusheng.bean.PicBean;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.bean.BaseBean;
@@ -31,6 +32,15 @@ public interface ZKApi {
      */
     @GET("JueDiQiuSheng/picCategoryJson")
     Call<BaseBean<List<PicCategoryBean>>> getPicCategory();
+
+    /**
+     * 图片分类结果
+     * @param id
+     * @param count
+     * @return
+     */
+    @GET("JueDiQiuSheng/picUrlJson")
+    Call<BaseBean<List<PicBean>>> getCategoryList(@Query("jid")String id,@Query("pageCount") int count);
 
     /**
      * 精品推荐
