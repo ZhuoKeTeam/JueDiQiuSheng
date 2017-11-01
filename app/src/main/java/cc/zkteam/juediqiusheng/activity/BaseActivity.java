@@ -78,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (mFloatMenu == null) {
-            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this);
+            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this, getFragmentManager());
         }
         mFloatMenu.show();
     }

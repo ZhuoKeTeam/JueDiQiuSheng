@@ -1,11 +1,11 @@
 package cc.zkteam.juediqiusheng.managers;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.yw.game.floatmenu.FloatItem;
 import com.yw.game.floatmenu.FloatLogoMenu;
@@ -13,6 +13,7 @@ import com.yw.game.floatmenu.FloatMenuView;
 
 import java.util.ArrayList;
 
+import cc.zkteam.juediqiusheng.fragment.WebViewDialogFragment;
 import cc.zkteam.juediqiusheng.R;
 
 /**
@@ -50,7 +51,7 @@ public class ZKFloatMenuManager {
     }
 
 
-    public FloatLogoMenu getFloatLogoMenu(final Activity mActivity) {
+    public FloatLogoMenu getFloatLogoMenu(final Activity mActivity, final FragmentManager fragmentManager) {
         if (mFloatMenu == null) {
             for (int i = 0; i < menuIcons.length; i++) {
                 itemList.add(new FloatItem(MENU_ITEMS[i], 0x99000000, 0x99000000, BitmapFactory.decodeResource(mActivity.getResources(), menuIcons[i]), String.valueOf(i + 1)));
@@ -70,7 +71,10 @@ public class ZKFloatMenuManager {
                     .showWithListener(new FloatMenuView.OnMenuClickListener() {
                         @Override
                         public void onItemClick(int position, String title) {
-                            Toast.makeText(mActivity, "position " + position + " title:" + title + " is clicked.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(mActivity, "position " + position + " title:" + title + " is clicked.", Toast.LENGTH_SHORT).show();
+
+                            WebViewDialogFragment editNameDialog = WebViewDialogFragment.getInstance();
+                            editNameDialog.show(fragmentManager, "PayDialog");
                         }
 
                         @Override
