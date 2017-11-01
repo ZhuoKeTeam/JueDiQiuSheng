@@ -19,7 +19,7 @@ import org.jetbrains.anko.support.v4.ctx
 /**
  * Created by kutear on 10/24/17.
  */
-@Route(path = "modules/pic/main")
+@Route(path = "/modules/pic/main")
 class JDQSPicMainFragment : Fragment() {
     private val adapter = PicMainAdapter()
 
