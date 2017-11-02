@@ -47,7 +47,7 @@ public class SortActivity extends BaseActivity {
                             public void onItemClick(int id, int position) {
                                 Intent intent = new Intent();
                                 intent.setClass(mContext, SortDetailActivity.class);
-                                intent.putExtra("url", result.get(position).getArtifactSourceUrl());
+                                intent.putExtra("url", result.get(position).getArtifactUrl());
                                 startActivity(intent);
 
                             }
