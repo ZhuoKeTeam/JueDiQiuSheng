@@ -7,13 +7,11 @@ buildscript {
     dependencies {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin_gradle_plugin
-        classpath deps.agent_gradle_plugin
+//        classpath deps.agent_gradle_plugin
+        classpath fileTree(dir: './opt/',include: ['*.jar'])
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-    }
-    repositories {
-        google()
     }
 }
 
