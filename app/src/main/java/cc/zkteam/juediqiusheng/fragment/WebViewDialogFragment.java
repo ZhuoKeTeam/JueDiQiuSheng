@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -44,6 +45,17 @@ public class WebViewDialogFragment extends DialogFragment {
             }
         }
         return dialog;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Window window = getDialog().getWindow();
+        WindowManager.LayoutParams windowParams = window.getAttributes();
+        windowParams.dimAmount = 0.0f;
+
+        window.setAttributes(windowParams);
     }
 
     /**

@@ -50,6 +50,7 @@ public class ZKFloatMenuManager {
 
     public FloatLogoMenu getFloatLogoMenu(final Activity mActivity, final FragmentManager fragmentManager) {
         if (mFloatMenu == null) {
+            itemList.clear();
             for (int i = 0; i < menuIcons.length; i++) {
                 itemList.add(new FloatItem(MENU_ITEMS[i], 0x99000000, 0x99000000, BitmapFactory.decodeResource(mActivity.getResources(), menuIcons[i]), String.valueOf(i + 1)));
             }
