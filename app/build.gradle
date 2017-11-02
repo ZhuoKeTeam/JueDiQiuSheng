@@ -82,4 +82,5 @@ dependencies {
     //    androidTestImplementation support.v4
     //    androidTestImplementation support.app_compat
     //    androidTestImplementation support.design
+    compile 'com.android.support:support-v4:26.+'
 }
