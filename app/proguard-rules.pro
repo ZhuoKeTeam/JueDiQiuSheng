@@ -44,3 +44,11 @@
 #retrofit2
 -dontwarn okio.**
 -dontwarn javax.annotation.**
+
+# tingyun
+# ProGuard configurations for NetworkBench Lens
+-keep class com.networkbench.** { *; }
+-keepattributes SourceFile,LineNumberTable
+-dontwarn com.networkbench.**
+-keepattributes Exceptions, Signature, InnerClasses
+# End NetworkBench Lens

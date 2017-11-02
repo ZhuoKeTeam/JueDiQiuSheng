@@ -1,10 +1,9 @@
 package cc.zkteam.juediqiusheng.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -13,6 +12,9 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.networkbench.agent.impl.NBSAppAgent;
+
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,7 +27,18 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         initView();
+        initData();
         initAnimation();
+    }
+
+    private void initData() {
+        // 初始化听云 SDK
+        NBSAppAgent.setLicenseKey(Constant.ZKTEAM_TINGYUN_KEY)
+                .withLocationServiceEnabled(true)
+                .enableLogging(true)
+                .start(this.getApplicationContext());
+        // Log last 100 messages
+        NBSAppAgent.setLogging(50);
     }
 
     private void initView() {

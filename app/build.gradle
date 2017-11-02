@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'newlens'
 
 kapt {
     arguments {
@@ -51,8 +52,6 @@ dependencies {
 
     //Router,参考地址：https://github.com/alibaba/ARouter#fork-destination-box
     implementation deps.arouter
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:support-v4:26.1.0'
     kapt deps.arouter_compiler
 
     implementation deps.butterknife
@@ -61,6 +60,7 @@ dependencies {
     implementation deps.zk_fresco
     implementation deps.okhttp
     implementation deps.floatmenu
+    implementation deps.nbs_newlens_agent
 
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.java8
@@ -82,5 +82,4 @@ dependencies {
     //    androidTestImplementation support.v4
     //    androidTestImplementation support.app_compat
     //    androidTestImplementation support.design
-    compile 'com.android.support:support-v4:26.+'
 }

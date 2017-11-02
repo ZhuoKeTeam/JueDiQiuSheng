@@ -2,9 +2,12 @@ package cc.zkteam.juediqiusheng.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.networkbench.agent.impl.instrumentation.NBSWebChromeClient;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.L;
@@ -79,6 +82,13 @@ public class SortDetailActivity extends BaseActivity {
                 L.i("当前的 shouldOverrideUrlLoading Url:" + url);
                 view.loadUrl(url);
                 return true;
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                NBSWebChromeClient.initJSMonitor(view, newProgress);
+                super.onProgressChanged(view, newProgress);
             }
         });
     }

@@ -80,7 +80,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mFloatMenu == null) {
             mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this, getFragmentManager());
         }
-        mFloatMenu.show();
+        try {
+            mFloatMenu.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

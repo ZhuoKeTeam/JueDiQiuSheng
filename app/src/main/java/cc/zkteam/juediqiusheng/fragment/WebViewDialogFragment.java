@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.networkbench.agent.impl.instrumentation.NBSWebChromeClient;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
@@ -123,6 +126,13 @@ public class WebViewDialogFragment extends DialogFragment {
                 L.i("当前的 shouldOverrideUrlLoading Url:" + url);
                 view.loadUrl(url);
                 return true;
+            }
+        });
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                NBSWebChromeClient.initJSMonitor(view, newProgress);
+                super.onProgressChanged(view, newProgress);
             }
         });
     }
