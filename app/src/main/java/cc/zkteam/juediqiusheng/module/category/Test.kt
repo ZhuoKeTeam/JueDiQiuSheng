@@ -94,5 +94,17 @@ class Test {
             "orange" in items -> println("")
             "apple" in items -> println("")
         }
+
+        // 可能为空
+        val file: String? = null
+
+        // 如果不为空则执行
+        val length = file?.length
+
+        // 如果不为空执行。。。否则。。。
+        val length1 = file?.length ?: 10
+
+        // 如果为空则执行
+        val length2 = file?:10
     }
 }

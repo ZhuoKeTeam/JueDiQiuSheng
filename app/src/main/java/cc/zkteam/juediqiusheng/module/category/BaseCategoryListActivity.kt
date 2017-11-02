@@ -26,7 +26,7 @@ class BaseCategoryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_base_category_list)
-        toolbar = findViewById(R.id.toolbar_category) as Toolbar?
+        toolbar = findViewById(R.id.toolbar_category)
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -37,7 +37,7 @@ class BaseCategoryListActivity : AppCompatActivity() {
     private fun initView() {
         toolbar!!.setTitleTextColor(Color.WHITE)
         toolbar!!.title = getString(R.string.category_list)
-        list = findViewById(R.id.list_category) as RecyclerView?
+        list = findViewById(R.id.list_category)
         list!!.layoutManager = LinearLayoutManager(this)
     }
 
