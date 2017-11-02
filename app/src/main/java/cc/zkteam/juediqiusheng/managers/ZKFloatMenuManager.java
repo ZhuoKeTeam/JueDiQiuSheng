@@ -3,9 +3,6 @@ package cc.zkteam.juediqiusheng.managers;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.os.Looper;
-import android.text.TextUtils;
 
 import com.yw.game.floatmenu.FloatItem;
 import com.yw.game.floatmenu.FloatLogoMenu;
@@ -13,8 +10,8 @@ import com.yw.game.floatmenu.FloatMenuView;
 
 import java.util.ArrayList;
 
-import cc.zkteam.juediqiusheng.fragment.WebViewDialogFragment;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.fragment.WebViewDialogFragment;
 
 /**
  * 悬浮窗控制管理类
@@ -82,25 +79,8 @@ public class ZKFloatMenuManager {
 
                         }
                     });
-
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    refreshDot();
-                }
-            }, 5000);
         }
         return mFloatMenu;
-    }
-
-
-    public void refreshDot() {
-        for (FloatItem menuItem : itemList) {
-            if (TextUtils.equals(menuItem.getTitle(), "我的")) {
-                menuItem.dotNum = String.valueOf(8);
-            }
-        }
-        mFloatMenu.setFloatItemList(itemList);
     }
 
     public void hideFloat() {

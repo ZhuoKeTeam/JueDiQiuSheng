@@ -12,6 +12,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.L;
 
@@ -66,9 +67,7 @@ public class WebViewDialogFragment extends DialogFragment {
 
         initWebSettings(webView);
 
-        webView.loadUrl("http://xianliao.me/website/11501?mobile=1");
-//        webView.loadUrl("http://www.baidu.com");
-
+        webView.loadUrl(Constant.ZKTEAM_XIAN_LIAO_ME_URL);
         return view;
     }
 
