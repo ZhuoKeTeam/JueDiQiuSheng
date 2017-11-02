@@ -59,7 +59,11 @@ public class QuestionFragment extends Fragment {
                             public void onItemClick(int id, int position) {
                                 Intent intent = new Intent();
                                 intent.setClass(mContext, SortDetailActivity.class);
-                                intent.putExtra("url", result.get(position).getArtifactSourceUrl());
+
+                                String url = result.get(position).getArtifactUrl();
+//                                url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
+                                url = url.substring(url.lastIndexOf("\">") + 2, url.lastIndexOf("</a>"));
+                                intent.putExtra("url", url);
                                 startActivity(intent);
 
                             }
