@@ -1,12 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'newlens'
+
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+}
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+
     defaultConfig {
         applicationId "cc.zkteam.juediqiusheng"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,14 +28,59 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
+    // Support libraries
+    implementation deps.support.app_compat
+    implementation deps.support.v4
+    implementation deps.support.design
+    implementation deps.support.cardview
+    implementation deps.constraint_layout
+
+    // retrofit2
+    implementation deps.retrofit2
+    implementation deps.retrofit2_gson
+
+    // kotlin支持
+    implementation deps.kotlin
+    implementation deps.anko
+
+    //Router,参考地址：https://github.com/alibaba/ARouter#fork-destination-box
+    implementation deps.arouter
+    kapt deps.arouter_compiler
+
+    implementation deps.butterknife
+    kapt deps.butterknife_compiler
+
+    implementation deps.zk_fresco
+    implementation deps.okhttp
+    implementation deps.floatmenu
+    implementation deps.nbs_newlens_agent
+
+    //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
+    implementation deps.lifecycle.java8
+    implementation deps.lifecycle.extensions
+
+    //utilcode， 可参考：https://github.com/Blankj/AndroidUtilCode
+    implementation deps.utilcode
+    //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
+    //    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
+
+    testImplementation deps.junit
+
+//    Espresso UI Testing
+    androidTestImplementation espresso.core
+    //    androidTestImplementation espresso.contrib
+    //    androidTestImplementation espresso.intents
+    // Resolve conflicts between main and test APK:
+    //    androidTestImplementation support.annotations
+    //    androidTestImplementation support.v4
+    //    androidTestImplementation support.app_compat
+    //    androidTestImplementation support.design
 }

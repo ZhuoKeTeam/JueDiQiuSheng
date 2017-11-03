@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_recommend"
+        android:icon="@drawable/ic_scanner_black_24dp"
+        android:title="@string/title_recommend"/>
+
+    <item
+        android:id="@+id/navigation_game"
+        android:icon="@drawable/ic_videogame_asset_black_24dp"
+        android:title="@string/title_game"/>
+
+    <item
+        android:id="@+id/navigation_picture"
+        android:icon="@drawable/ic_image_black_24dp"
+        android:title="@string/title_picture"/>
+
+    <item
+        android:id="@+id/navigation_question"
+        android:icon="@drawable/ic_question_answer_black_24dp"
+        android:title="@string/title_question"/>
+
+</menu>
