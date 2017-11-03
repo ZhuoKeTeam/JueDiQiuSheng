@@ -75,6 +75,7 @@ dependencies {
 
 //    Espresso UI Testing
     androidTestImplementation espresso.core
+    implementation 'com.google.code.gson:gson:2.8.2'
     //    androidTestImplementation espresso.contrib
     //    androidTestImplementation espresso.intents
     // Resolve conflicts between main and test APK:
