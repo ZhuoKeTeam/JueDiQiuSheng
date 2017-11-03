@@ -2,6 +2,7 @@ package cc.zkteam.juediqiusheng.module.category;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.SortDetailActivity;
 
 /**
  *
@@ -37,8 +39,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(CategoryHolder holder, int position) {
-        BeanCategory.ResultBean item = datas.get(position);
+        final BeanCategory.ResultBean item = datas.get(position);
         holder.tvTitle.setText(item.getCategoryName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(context, SortDetailActivity.class);
+
+                String url = item.getCategoryUrl();
+                intent.putExtra("url", url);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

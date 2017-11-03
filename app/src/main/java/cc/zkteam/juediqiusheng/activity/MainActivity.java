@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,7 @@ import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
+import cc.zkteam.juediqiusheng.module.category.BaseCategoryListActivity;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 
@@ -75,6 +77,9 @@ public class MainActivity extends BaseActivity {
                 case 3:
                     itemId = R.id.navigation_question;
                     break;
+                case 4:
+                    itemId = R.id.navigation_category;
+                    break;
             }
 
             navigation.setSelectedItemId(itemId);
@@ -107,12 +112,18 @@ public class MainActivity extends BaseActivity {
                     mTextMessage.setText(R.string.title_picture);
                     mTextView.setVisibility(View.VISIBLE);
                     return true;
+
                 case R.id.navigation_question:
                     mViewPager.setCurrentItem(3);
                     mTextMessage.setText("");
-//                    mTextMessage.setText(R.string.title_question);
                     mTextView.setVisibility(View.GONE);
                     return true;
+
+                case R.id.navigation_category:
+                    mViewPager.setCurrentItem(4);
+                    mTextMessage.setVisibility(View.GONE);
+                    return true;
+                default:
             }
             return false;
         }
@@ -231,6 +242,22 @@ public class MainActivity extends BaseActivity {
     }
 
 
+    public static class CategoryFragment extends Fragment {
+        @Nullable
+        @Override
+        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_category, null);
+            view.findViewById(R.id.tv_category).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), BaseCategoryListActivity.class));
+                }
+            });
+            return view;
+        }
+    }
+
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -311,6 +338,8 @@ public class MainActivity extends BaseActivity {
                 return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
             } else if (position == 3) {
                 return QuestionFragment.newInstance("a", "b");
+            } else if (position == 4) {
+                return new CategoryFragment();
             } else {
                 return PlaceholderFragment.newInstance(position + 1);
             }
@@ -319,7 +348,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 5;
         }
     }
 }
