@@ -331,18 +331,21 @@ public class MainActivity extends BaseActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 1) {
-                return    StrategyFragment.newInstance();
+
+            switch (position) {
+                case 0:
+                    return PlaceholderFragment.newInstance(0);
+                case 1:
+                    return StrategyFragment.newInstance();
+                case 2:
+                    return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
+                case 3:
+                    return QuestionFragment.newInstance("a", "b");
+                case 4:
+                    return new CategoryFragment();
             }
-            else if (position == 2) {
-                return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
-            } else if (position == 3) {
-                return QuestionFragment.newInstance("a", "b");
-            } else if (position == 4) {
-                return new CategoryFragment();
-            } else {
-                return PlaceholderFragment.newInstance(position + 1);
-            }
+
+            return null;
         }
 
         @Override
