@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.strategy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.SortActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
@@ -84,8 +86,12 @@ public class StrategyFragment extends Fragment {
         mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(getActivity(),  mDatas.get(position-1).getCategoryName(), Toast.LENGTH_SHORT).show();
-                mAdapter.notifyItemRemoved(position);
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), SortActivity.class);
+                String id = String.valueOf(mDatas.get(position - 1).getId());
+                intent.putExtra("id", id);
+                startActivity(intent);
+//                mAdapter.notifyItemRemoved(position);
             }
 
             @Override

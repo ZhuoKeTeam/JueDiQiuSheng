@@ -49,7 +49,7 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ZKConnectionManager.getInstance().getZKApi().getSortDetail("6792", "100")
+        ZKConnectionManager.getInstance().getZKApi().getSortDetail("34425", "100")
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(final List<SortDetailBean> result) {

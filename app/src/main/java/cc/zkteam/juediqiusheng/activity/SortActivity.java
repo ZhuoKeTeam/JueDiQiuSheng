@@ -17,6 +17,7 @@ import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 public class SortActivity extends BaseActivity {
     private static final String TAG = "sort";
     private RecyclerView rvSort;
+    private String jid;
 
     @Override
     protected int getLayoutId() {
@@ -28,16 +29,19 @@ public class SortActivity extends BaseActivity {
         setTitle("分类");
         rvSort = findViewById(R.id.rv_sort);
 
+
     }
 
     @Override
     protected void initListener() {
-
+        Intent intent = getIntent();
+        if (intent != null)
+            jid = intent.getStringExtra("id");
     }
 
     @Override
     protected void initData() {
-        ZKConnectionManager.getInstance().getZKApi().getSortDetail("6792", "100")
+        ZKConnectionManager.getInstance().getZKApi().getSortDetail(jid, "20")
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(final List<SortDetailBean> result) {
@@ -47,7 +51,9 @@ public class SortActivity extends BaseActivity {
                             public void onItemClick(int id, int position) {
                                 Intent intent = new Intent();
                                 intent.setClass(mContext, SortDetailActivity.class);
-                                intent.putExtra("url", result.get(position).getArtifactUrl());
+                                String artifactUrl = result.get(position).getArtifactUrl();
+                                String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
+                                intent.putExtra("url", url);
                                 startActivity(intent);
 
                             }
