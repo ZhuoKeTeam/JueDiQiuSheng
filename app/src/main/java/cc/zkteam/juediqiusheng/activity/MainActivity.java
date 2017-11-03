@@ -100,17 +100,17 @@ public class MainActivity extends BaseActivity {
                 case R.id.navigation_recommend:
                     mViewPager.setCurrentItem(0);
                     mTextMessage.setText(R.string.title_recommend);
-                    mTextView.setVisibility(View.VISIBLE);
+                    mTextView.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_game:
                     mViewPager.setCurrentItem(1);
                     mTextMessage.setText(R.string.title_game);
-                    mTextView.setVisibility(View.VISIBLE);
+                    mTextView.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_picture:
                     mViewPager.setCurrentItem(2);
                     mTextMessage.setText(R.string.title_picture);
-                    mTextView.setVisibility(View.VISIBLE);
+                    mTextView.setVisibility(View.GONE);
                     return true;
 
                 case R.id.navigation_question:
@@ -145,6 +145,9 @@ public class MainActivity extends BaseActivity {
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        mTextView.setVisibility(View.GONE);
+        mTextMessage.setVisibility(View.GONE);
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
@@ -174,7 +177,7 @@ public class MainActivity extends BaseActivity {
         testRequestApi();
 
         // 演示 如何使用 LifeComponents
-        testLifeComponents(mTextView);
+//        testLifeComponents(mTextView);
     }
 
     @Override
@@ -292,7 +295,7 @@ public class MainActivity extends BaseActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            textView.setText(getString(R.string.section_format, getArguments().getString(ARG_SECTION_NUMBER)));
             return rootView;
         }
 

@@ -7,11 +7,11 @@
     <string name="title_game">攻略</string>
     <string name="title_picture">图片</string>
     <string name="title_question">问答</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_format">>>>%1$s</string>
 
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="tab_text_1">热门资讯</string>
+    <string name="tab_text_2">精品攻略推荐</string>
+    <string name="tab_text_3">葵花宝典</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
