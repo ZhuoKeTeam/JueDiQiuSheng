@@ -21,9 +21,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
         <activity android:name=".module.pic.details.JDQSSeeBigPicActivity" />
         <activity android:name=".activity.SortActivity" />
         <activity android:name=".activity.SortDetailActivity" />
@@ -35,6 +32,14 @@
             </intent-filter>
         </activity>
       <activity android:name=".module.pic.category.PicCategoryActivity"/>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".module.category.BaseCategoryListActivity"></activity>
     </application>
 
 </manifest>
