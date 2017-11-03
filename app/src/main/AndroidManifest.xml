@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS" />
@@ -21,20 +22,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
         <activity android:name=".module.pic.details.JDQSSeeBigPicActivity" />
         <activity android:name=".activity.SortActivity" />
         <activity android:name=".activity.SortDetailActivity" />
-        <activity android:name=".activity.SplashActivity" >
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-      <activity android:name=".module.pic.category.PicCategoryActivity"/>
+        <activity android:name=".module.pic.category.PicCategoryActivity" />
+        <activity android:name=".module.category.BaseCategoryListActivity"/>
+        <activity android:name=".activity.MainActivity"/>
     </application>
 
 </manifest>
