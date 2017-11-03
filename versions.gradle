@@ -11,7 +11,6 @@ versions.constraint_layout = "1.0.2"
 versions.espresso = "3.0.1"
 versions.utilcode = "1.9.3"
 versions.okhttp = "3.9.0"
-versions.fresco = "1.0.0"
 versions.butterknife = "8.8.1"
 versions.arouter = "1.2.2"
 versions.arouter_compiler = "1.1.3"
@@ -19,6 +18,10 @@ versions.junit = "4.12"
 versions.retrofit = "2.3.0"
 versions.floatmenu = "2.0.1"
 versions.networkbench_version = "2.7.0"
+versions.photo_view = "2.1.3"
+versions.fresco = "1.3.0"
+versions.zk_fresco = "1.0.0"
+versions.photo_draweeview = "1.1.3"
 ext.versions = versions
 
 
@@ -58,7 +61,7 @@ deps.constraint_layout = "com.android.support.constraint:constraint-layout:$vers
 deps.utilcode = "com.blankj:utilcode:$versions.utilcode"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"
 
-deps.zk_fresco = "com.github.ZhuoKeTeam:WapperFrescoHelper:$versions.fresco"
+deps.zk_fresco = "com.github.ZhuoKeTeam:WapperFrescoHelper:$versions.zk_fresco"
 
 deps.butterknife = "com.jakewharton:butterknife:$versions.butterknife"
 deps.butterknife_compiler = "com.jakewharton:butterknife-compiler:$versions.butterknife"
@@ -75,6 +78,11 @@ deps.floatmenu = "com.yw.game.floatmenu:FloatMenu:$versions.floatmenu"
 
 deps.agent_gradle_plugin = "com.networkbench.newlens.agent.android:agent-gradle-plugin:$versions.networkbench_version"
 deps.nbs_newlens_agent = "com.networkbench.newlens.agent.android:nbs.newlens.agent:$versions.networkbench_version"
+
+deps.photo_view = "com.github.chrisbanes:PhotoView:$versions.photo_view"
+
+deps.fresco = "com.facebook.fresco:fresco:$versions.fresco"
+deps.photo_draweeview = "me.relex:photodraweeview:$versions.photo_draweeview"
 
 deps.support = support
 deps.lifecycle = lifecycle

@@ -62,6 +62,9 @@ dependencies {
     implementation deps.okhttp
     implementation deps.floatmenu
     implementation deps.nbs_newlens_agent
+//    implementation deps.photo_view
+    implementation deps.fresco
+    implementation deps.photo_draweeview
 
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.java8
