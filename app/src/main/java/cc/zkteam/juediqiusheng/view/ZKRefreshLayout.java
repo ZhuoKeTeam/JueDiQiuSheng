@@ -3,8 +3,9 @@ package cc.zkteam.juediqiusheng.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * 自定义 ZKRefreshLayout， 增加动画效果
@@ -12,7 +13,7 @@ import android.util.AttributeSet;
  * Created by WangQing on 2017/11/5.
  */
 
-public class ZKRefreshLayout extends SwipeRefreshLayout {
+public class ZKRefreshLayout extends WaveSwipeRefreshLayout {
     public ZKRefreshLayout(@NonNull Context context) {
         super(context);
     }

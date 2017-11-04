@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by WangQing on 2017/10/30.
@@ -29,7 +30,7 @@ public class HotInformationFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     ListView listView;
-    SwipeRefreshLayout refreshLayout;
+    ZKRefreshLayout refreshLayout;
     ArrayAdapter<String> arrayAdapter;
 
     public HotInformationFragment() {
@@ -51,10 +52,10 @@ public class HotInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rec_hot_infor, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.text);
+        TextView textView = rootView.findViewById(R.id.text);
 
-        listView = (ListView) rootView.findViewById(R.id.listView);
-        refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
+        listView = rootView.findViewById(R.id.listView);
+        refreshLayout = rootView.findViewById(R.id.swipe_refresh_layout);
         textView.setText(getString(R.string.section_format, getArguments().getString(ARG_SECTION_NUMBER)));
         return rootView;
     }
@@ -73,13 +74,11 @@ public class HotInformationFragment extends Fragment {
         }
 
 
-        refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
-        // 设置下拉进度的主题颜色
-        refreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
 
-        refreshLayout.setProgressViewOffset(true, 0, 200);
-
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//        https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout  水滴效果
+//        refreshLayout.setColorSchemeColors(Color.BLUE, Color.GRAY);
+//        refreshLayout.setWaveColor(Color.argb(100,255,0,0));
+        refreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
@@ -95,6 +94,30 @@ public class HotInformationFragment extends Fragment {
                 }, 3000);
             }
         });
+
+//        SwipeRefreshLayout 版本
+//        refreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
+//        // 设置下拉进度的主题颜色
+//        refreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
+//        refreshLayout.setProgressViewOffset(true, 0, 200);
+//
+//
+//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshLayout.setRefreshing(true);
+//
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        arrayAdapter.addAll(arrayList);
+//                        arrayAdapter.notifyDataSetChanged();
+//
+//                        refreshLayout.setRefreshing(false);
+//                    }
+//                }, 3000);
+//            }
+//        });
 
 
         arrayAdapter = new ArrayAdapter<String>(getContext(),

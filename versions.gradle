@@ -22,6 +22,7 @@ versions.photo_view = "2.1.3"
 versions.fresco = "1.3.0"
 versions.zk_fresco = "1.0.0"
 versions.photo_draweeview = "1.1.3"
+versions.wave_swipe_refresh_layout = "1.6"
 ext.versions = versions
 
 
@@ -83,6 +84,7 @@ deps.photo_view = "com.github.chrisbanes:PhotoView:$versions.photo_view"
 
 deps.fresco = "com.facebook.fresco:fresco:$versions.fresco"
 deps.photo_draweeview = "me.relex:photodraweeview:$versions.photo_draweeview"
+deps.wave_swipe_refresh_layout = "com.github.recruit-lifestyle:WaveSwipeRefreshLayout:$versions.wave_swipe_refresh_layout"
 
 deps.support = support
 deps.lifecycle = lifecycle
