@@ -27,9 +27,10 @@ import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
 /**
+ * 热门资讯
+ *
  * Created by WangQing on 2017/10/30.
  */
-
 public class HotInformationFragment extends Fragment {
     /**
      * The fragment argument representing the section number for this
@@ -114,58 +115,6 @@ public class HotInformationFragment extends Fragment {
                 }, 3000);
             }
         });
-
-
-
-//        https://github.com/recruit-lifestyle/WaveSwipeRefreshLayout  水滴效果
-//        zkRefreshLayout.setColorSchemeColors(Color.BLUE, Color.GRAY);
-//        zkRefreshLayout.setWaveColor(Color.argb(100,255,0,0));
-//        zkRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                zkRefreshLayout.setRefreshing(true);
-//
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        arrayAdapter.addAll(arrayList);
-//                        arrayAdapter.notifyDataSetChanged();
-//
-//                        zkRefreshLayout.setRefreshing(false);
-//                    }
-//                }, 3000);
-//            }
-//        });
-
-//        SwipeRefreshLayout 版本
-//        zkRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
-//        // 设置下拉进度的主题颜色
-//        zkRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
-//        zkRefreshLayout.setProgressViewOffset(true, 0, 200);
-//
-//
-//        zkRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                zkRefreshLayout.setRefreshing(true);
-//
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        arrayAdapter.addAll(arrayList);
-//                        arrayAdapter.notifyDataSetChanged();
-//
-//                        zkRefreshLayout.setRefreshing(false);
-//                    }
-//                }, 3000);
-//            }
-//        });
-
-
-//        arrayAdapter = new ArrayAdapter<String>(getContext(),
-//                android.R.layout.simple_list_item_1, arrayList);
-//        zkRecyclerView.setAdapter(arrayAdapter);
-
 
         linearLayoutManager = new LinearLayoutManager(zkRecyclerView.getContext());
         zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
