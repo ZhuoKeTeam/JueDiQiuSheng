@@ -10,11 +10,11 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         app:overlay="false"
-        app:wave_show="false"
-        app:wave_color="@color/colorPrimary"
-        app:wave_height_type="normal"
+        app:wave_show="true"
+        app:progress_colors="@array/material_colors"
         app:progress_size_type="normal"
-        app:progress_colors="@array/material_colors">
+        app:wave_color="@color/colorPrimary"
+        app:wave_height_type="normal">
 
         <cc.zkteam.juediqiusheng.view.ZKRecyclerView
             android:id="@+id/zk_recycler_view"
