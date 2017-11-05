@@ -81,18 +81,13 @@ public class HotInformationFragment extends Fragment {
             arrayList.add(list[i % 5] + "-" + i);
         }
 
-
-
-
+        zkRefreshLayout.setWaveColor(0x555555);
         zkRefreshLayout.setLoadMore(true);
-//        https://github.com/android-cjj/Android-MaterialRefreshLayout
+//        https://github.com/gdky005/Android-MaterialRefreshLayout
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
 
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-
-
-
                 materialRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
