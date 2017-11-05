@@ -67,6 +67,11 @@ public class WebViewDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getDialog().getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         /**
          * 先设置   无标题样式的  对话框
          */
@@ -81,6 +86,10 @@ public class WebViewDialogFragment extends DialogFragment {
         }
 
         initWebSettings(webView);
+
+        getDialog().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager
+                .LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         webView.loadUrl(Constant.ZKTEAM_XIAN_LIAO_ME_URL);
         return view;
