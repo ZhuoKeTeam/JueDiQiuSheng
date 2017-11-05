@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+import com.cjj.MaterialRefreshLayout;
 
 /**
  * 自定义 ZKRefreshLayout， 增加动画效果
@@ -13,7 +13,7 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
  * Created by WangQing on 2017/11/5.
  */
 
-public class ZKRefreshLayout extends WaveSwipeRefreshLayout {
+public class ZKRefreshLayout extends MaterialRefreshLayout {
     public ZKRefreshLayout(@NonNull Context context) {
         super(context);
     }
