@@ -32,4 +32,11 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
+    <integer-array name="zk_material_colors">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/colorPrimaryTranslucent</item>
+        <item>@color/colorAccent</item>
+    </integer-array>
+
 </resources>

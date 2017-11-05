@@ -2,6 +2,8 @@ package cc.zkteam.juediqiusheng.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.DialogFragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 import com.networkbench.agent.impl.instrumentation.NBSWebChromeClient;
 
@@ -30,6 +33,8 @@ public class WebViewDialogFragment extends DialogFragment {
      * volatile很容易被误用，用来进行原子性操作。
      */
     private static volatile WebViewDialogFragment dialog = null;
+
+    WebView webView;
 
     public WebViewDialogFragment() {
     }
@@ -76,10 +81,19 @@ public class WebViewDialogFragment extends DialogFragment {
          * 先设置   无标题样式的  对话框
          */
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        final Window window = getDialog().getWindow();
+        View view = inflater.inflate(R.layout.dialog_webview_fragment,  ((ViewGroup) window.findViewById(android.R.id.content)), false);//需要用android.R.id.content这个view
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));//注意此处
+        window.setLayout(-1, -2);//这2行,和上面的一样,注意顺序就行;
+        webView = view.findViewById(R.id.webView);
+        RelativeLayout azkRefreshLayout = view.findViewById(R.id.root_view);
+        azkRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismissAllowingStateLoss();
+            }
+        });
 
-        View view = inflater.inflate(R.layout.dialog_webview_fragment, container, false);
-
-        WebView webView = (WebView) view.findViewById(R.id.webView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 //            http://blog.csdn.net/zhulin2609/article/details/51437821  基于webkit核心的webview端调试
             setWebContentsDebuggingEnabled(true);
@@ -96,7 +110,7 @@ public class WebViewDialogFragment extends DialogFragment {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void initWebSettings(WebView webView) {
+    private void initWebSettings(final WebView webView) {
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
 
@@ -130,6 +144,7 @@ public class WebViewDialogFragment extends DialogFragment {
         webSettings.setAppCacheEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 L.i("当前的 shouldOverrideUrlLoading Url:" + url);

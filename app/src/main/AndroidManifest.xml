@@ -34,7 +34,8 @@
         </activity>
         <activity android:name=".module.pic.category.PicCategoryActivity" />
         <activity android:name=".module.category.BaseCategoryListActivity"/>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity"
+            />
     </application>
 
 </manifest>

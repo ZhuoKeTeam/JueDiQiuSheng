@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/colorPrimaryTranslucent"
+    android:padding="50dp">
 
-    <WebView
-        android:id="@+id/webView"
-        android:layout_width="500dp"
-        android:layout_height="500dp"/>
+    <!--<cc.zkteam.juediqiusheng.view.ZKRefreshLayout-->
+        <!--android:id="@+id/zk_refresh_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:overlay="true"-->
+        <!--app:wave_show="true"-->
+        <!--app:wave_color="@color/colorPrimaryTranslucent"-->
+        <!--app:progress_colors="@array/zk_material_colors">-->
+
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    <!--</cc.zkteam.juediqiusheng.view.ZKRefreshLayout>-->
 </RelativeLayout>
