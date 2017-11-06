@@ -67,6 +67,7 @@ dependencies {
     implementation deps.photo_draweeview
     implementation deps.wave_swipe_refresh_layout
     implementation deps.material_refesh_layout
+    implementation deps.banners
 
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.java8
