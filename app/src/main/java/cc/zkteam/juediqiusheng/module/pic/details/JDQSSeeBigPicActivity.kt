@@ -4,6 +4,7 @@ import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.view.Window
 import cc.zkteam.juediqiusheng.R
 import cc.zkteam.juediqiusheng.utils.L
@@ -54,4 +55,13 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         see_big_pic_imageView.controller = controller.build()
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 }
