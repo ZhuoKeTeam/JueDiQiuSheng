@@ -17,4 +17,5 @@
 
     <string name="category_list">分类列表</string>
     <string name="category">分类</string>
+    <string name="pic_detail">图片浏览</string>
 </resources>
