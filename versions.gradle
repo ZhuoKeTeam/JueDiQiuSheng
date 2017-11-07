@@ -25,6 +25,7 @@ versions.photo_draweeview = "1.1.3"
 versions.wave_swipe_refresh_layout = "1.6"
 versions.material_refesh_layout = "1.3.0"
 versions.banners = "1.4.10"
+versions.rvh = "2.9.30"
 ext.versions = versions
 
 
@@ -89,6 +90,8 @@ deps.photo_draweeview = "me.relex:photodraweeview:$versions.photo_draweeview"
 deps.wave_swipe_refresh_layout = "com.github.recruit-lifestyle:WaveSwipeRefreshLayout:$versions.wave_swipe_refresh_layout"
 deps.material_refesh_layout = "com.cjj.materialrefeshlayout:library:$versions.material_refesh_layout"
 deps.banners = "com.youth.banner:banner:$versions.banners"
+
+deps.rvh = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.rvh"
 
 deps.support = support
 deps.lifecycle = lifecycle

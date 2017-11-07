@@ -1,13 +1,14 @@
 package cc.zkteam.juediqiusheng.api;
 
-import cc.zkteam.juediqiusheng.bean.PicBean;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.bean.BaseBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
+import cc.zkteam.juediqiusheng.bean.PicBean;
 import cc.zkteam.juediqiusheng.bean.PicCategoryBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
+import cc.zkteam.juediqiusheng.module.waterfall.ItemBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -53,5 +54,15 @@ public interface ZKApi {
      */
     @GET("JueDiQiuSheng/itemJson")
     Call<BaseBean<List<SortDetailBean>>> getSortDetail(@Query("jid") String jId, @Query("pageCount") String pageCount);
+
+    /**
+     * 瀑布流
+     * @param id
+     * @param count
+     * @param page
+     * @return
+     */
+    @GET("JueDiQiuSheng/picUrlJson")
+    Call<BaseBean<List<ItemBean>>> getCategoryListByJId(@Query("jid")String id, @Query("pageCount") int count, @Query("page") int page);
 
 }

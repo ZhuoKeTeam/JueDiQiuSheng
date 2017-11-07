@@ -78,6 +78,8 @@ dependencies {
     //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
     //    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
 
+    implementation deps.rvh
+
     testImplementation deps.junit
 
 //    Espresso UI Testing

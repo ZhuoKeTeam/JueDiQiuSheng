@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="animation_types">
+        <item>Alpha In</item>
+        <item>Scale In </item>
+        <item>Slide Bottom</item>
+        <item>SlideIn Left</item>
+        <item>SlideIn Right</item>
+    </string-array>
+</resources>

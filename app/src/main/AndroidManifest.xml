@@ -36,6 +36,7 @@
         <activity android:name=".module.category.BaseCategoryListActivity"/>
         <activity android:name=".activity.MainActivity"
             />
+        <activity android:name=".module.waterfall.WaterfallActivity"></activity>
     </application>
 
 </manifest>

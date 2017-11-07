@@ -20,7 +20,7 @@ class PicMainHolder(v: View) : RecyclerView.ViewHolder(v), ICovertData<PicCatego
         imageView.loadUrl("https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
         textView.text = dt?.picCategoryName
         itemView.setOnClickListener {
-            ARouter.getInstance().build("/modules/pic/category").withString("categoryId", dt?.id).navigation()
+            ARouter.getInstance().build("/modules/waterfall/WaterfallActivity").withString("categoryId", dt?.id).navigation()
         }
     }
 }
