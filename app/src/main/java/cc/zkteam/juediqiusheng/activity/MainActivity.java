@@ -38,7 +38,6 @@ import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
-    public TextView mTextView;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -53,7 +52,6 @@ public class MainActivity extends BaseActivity {
      */
     private ViewPager mViewPager;
     private BottomNavigationView navigation;
-    private TextView mTextMessage;
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -77,9 +75,6 @@ public class MainActivity extends BaseActivity {
                 case 3:
                     itemId = R.id.navigation_question;
                     break;
-                case 4:
-                    itemId = R.id.navigation_category;
-                    break;
             }
 
             navigation.setSelectedItemId(itemId);
@@ -99,29 +94,16 @@ public class MainActivity extends BaseActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_recommend:
                     mViewPager.setCurrentItem(0);
-                    mTextMessage.setText(R.string.title_recommend);
-                    mTextView.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_game:
                     mViewPager.setCurrentItem(1);
-                    mTextMessage.setText(R.string.title_game);
-                    mTextView.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_picture:
                     mViewPager.setCurrentItem(2);
-                    mTextMessage.setText(R.string.title_picture);
-                    mTextView.setVisibility(View.GONE);
                     return true;
 
                 case R.id.navigation_question:
                     mViewPager.setCurrentItem(3);
-                    mTextMessage.setText("");
-                    mTextView.setVisibility(View.GONE);
-                    return true;
-
-                case R.id.navigation_category:
-                    mViewPager.setCurrentItem(4);
-                    mTextMessage.setVisibility(View.GONE);
                     return true;
                 default:
             }
@@ -140,13 +122,8 @@ public class MainActivity extends BaseActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mTextView = (TextView) findViewById(R.id.jump);
-        mTextMessage = (TextView) findViewById(R.id.message);
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        mTextView.setVisibility(View.GONE);
-        mTextMessage.setVisibility(View.GONE);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -159,16 +136,6 @@ public class MainActivity extends BaseActivity {
         mViewPager.addOnPageChangeListener(onPageChangeListener);
 
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        mTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ARouter.getInstance()
-                        .build("/module/pic/details")
-                        .withString("url", "https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
-                        .navigation();
-            }
-        });
     }
 
     @Override
@@ -190,7 +157,7 @@ public class MainActivity extends BaseActivity {
      * 演示快速使用测试 Api
      */
     private void testRequestApi() {
-        ZKConnectionManager.getInstance().getZKApi().categoryData()
+        ZKConnectionManager.getInstance().getZKApi().categoryData(20)
                 .enqueue(new ZKCallback<List<CategoryBean>>() {
                     @Override
                     public void onResponse(List<CategoryBean> result) {
@@ -344,8 +311,6 @@ public class MainActivity extends BaseActivity {
                     return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
                 case 3:
                     return QuestionFragment.newInstance("a", "b");
-                case 4:
-                    return new CategoryFragment();
             }
 
             return null;
@@ -353,8 +318,8 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 5;
+            // Show 4 total pages.
+            return 4;
         }
     }
 }

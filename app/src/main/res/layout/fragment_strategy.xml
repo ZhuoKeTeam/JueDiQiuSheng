@@ -1,12 +1,37 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_strategy"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/id_recyclerview"
+    <cc.zkteam.juediqiusheng.view.ZKBanner
+        android:id="@+id/zk_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="200dp" />
+
+
+    <cc.zkteam.juediqiusheng.view.ZKRefreshLayout
+        android:id="@+id/zk_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/zk_banner"
+        app:overlay="false"
+        app:progress_colors="@array/material_colors"
+        app:progress_size_type="normal"
+        app:wave_color="@color/colorPrimary"
+        app:wave_height_type="normal"
+        app:wave_show="true">
+
+        <cc.zkteam.juediqiusheng.view.ZKRecyclerView
+            android:id="@+id/zk_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+    </cc.zkteam.juediqiusheng.view.ZKRefreshLayout>
 
 </android.support.constraint.ConstraintLayout>

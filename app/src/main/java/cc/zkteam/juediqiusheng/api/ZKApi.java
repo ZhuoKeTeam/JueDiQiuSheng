@@ -26,7 +26,7 @@ public interface ZKApi {
      * @return 分类的数据
      */
     @GET("JueDiQiuSheng/categoryJson")
-    Call<BaseBean<List<CategoryBean>>> categoryData();
+    Call<BaseBean<List<CategoryBean>>> categoryData(@Query("pageCount") int count);
 
     /**
      * 图片分类

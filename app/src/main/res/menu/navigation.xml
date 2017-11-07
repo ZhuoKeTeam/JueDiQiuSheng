@@ -21,8 +21,4 @@
         android:icon="@drawable/ic_question_answer_black_24dp"
         android:title="@string/title_question"/>
 
-    <item android:id="@+id/navigation_category"
-        android:title="@string/category"
-        android:icon="@drawable/ic_question_answer_black_24dp"/>
-
 </menu>
