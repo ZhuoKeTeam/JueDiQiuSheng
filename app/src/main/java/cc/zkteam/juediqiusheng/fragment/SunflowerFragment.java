@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.activity.SortDetailActivity;
+import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
@@ -76,7 +76,7 @@ public class SunflowerFragment extends Fragment {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), SortDetailActivity.class);
+                intent.setClass(getActivity(), WebViewActivity.class);
                 String artifactUrl = mDatas.get(position).getNewsSourceUrl();
                 String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
                 intent.putExtra("url", url);
