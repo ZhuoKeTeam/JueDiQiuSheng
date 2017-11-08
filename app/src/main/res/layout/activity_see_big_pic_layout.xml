@@ -13,9 +13,22 @@
         app:titleTextColor="#ffffff"
         app:title="@string/pic_detail" />
 
-    <me.relex.photodraweeview.PhotoDraweeView
-        android:id="@+id/see_big_pic_imageView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/images_details" />
+        android:layout_height="match_parent">
+
+        <me.relex.photodraweeview.PhotoDraweeView
+            android:id="@+id/see_big_pic_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/images_details" />
+
+        <app.dinus.com.loadingdrawable.LoadingView
+            android:id="@+id/loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff1c02e"
+            app:loading_renderer="GhostsEyeLoadingRenderer"
+            android:visibility="gone"/>
+    </RelativeLayout>
 </LinearLayout>

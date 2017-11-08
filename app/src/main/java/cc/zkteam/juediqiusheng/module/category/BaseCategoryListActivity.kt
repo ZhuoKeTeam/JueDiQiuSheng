@@ -76,9 +76,9 @@ class BaseCategoryListActivity : AppCompatActivity() {
         if (result.result != null && !result.result.isEmpty()) {
             datas = result.result
             adapter = CategoryAdapter(this, datas)
-            list!!.post({
+            list?.post({
                 run {
-                    list!!.adapter = adapter
+                    list?.adapter = adapter
                 }
             })
         }

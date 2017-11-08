@@ -5,7 +5,11 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
+import app.dinus.com.loadingdrawable.LoadingView
+import app.dinus.com.loadingdrawable.render.LoadingRenderer
+import app.dinus.com.loadingdrawable.render.circle.jump.DanceLoadingRenderer
 import cc.zkteam.juediqiusheng.R
 import cc.zkteam.juediqiusheng.utils.L
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -34,11 +38,14 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_see_big_pic_layout)
         ARouter.getInstance().inject(this)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar_pic_detail)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initToolbar()
+        loadImg()
+    }
 
+    private fun loadImg() {
         L.i("当前的 Url是：" + url)
+        val loadingView: LoadingView = findViewById(R.id.loading_view)
+        loadingView.visibility = View.VISIBLE
 
         val controller = Fresco.newDraweeControllerBuilder()
         controller.setUri(url)
@@ -46,14 +53,25 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         controller.controllerListener = object : BaseControllerListener<ImageInfo>() {
             override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
                 super.onFinalImageSet(id, imageInfo, animatable)
+                loadingView.visibility = View.GONE
                 if (imageInfo == null || see_big_pic_imageView == null) {
                     return
                 }
                 see_big_pic_imageView.update(imageInfo.width, imageInfo.height)
             }
+
+            override fun onFailure(id: String?, throwable: Throwable?) {
+                super.onFailure(id, throwable)
+                loadingView.visibility = View.GONE
+            }
         }
         see_big_pic_imageView.controller = controller.build()
+    }
 
+    private fun initToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar_pic_detail)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
