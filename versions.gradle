@@ -2,7 +2,8 @@
 ext.deps = [:]
 def versions = [:]
 //versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.0.0-rc1"
-versions.arch = "1.0.0-rc1"
+versions.arch = "1.0.0"
+versions.arch_paging = "1.0.0-alpha3"
 versions.android_gradle_plugin = "3.0.0"
 versions.kotlin_version = "1.1.51"
 versions.anko_version = "0.10.1"
@@ -50,9 +51,13 @@ ext.espresso = espresso
 
 def lifecycle = [:]
 lifecycle.runtime = "android.arch.lifecycle:runtime:$versions.arch"
-lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.arch"
-lifecycle.java8 = "android.arch.lifecycle:common-java8:$versions.arch"
 lifecycle.compiler = "android.arch.lifecycle:compiler:$versions.arch"
+//java8 默认包含 runtime 和 compiler
+lifecycle.lifecycle_java8 = "android.arch.lifecycle:common-java8:$versions.arch"
+lifecycle.extensions = "android.arch.lifecycle:extensions:$versions.arch"
+lifecycle.arch_paging = "android.arch.paging:runtime:$versions.arch_paging"
+lifecycle.room = "android.arch.persistence.room:runtime:$versions.arch"
+lifecycle.room_compiler = "android.arch.persistence.room:compiler:$versions.arch"
 
 ext.lifecycle = lifecycle
 
