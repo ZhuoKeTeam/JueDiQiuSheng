@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.List;
@@ -26,7 +27,6 @@ public class SortActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        setTitle("分类");
         rvSort = findViewById(R.id.rv_sort);
 
 
@@ -35,8 +35,14 @@ public class SortActivity extends BaseActivity {
     @Override
     protected void initListener() {
         Intent intent = getIntent();
-        if (intent != null)
+        if (intent != null){
             jid = intent.getStringExtra("id");
+            String name=intent.getStringExtra("name");
+            if (!TextUtils.isEmpty(name))
+                setTitle(name);
+            else
+                setTitle("分类详情");
+        }
     }
 
     @Override
@@ -50,7 +56,7 @@ public class SortActivity extends BaseActivity {
                             @Override
                             public void onItemClick(int id, int position) {
                                 Intent intent = new Intent();
-                                intent.setClass(mContext, SortDetailActivity.class);
+                                intent.setClass(mContext, WebViewActivity.class);
                                 String artifactUrl = result.get(position).getArtifactUrl();
                                 String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
                                 intent.putExtra("url", url);

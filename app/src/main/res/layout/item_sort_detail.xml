@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="bottom"
-        android:background="@drawable/bg_recommendation_content">
+        android:background="@drawable/shape_gradient">
 
         <cc.zkteam.juediqiusheng.view.ZKImageView
             android:id="@+id/iv_sort"
@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="15sp"
+            android:text="20sp"
             android:textColor="@android:color/black"
             tools:text="分类内容"/>
 
@@ -39,7 +39,7 @@
             android:layout_below="@id/tv_content"
             android:gravity="center"
             android:textColor="@android:color/black"
-            android:textSize="12sp"
+            android:textSize="14sp"
             tools:text="发布时间"/>
 
     </RelativeLayout>

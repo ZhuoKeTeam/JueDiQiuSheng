@@ -24,7 +24,8 @@
 
         <activity android:name=".module.pic.details.JDQSSeeBigPicActivity" />
         <activity android:name=".activity.SortActivity" />
-        <activity android:name=".activity.SortDetailActivity" />
+        <activity android:name=".activity.WebViewActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".activity.SplashActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

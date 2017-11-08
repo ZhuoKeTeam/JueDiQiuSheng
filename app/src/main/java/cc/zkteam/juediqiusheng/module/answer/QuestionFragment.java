@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.activity.SortDetailActivity;
+import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
 import cc.zkteam.juediqiusheng.base.RvListener;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
@@ -58,7 +58,7 @@ public class QuestionFragment extends Fragment {
                             @Override
                             public void onItemClick(int id, int position) {
                                 Intent intent = new Intent();
-                                intent.setClass(mContext, SortDetailActivity.class);
+                                intent.setClass(mContext, WebViewActivity.class);
 
                                 String url = result.get(position).getArtifactUrl();
 //                                url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";

@@ -15,18 +15,18 @@ import cc.zkteam.juediqiusheng.R;
 
 @SuppressLint("SetJavaScriptEnabled")
 
-public class SortDetailActivity extends BaseActivity {
+public class WebViewActivity extends BaseActivity {
     WebView webView;
     private WebSettings mWebSettings;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_sort_detail;
+        return R.layout.activity_webview;
     }
 
     @Override
     protected void initViews() {
-        setTitle("问答详情");
+        setTitle("详情");
         webView = findViewById(R.id.wb_sort);
     }
 

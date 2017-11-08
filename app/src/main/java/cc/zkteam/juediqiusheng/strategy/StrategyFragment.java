@@ -90,6 +90,7 @@ public class StrategyFragment extends Fragment {
                 intent.setClass(getActivity(), SortActivity.class);
                 String id = String.valueOf(mDatas.get(position - 1).getId());
                 intent.putExtra("id", id);
+                intent.putExtra("name", mDatas.get(position - 1).getCategoryName());
                 startActivity(intent);
 //                mAdapter.notifyItemRemoved(position);
             }

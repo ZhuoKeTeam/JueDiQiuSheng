@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.activity.SortDetailActivity;
+import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 
 /**
  *
@@ -45,7 +45,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(context, SortDetailActivity.class);
+                intent.setClass(context, WebViewActivity.class);
 
                 String url = item.getCategoryUrl();
                 intent.putExtra("url", url);
