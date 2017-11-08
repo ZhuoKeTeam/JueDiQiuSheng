@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
 
@@ -22,11 +22,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-        <activity android:name=".module.pic.details.JDQSSeeBigPicActivity" />
+        <activity
+            android:name=".module.pic.details.JDQSSeeBigPicActivity"
+            android:theme="@style/DarkActionBarTheme" />
         <activity android:name=".activity.SortActivity" />
+
         <activity android:name=".activity.WebViewActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".activity.SplashActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,8 +38,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.pic.category.PicCategoryActivity" />
-        <activity android:name=".module.category.BaseCategoryListActivity"/>
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".module.waterfall.WaterfallActivity"></activity>
+        <activity
+            android:name=".module.category.BaseCategoryListActivity"
+            android:theme="@style/DarkActionBarTheme" />
+        <activity android:name=".activity.MainActivity" />
     </application>
 
 </manifest>

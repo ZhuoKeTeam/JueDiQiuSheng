@@ -5,23 +5,32 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="168dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Hello!!!"
-        android:textSize="50sp"
+    <cc.zkteam.juediqiusheng.view.ZKBanner
+        android:id="@+id/zk_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+
+    <cc.zkteam.juediqiusheng.view.ZKRefreshLayout
+        android:id="@+id/zk_refresh_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1"/>
+        app:layout_constraintTop_toBottomOf="@+id/zk_banner"
+        app:overlay="false"
+        app:progress_colors="@array/material_colors"
+        app:progress_size_type="normal"
+        app:wave_color="@color/colorPrimary"
+        app:wave_height_type="normal"
+        app:wave_show="true">
 
+        <cc.zkteam.juediqiusheng.view.ZKRecyclerView
+            android:id="@+id/zk_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"/>
+
+    </cc.zkteam.juediqiusheng.view.ZKRefreshLayout>
 </android.support.constraint.ConstraintLayout>

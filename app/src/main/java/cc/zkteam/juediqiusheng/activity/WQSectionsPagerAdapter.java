@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import cc.zkteam.juediqiusheng.fragment.HotInformationFragment;
-import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
 import cc.zkteam.juediqiusheng.fragment.SunflowerFragment;
+import cc.zkteam.juediqiusheng.module.recommend.JDQSRecommendFragment;
 
 /**
  * Created by WangQing on 2017/10/30.
@@ -30,7 +30,7 @@ public class WQSectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = HotInformationFragment.newInstance("热门资讯");
                 break;
             case 1:
-                fragment = RecommendFragment.newInstance("精品攻略推荐");
+                fragment = new JDQSRecommendFragment();
                 break;
             case 2:
                 fragment = SunflowerFragment.newInstance("葵花宝典");

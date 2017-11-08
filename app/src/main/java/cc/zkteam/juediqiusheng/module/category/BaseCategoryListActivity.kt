@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import android.view.Window
 import cc.zkteam.juediqiusheng.R
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -39,6 +40,15 @@ class BaseCategoryListActivity : AppCompatActivity() {
         toolbar!!.title = getString(R.string.category_list)
         list = findViewById(R.id.list_category)
         list!!.layoutManager = LinearLayoutManager(this)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun requestData() {
@@ -66,9 +76,9 @@ class BaseCategoryListActivity : AppCompatActivity() {
         if (result.result != null && !result.result.isEmpty()) {
             datas = result.result
             adapter = CategoryAdapter(this, datas)
-            list!!.post({
+            list?.post({
                 run {
-                    list!!.adapter = adapter
+                    list?.adapter = adapter
                 }
             })
         }

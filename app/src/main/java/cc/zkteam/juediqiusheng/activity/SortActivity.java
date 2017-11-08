@@ -29,11 +29,11 @@ public class SortActivity extends BaseActivity {
     protected void initViews() {
         rvSort = findViewById(R.id.rv_sort);
 
-
     }
 
     @Override
     protected void initListener() {
+
         Intent intent = getIntent();
         if (intent != null){
             jid = intent.getStringExtra("id");
@@ -43,10 +43,17 @@ public class SortActivity extends BaseActivity {
             else
                 setTitle("分类详情");
         }
+
+
+
     }
 
     @Override
     protected void initData() {
+        Intent intent = getIntent();
+        if (intent != null)
+            jid = intent.getStringExtra("id");
+
         ZKConnectionManager.getInstance().getZKApi().getSortDetail(jid, "20")
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override

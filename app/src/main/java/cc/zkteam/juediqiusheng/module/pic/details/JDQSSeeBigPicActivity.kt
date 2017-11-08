@@ -3,6 +3,13 @@ package cc.zkteam.juediqiusheng.module.pic.details
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.Toolbar
+import android.view.MenuItem
+import android.view.View
+import android.view.Window
+import app.dinus.com.loadingdrawable.LoadingView
+import app.dinus.com.loadingdrawable.render.LoadingRenderer
+import app.dinus.com.loadingdrawable.render.circle.jump.DanceLoadingRenderer
 import cc.zkteam.juediqiusheng.R
 import cc.zkteam.juediqiusheng.utils.L
 import com.alibaba.android.arouter.facade.annotation.Autowired
@@ -27,26 +34,52 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_see_big_pic_layout)
         ARouter.getInstance().inject(this)
 
-        L.i("当前的 Url是：" + url)
+        initToolbar()
+        loadImg()
+    }
 
-//        添加 https://github.com/ongakuer/PhotoDraweeView
+    private fun loadImg() {
+        L.i("当前的 Url是：" + url)
+        val loadingView: LoadingView = findViewById(R.id.loading_view)
+        loadingView.visibility = View.VISIBLE
 
         val controller = Fresco.newDraweeControllerBuilder()
         controller.setUri(url)
-        controller.oldController = see_big_pic_imageView.getController()
-        controller.setControllerListener(object : BaseControllerListener<ImageInfo>() {
+        controller.oldController = see_big_pic_imageView.controller
+        controller.controllerListener = object : BaseControllerListener<ImageInfo>() {
             override fun onFinalImageSet(id: String?, imageInfo: ImageInfo?, animatable: Animatable?) {
                 super.onFinalImageSet(id, imageInfo, animatable)
+                loadingView.visibility = View.GONE
                 if (imageInfo == null || see_big_pic_imageView == null) {
                     return
                 }
                 see_big_pic_imageView.update(imageInfo.width, imageInfo.height)
             }
-        })
-        see_big_pic_imageView.setController(controller.build())
 
+            override fun onFailure(id: String?, throwable: Throwable?) {
+                super.onFailure(id, throwable)
+                loadingView.visibility = View.GONE
+            }
+        }
+        see_big_pic_imageView.controller = controller.build()
     }
+
+    private fun initToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar_pic_detail)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 }
