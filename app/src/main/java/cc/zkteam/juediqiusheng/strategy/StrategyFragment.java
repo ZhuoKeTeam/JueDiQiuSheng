@@ -111,7 +111,12 @@ public class StrategyFragment extends Fragment {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent();
-                intent.setClass(getContext(), SortActivity.class);
+
+                intent.setClass(getActivity(), SortActivity.class);
+                String id = String.valueOf(mDatas.get(position - 1).getId());
+                intent.putExtra("id", id);
+                intent.putExtra("name", mDatas.get(position - 1).getCategoryName());
+
                 intent.putExtra("id", String.valueOf(mDatas.get(position).getId()));
                 startActivity(intent);
 //                mAdapter.notifyItemRemoved(position);

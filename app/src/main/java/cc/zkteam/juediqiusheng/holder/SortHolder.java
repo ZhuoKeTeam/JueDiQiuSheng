@@ -36,10 +36,8 @@ public class SortHolder extends RvHolder<SortDetailBean> {
     @Override
     public void bindHolder(SortDetailBean sortDetailBean, int position) {
 
-        String picUrl = sortDetailBean.getPicUrl();
+//        ZKImageViewExtKt.loadUrl(ivSort, sortDetailBean.getPicUrl(), R.mipmap.ic_launcher);
 
-        if (!TextUtils.isEmpty(picUrl))
-            ZKImageViewExtKt.loadUrl(ivSort, sortDetailBean.getPicUrl(), R.mipmap.ic_launcher);
         tvContent.setText(sortDetailBean.getArtifactName());
         Date date = TimestampToDate(sortDetailBean.getArtifactDate());
         SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
