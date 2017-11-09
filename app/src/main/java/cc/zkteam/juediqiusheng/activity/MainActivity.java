@@ -275,13 +275,9 @@ public class MainActivity extends BaseActivity {
             // Set up the ViewPager with the sections adapter.
             mViewPager = (ViewPager) view.findViewById(R.id.container);
             mViewPager.setAdapter(mSectionsPagerAdapter);
-
             TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-
             mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-
         }
     }
 

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import cc.zkteam.juediqiusheng.strategy.CommonAdapter;
 import cc.zkteam.juediqiusheng.strategy.base.ViewHolder;
 import cc.zkteam.juediqiusheng.strategy.wrapper.HeaderAndFooterWrapper;
 import cc.zkteam.juediqiusheng.strategy.wrapper.LoadMoreWrapper;
+import cc.zkteam.juediqiusheng.view.ZKImageView;
 
 /**
  * Created by WangQing on 2017/10/30.
@@ -39,6 +42,7 @@ public class SunflowerFragment extends Fragment {
     private CommonAdapter<RecommendedBean> mAdapter;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LoadMoreWrapper mLoadMoreWrapper;
+
     public SunflowerFragment() {
     }
 
@@ -58,13 +62,20 @@ public class SunflowerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rec_sunflower, container, false);
-        mRecyclerView= (RecyclerView) rootView.findViewById(R.id.sunflower_main_list);
+        mRecyclerView = rootView.findViewById(R.id.sunflower_main_list);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         mAdapter = new CommonAdapter<RecommendedBean>(getActivity(), R.layout.list_item, mDatas) {
             @Override
             protected void convert(ViewHolder holder, RecommendedBean r, int position) {
                 holder.setText(R.id.text, r.getContext());
+                ZKImageView zkImageView = holder.getView(R.id.pic);
+                Log.e("----", r.getPicUrl());
+                if (TextUtils.isEmpty(r.getPicUrl())) {
+                    zkImageView.setImageResource(R.drawable.bg);
+                } else {
+                    zkImageView.setImageURI(r.getPicUrl());
+                }
             }
         };
         initHeaderAndFooter();
@@ -88,10 +99,8 @@ public class SunflowerFragment extends Fragment {
                 return false;
             }
         });
-
         return rootView;
     }
-
 
     private void initHeaderAndFooter() {
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
@@ -106,12 +115,11 @@ public class SunflowerFragment extends Fragment {
         mHeaderAndFooterWrapper.addHeaderView(imageView);
     }
 
-
     /**
      * 演示快速使用测试 Api
      */
     private void initDatas() {
-        ZKConnectionManager.getInstance().getZKApi().getRecommended("10002","20")
+        ZKConnectionManager.getInstance().getZKApi().getRecommended("10002", "20")
                 .enqueue(new ZKCallback<List<RecommendedBean>>() {
                     @Override
                     public void onResponse(List<RecommendedBean> result) {

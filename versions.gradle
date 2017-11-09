@@ -1,4 +1,3 @@
-
 ext.deps = [:]
 def versions = [:]
 //versions.arch = hasProperty("ARCH_VERSION") ? getProperty("ARCH_VERSION") : "1.0.0-rc1"
@@ -116,10 +115,11 @@ def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()
-    handler.maven { url 'https://jitpack.io'}
+    handler.maven { url 'https://jitpack.io' }
     //阿里的maven仓国内镜像，如果gradle下载很慢，建议使用该仓库
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
 //    handler.maven { url 'https://maven.google.com'}
 
 }
+
 ext.addRepos = this.&addRepos

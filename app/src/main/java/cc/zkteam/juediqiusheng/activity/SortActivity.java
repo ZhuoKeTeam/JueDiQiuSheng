@@ -58,7 +58,6 @@ public class SortActivity extends BaseActivity {
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(final List<SortDetailBean> result) {
-
                         SortAdapter sortAdapter = new SortAdapter(mContext, result, new RvListener() {
                             @Override
                             public void onItemClick(int id, int position) {

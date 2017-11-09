@@ -28,22 +28,8 @@ import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKImageLoader;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * to handle interaction events.
- * Use the {@link StrategyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class StrategyFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-
-    public static final String TAG = "StrategyFragment";
-
     private ZKBanner zkBanner;
     private ZKRefreshLayout zkRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -75,8 +61,6 @@ public class StrategyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_strategy, container, false);
-
-
         zkBanner = view.findViewById(R.id.zk_banner);
         zkRefreshLayout = view.findViewById(R.id.zk_refresh_layout);
         mRecyclerView = view.findViewById(R.id.zk_recycler_view);

@@ -11,10 +11,7 @@ import com.blankj.utilcode.util.Utils;
  */
 
 public class JDQSApplication extends Application {
-
     Context mContext;
-
-
     @Override
     public void onCreate() {
         super.onCreate();

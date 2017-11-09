@@ -35,8 +35,6 @@ public class RecommendFragment extends BaseFragment {
     ZKRecyclerView zkRecyclerView;
     ZKRefreshLayout zkRefreshLayout;
 
-
-
     public RecommendFragment() {
     }
 

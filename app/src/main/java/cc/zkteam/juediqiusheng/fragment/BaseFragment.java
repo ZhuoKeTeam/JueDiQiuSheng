@@ -35,7 +35,7 @@ public class BaseFragment extends Fragment {
     }
 
     protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
-        SimpleStringRecyclerViewAdapter recyclerViewAdapter = new SimpleStringRecyclerViewAdapter(getContext(), arrayList);
+        SimpleStringRecyclerViewAdapter recyclerViewAdapter = new SimpleStringRecyclerViewAdapter(arrayList);
         zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
         zkRecyclerView.setAdapter(recyclerViewAdapter);
         zkRecyclerView.setItemAnimator(new DefaultItemAnimator());
