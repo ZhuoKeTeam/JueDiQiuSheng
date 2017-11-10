@@ -1,1 +1,1 @@
-include ':app',":loadingview"
+include ':app', ':lifecyclermodule',":loadingview"
