@@ -67,7 +67,6 @@ public class StrategyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_strategy, container, false);
 
-
         strategyViewModel = ViewModelProviders.of(getActivity()).get(ZKStrategyViewModel.class);
 
         zkBanner = view.findViewById(R.id.zk_banner);
@@ -103,6 +102,10 @@ public class StrategyFragment extends Fragment {
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
 //        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
         mRecyclerView.setAdapter(mLoadMoreWrapper);
+
+
+
+
         mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
