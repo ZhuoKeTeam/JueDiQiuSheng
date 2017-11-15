@@ -2,6 +2,7 @@ package cc.zkteam.juediqiusheng.api;
 
 import java.util.List;
 
+import cc.zkteam.juediqiusheng.bean.BannerBean;
 import cc.zkteam.juediqiusheng.bean.BaseBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.bean.PicBean;
@@ -27,6 +28,12 @@ public interface ZKApi {
      */
     @GET("JueDiQiuSheng/categoryJson")
     Call<BaseBean<List<CategoryBean>>> categoryData(@Query("pageCount") int count);
+
+    /**
+     * 攻略banner
+     */
+    @GET("JueDiQiuSheng/recommendedItemJson?jid=10003")
+    Call<BaseBean<List<BannerBean>>>  getStrategy(@Query("pageCount") int count);
 
     /**
      * 图片分类

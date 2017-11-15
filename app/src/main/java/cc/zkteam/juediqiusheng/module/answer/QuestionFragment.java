@@ -91,7 +91,7 @@ public class QuestionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the item_banner for this fragment
         View inflate = inflater.inflate(R.layout.fragment_question, container, false);
         rvSort = inflate.findViewById(R.id.rv_sort);
 

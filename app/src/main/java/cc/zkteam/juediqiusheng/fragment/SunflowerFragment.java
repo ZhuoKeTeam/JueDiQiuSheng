@@ -80,7 +80,7 @@ public class SunflowerFragment extends Fragment {
         };
         initHeaderAndFooter();
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
-//        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
+//        mLoadMoreWrapper.setLoadMoreView(R.item_banner.default_loading);
         initDatas();
         mRecyclerView.setAdapter(mLoadMoreWrapper);
         mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {

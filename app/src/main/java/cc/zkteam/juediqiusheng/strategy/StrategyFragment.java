@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.activity.SortActivity;
+import cc.zkteam.juediqiusheng.bean.BannerBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.lifecycle.strategy.ZKStrategyViewModel;
+import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
+import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.base.ViewHolder;
 import cc.zkteam.juediqiusheng.strategy.wrapper.HeaderAndFooterWrapper;
 import cc.zkteam.juediqiusheng.strategy.wrapper.LoadMoreWrapper;
@@ -32,6 +35,7 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
 
 public class StrategyFragment extends Fragment {
+    private static String TAG = "StrategyFragment";
     private ZKBanner zkBanner;
     private ZKRefreshLayout zkRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -73,7 +77,7 @@ public class StrategyFragment extends Fragment {
         zkRefreshLayout = view.findViewById(R.id.zk_refresh_layout);
         mRecyclerView = view.findViewById(R.id.zk_recycler_view);
 
-        initZKBanner(zkBanner);
+//        initZKBanner(zkBanner);
         zkBanner.setLifecycle(getLifecycle());
         getLifecycle().addObserver(zkBanner);
 
@@ -100,10 +104,8 @@ public class StrategyFragment extends Fragment {
         };
         initHeaderAndFooter();
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
-//        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
+//        mLoadMoreWrapper.setLoadMoreView(R.item_banner.default_loading);
         mRecyclerView.setAdapter(mLoadMoreWrapper);
-
-
 
 
         mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
@@ -112,9 +114,9 @@ public class StrategyFragment extends Fragment {
                 Intent intent = new Intent();
 
                 intent.setClass(getActivity(), SortActivity.class);
-                String id = String.valueOf(mDatas.get(position - 1).getId());
+                String id = String.valueOf(mDatas.get(position).getId());
                 intent.putExtra("id", id);
-                intent.putExtra("name", mDatas.get(position - 1).getCategoryName());
+                intent.putExtra("name", mDatas.get(position).getCategoryName());
 
                 intent.putExtra("id", String.valueOf(mDatas.get(position).getId()));
                 startActivity(intent);
@@ -141,30 +143,42 @@ public class StrategyFragment extends Fragment {
                 mLoadMoreWrapper.notifyDataSetChanged();
             }
         });
+        ZKConnectionManager.getInstance().getZKApi().getStrategy(5)
+                .enqueue(new ZKCallback<List<BannerBean>>() {
+                    @Override
+                    public void onResponse(List<BannerBean> bannerBeans) {
+                        List<String> bannerData = new ArrayList<>();
+                        if (bannerBeans == null && bannerBeans.size() == 0)
+                            return;
+                        for (int i = 0; i < bannerBeans.size(); i++) {
+                            bannerData.add(bannerBeans.get(i).getTjPicUrl());
+                        }
+                        initZKBanner(zkBanner, bannerData);
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+                        Log.d(TAG, "onFailure() called with: throwable = [" + throwable + "]");
+                    }
+
+
+                });
 
 
     }
 
-    protected void initZKBanner(ZKBanner zkBanner) {
+    protected void initZKBanner(ZKBanner zkBanner, List<String> bannerData) {
         //设置图片加载器
         zkBanner.setImageLoader(new ZKImageLoader());
         //设置图片集合
-        zkBanner.setImages(TestData.getTestPics());
+        zkBanner.setImages(bannerData);
         //banner设置方法全部调用完毕时最后调用
         zkBanner.start();
     }
 
     private void initHeaderAndFooter() {
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
-//        ImageView imageView = new ImageView(getActivity());
-//        imageView.setImageResource(R.mipmap.ic_launcher);
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity().getApplicationContext(), "轮播图", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        mHeaderAndFooterWrapper.addHeaderView(imageView);
+//        mHeaderAndFooterWrapper.addHeaderView(zkBanner);
     }
 
 }
