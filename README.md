@@ -4,6 +4,7 @@
  ## 更新记录
  1. 2017年10月28日 更新网络请求的简单操作
  2. 2017年10月28日 合并 LifeCycle Components 到 master 分支，添加演示的相关 Demo 数据
+ 3. 2017年11月15日 添加 Dagger2 和 MVP
  
 
 相关数据和接口地址是：http://zkteam.cc/JueDiQiuSheng/index.html
@@ -81,3 +82,10 @@ ZKBase 初始化 必须在 Application 中 ZKBase.init()。
     
 ## LifeCycle Components 
 参见 MainActivity 中的 testLifeComponents() 方法。
+
+
+
+## 添加 Dagger2 + MVP Demo
+
+参见 dagger2 module
+https://github.com/gdky005/dagger-android-injection

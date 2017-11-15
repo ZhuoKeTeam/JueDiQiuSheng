@@ -98,9 +98,9 @@ deps.banners = "com.youth.banner:banner:$versions.banners"
 
 deps.rvh = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.rvh"
 
-deps.dagger = "com.google.dagger:dagger-android:$versions.dagger"
+deps.dagger = "com.google.dagger:dagger:$versions.dagger"
 deps.dagger_support = "com.google.dagger:dagger-android-support:$versions.dagger"
-deps.dagger_processor = "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger_processor = "com.google.dagger:dagger-compiler:$versions.dagger"
 
 deps.support = support
 deps.lifecycle = lifecycle
