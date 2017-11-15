@@ -23,7 +23,7 @@ public class UserProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         String userId = getArguments().getString(UID_KEY);
         viewModel = ViewModelProviders.of(this).get(UserProfileViewModel.class);
-        viewModel.init(userId);
+        viewModel.init(Integer.parseInt(userId));
         viewModel.getUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {

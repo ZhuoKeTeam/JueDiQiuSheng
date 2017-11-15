@@ -16,8 +16,8 @@ public interface UserDao {
     @Insert(onConflict = REPLACE)
     void save(User user);
 
-    // TODO: 2017/11/8 what?
-    @Query("")
+    // TODO: 2017/11/8 what?  --> test
+    @Query("SELECT * FROM user WHERE id = :second")
     boolean hasUser(int second);
 
     @Query("SELECT * FROM user WHERE id = :userId")

@@ -35,6 +35,11 @@ public class UserRepository {
         return userDao.load(userId);
     }
 
+    public LiveData<User> getUser(int userId) {
+        refreshUserDB(userId);
+        return userDao.load(userId);
+    }
+
     private void refreshUserDB(int userId) {
         executor.execute(()->{
             boolean userExists = userDao.hasUser(FRESH_TIMEOUT);
