@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
-import cc.zkteam.juediqiusheng.activity.MainActivity;
+import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 
 /**

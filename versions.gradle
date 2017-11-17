@@ -66,6 +66,7 @@ ext.lifecycle = lifecycle
 def deps = [:]
 deps.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
 deps.kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin_version"
+deps.kotlin_gradle_extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlin_version"
 deps.constraint_layout = "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 deps.utilcode = "com.blankj:utilcode:$versions.utilcode"
 deps.okhttp = "com.squareup.okhttp3:okhttp:$versions.okhttp"

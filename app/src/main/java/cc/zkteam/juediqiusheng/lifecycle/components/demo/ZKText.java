@@ -5,7 +5,7 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
-import cc.zkteam.juediqiusheng.activity.MainActivity;
+import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 
 /**

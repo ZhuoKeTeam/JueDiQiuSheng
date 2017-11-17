@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath deps.android_gradle_plugin
         classpath deps.kotlin_gradle_plugin
+        classpath deps.kotlin_gradle_extensions
 //        classpath deps.agent_gradle_plugin
         classpath fileTree(dir: './opt/',include: ['*.jar'])
 

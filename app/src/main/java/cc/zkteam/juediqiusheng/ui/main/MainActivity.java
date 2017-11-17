@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.activity;
+package cc.zkteam.juediqiusheng.ui.main;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -24,7 +24,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.BaseActivity;
+import cc.zkteam.juediqiusheng.activity.WQSectionsPagerAdapter;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
@@ -153,11 +157,22 @@ public class MainActivity extends BaseActivity {
         mViewPager.removeOnPageChangeListener(onPageChangeListener);
     }
 
+    @Inject
+    ZKConnectionManager zkConnectionManager;
+
+    @Inject
+    ZKConnectionManager zkConnectionManager1;
+
     /**
      * 演示快速使用测试 Api
      */
     private void testRequestApi() {
-        ZKConnectionManager.getInstance().getZKApi().categoryData(20)
+//        ZKConnectionManager.getInstance().getZKApi().categoryData(20)
+        Log.i(TAG, "testRequestApi: " + zkConnectionManager.toString());
+        Log.i(TAG, "testRequestApi: " + zkConnectionManager1.toString());
+
+
+        zkConnectionManager.getZKApi().categoryData(20)
                 .enqueue(new ZKCallback<List<CategoryBean>>() {
                     @Override
                     public void onResponse(List<CategoryBean> result) {

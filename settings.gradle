@@ -1,2 +1,4 @@
-include ':app', ':lifecyclermodule',":loadingview"
-include ':dagger2'
+include ':app'
+//include ':lifecyclermodule'
+include ':loadingview'
+//include ':dagger2'

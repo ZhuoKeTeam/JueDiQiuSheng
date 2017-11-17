@@ -24,7 +24,7 @@ import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 
-import static cc.zkteam.juediqiusheng.activity.MainActivity.TAG;
+import static cc.zkteam.juediqiusheng.ui.main.MainActivity.TAG;
 
 public class QuestionFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";

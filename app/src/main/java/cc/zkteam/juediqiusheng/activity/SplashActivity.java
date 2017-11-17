@@ -16,6 +16,7 @@ import com.networkbench.agent.impl.NBSAppAgent;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

@@ -3,7 +3,7 @@ package cc.zkteam.juediqiusheng.lifecycle.components.demo;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
-import cc.zkteam.juediqiusheng.activity.MainActivity;
+import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 
 /**
