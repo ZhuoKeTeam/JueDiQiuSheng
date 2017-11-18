@@ -3,6 +3,9 @@ package cc.zkteam.juediqiusheng.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -10,7 +13,11 @@ import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import javax.inject.Inject;
+
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
+import okhttp3.OkHttpClient;
 
 @SuppressLint("SetJavaScriptEnabled")
 
@@ -80,6 +87,33 @@ public class WebViewActivity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
             }
         });
+
+
+    }
+
+    public static final String TAG = "MainActivity";
+
+    @Inject
+    ZKConnectionManager zkConnectionManager1;
+    @Inject
+    ZKConnectionManager zkConnectionManager2;
+
+    @Inject
+    OkHttpClient okHttpClient1;
+
+    @Inject
+    OkHttpClient okHttpClient2;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Log.i(TAG, "WebViewActivity: " + zkConnectionManager1.toString());
+        Log.i(TAG, "WebViewActivity: " + zkConnectionManager2.toString());
+
+        Log.i(TAG, "OkHttpClient: " + okHttpClient1.toString());
+        Log.i(TAG, "OkHttpClient: " + okHttpClient2.toString());
+
 
 
     }

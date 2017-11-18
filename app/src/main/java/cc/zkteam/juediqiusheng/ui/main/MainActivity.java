@@ -38,6 +38,8 @@ import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.module.category.BaseCategoryListActivity;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
+import cc.zkteam.juediqiusheng.ui.main.test.User;
+import okhttp3.OkHttpClient;
 
 public class MainActivity extends BaseActivity {
 
@@ -163,13 +165,30 @@ public class MainActivity extends BaseActivity {
     @Inject
     ZKConnectionManager zkConnectionManager1;
 
+    @Inject
+    OkHttpClient okHttpClient1;
+
+    @Inject
+    OkHttpClient okHttpClient2;
+
+    @Inject
+    User user;
+
     /**
      * 演示快速使用测试 Api
      */
     private void testRequestApi() {
+        user.setName("hello");
+
+        Log.d(TAG, "WWWW testRequestApi() called: " + user.getName());
+
 //        ZKConnectionManager.getInstance().getZKApi().categoryData(20)
-        Log.i(TAG, "testRequestApi: " + zkConnectionManager.toString());
-        Log.i(TAG, "testRequestApi: " + zkConnectionManager1.toString());
+        Log.i(TAG, "MainActivity: " + zkConnectionManager.toString());
+        Log.i(TAG, "MainActivity: " + zkConnectionManager1.toString());
+
+
+        Log.i(TAG, "OkHttpClient: " + okHttpClient1.toString());
+        Log.i(TAG, "OkHttpClient: " + okHttpClient2.toString());
 
 
         zkConnectionManager.getZKApi().categoryData(20)

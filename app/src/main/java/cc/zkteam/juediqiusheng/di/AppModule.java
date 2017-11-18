@@ -6,15 +6,17 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import cc.zkteam.juediqiusheng.ui.main.MainActivityComponent;
+import cc.zkteam.juediqiusheng.ui.main.test.WebViewActivityComponent;
 import dagger.Module;
 import dagger.Provides;
 
 /**
- * // TODO: 2017/11/17 todo
+ * 每添加一个 四大组件 都需要在此写上 对应的 Component
  * Created by WangQing on 2017/11/17.
  */
 @Module(subcomponents = {
-        MainActivityComponent.class})
+        MainActivityComponent.class,
+        WebViewActivityComponent.class})
 public class AppModule {
 
     @Provides
