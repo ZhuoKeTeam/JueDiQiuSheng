@@ -12,9 +12,6 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.networkbench.agent.impl.NBSAppAgent;
-
-import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
@@ -33,13 +30,13 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        // 初始化听云 SDK
-        NBSAppAgent.setLicenseKey(Constant.ZKTEAM_TINGYUN_KEY)
-                .withLocationServiceEnabled(true)
-                .enableLogging(true)
-                .start(this.getApplicationContext());
-        // Log last 100 messages
-        NBSAppAgent.setLogging(50);
+//        // 初始化听云 SDK
+//        NBSAppAgent.setLicenseKey(Constant.ZKTEAM_TINGYUN_KEY)
+//                .withLocationServiceEnabled(true)
+//                .enableLogging(true)
+//                .start(this.getApplicationContext());
+//        // Log last 100 messages
+//        NBSAppAgent.setLogging(50);
     }
 
     private void initView() {

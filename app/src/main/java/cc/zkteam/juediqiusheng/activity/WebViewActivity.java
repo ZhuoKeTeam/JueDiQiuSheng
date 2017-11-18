@@ -9,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.networkbench.agent.impl.instrumentation.NBSWebChromeClient;
 
 import cc.zkteam.juediqiusheng.R;
 
@@ -77,7 +76,7 @@ public class WebViewActivity extends BaseActivity {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                NBSWebChromeClient.initJSMonitor(view, newProgress);
+//                NBSWebChromeClient.initJSMonitor(view, newProgress);
                 super.onProgressChanged(view, newProgress);
             }
         });
