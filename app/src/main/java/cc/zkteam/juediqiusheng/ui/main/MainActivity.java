@@ -3,21 +3,15 @@ package cc.zkteam.juediqiusheng.ui.main;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -28,35 +22,39 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
-import cc.zkteam.juediqiusheng.activity.WQSectionsPagerAdapter;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
+import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
-import cc.zkteam.juediqiusheng.module.category.BaseCategoryListActivity;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
+import cc.zkteam.juediqiusheng.view.ZKViewPager;
 import okhttp3.OkHttpClient;
 
+/**
+ * 主 MainActivity
+ */
 public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+
+
+    // 推荐
+    public static final int NAV_TYPE_RECOMMEND = 0;
+    // 攻略
+    public static final int NAV_TYPE_STRATEGY = 1;
+    // 图库
+    public static final int NAV_TYPE_GALLERY = 2;
+    // 问题
+    public static final int NAV_TYPE_QUESTION= 3;
+
+    public static int [] NAV_TYPE = new int[]{NAV_TYPE_RECOMMEND, NAV_TYPE_STRATEGY, NAV_TYPE_GALLERY, NAV_TYPE_QUESTION};
+
+    private ZKViewPager mViewPager;
     private BottomNavigationView navigation;
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -69,16 +67,16 @@ public class MainActivity extends BaseActivity {
         public void onPageSelected(int position) {
             int itemId = R.id.navigation_recommend;
             switch (position) {
-                case 0:
+                case NAV_TYPE_RECOMMEND:
                     itemId = R.id.navigation_recommend;
                     break;
-                case 1:
+                case NAV_TYPE_STRATEGY:
                     itemId = R.id.navigation_game;
                     break;
-                case 2:
+                case NAV_TYPE_GALLERY:
                     itemId = R.id.navigation_picture;
                     break;
-                case 3:
+                case NAV_TYPE_QUESTION:
                     itemId = R.id.navigation_question;
                     break;
             }
@@ -99,24 +97,22 @@ public class MainActivity extends BaseActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_recommend:
-                    mViewPager.setCurrentItem(0);
+                    mViewPager.setCurrentItem(NAV_TYPE_RECOMMEND);
                     return true;
                 case R.id.navigation_game:
-                    mViewPager.setCurrentItem(1);
+                    mViewPager.setCurrentItem(NAV_TYPE_STRATEGY);
                     return true;
                 case R.id.navigation_picture:
-                    mViewPager.setCurrentItem(2);
+                    mViewPager.setCurrentItem(NAV_TYPE_GALLERY);
                     return true;
-
                 case R.id.navigation_question:
-                    mViewPager.setCurrentItem(3);
+                    mViewPager.setCurrentItem(NAV_TYPE_QUESTION);
                     return true;
                 default:
             }
             return false;
         }
     };
-
 
     @Override
     protected int getLayoutId() {
@@ -125,39 +121,81 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation = findViewById(R.id.navigation);
+        mViewPager = findViewById(R.id.container);
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-
+        mViewPager.setLifecycle(getLifecycle());
     }
 
     @Override
     protected void initListener() {
-
-        mViewPager.addOnPageChangeListener(onPageChangeListener);
-
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mViewPager.setViewPager(onPageChangeListener, new SectionsPagerAdapter(getSupportFragmentManager()));
     }
 
     @Override
     protected void initData() {
+        demo();
+    }
+
+    /**
+     * MainActivity 中的四大底标签页面
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case NAV_TYPE_RECOMMEND:
+                    return RecommendFragment.newInstance();
+                case NAV_TYPE_STRATEGY:
+                    return StrategyFragment.newInstance();
+                case NAV_TYPE_GALLERY:
+                    return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
+                case NAV_TYPE_QUESTION:
+                    return QuestionFragment.newInstance();
+            }
+
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return NAV_TYPE.length;
+        }
+    }
+
+
+
+
+
+
+
+
+/*
+ * ************************************************************************************************************************************
+ *      以下为范例
+ * ************************************************************************************************************************************
+ */
+
+
+    /**
+     * 范例使用
+     */
+    private void demo() {
         // 演示如何快速使用网络请求
-        testRequestApi();
+        demoRequestApi();
 
         // 演示 如何使用 LifeComponents
-//        testLifeComponents(mTextView);
+        demoLifeComponents(new TextView(this));
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mViewPager.removeOnPageChangeListener(onPageChangeListener);
-    }
 
     @Inject
     ZKConnectionManager zkConnectionManager;
@@ -177,10 +215,10 @@ public class MainActivity extends BaseActivity {
     /**
      * 演示快速使用测试 Api
      */
-    private void testRequestApi() {
+    private void demoRequestApi() {
         user.setName("hello");
 
-        Log.d(TAG, "WWWW testRequestApi() called: " + user.getName());
+        Log.d(TAG, "WWWW demoRequestApi() called: " + user.getName());
 
 //        ZKConnectionManager.getInstance().getZKApi().categoryData(20)
         Log.i(TAG, "MainActivity: " + zkConnectionManager.toString());
@@ -203,7 +241,7 @@ public class MainActivity extends BaseActivity {
                         Log.d(TAG, "onFailure() called with: throwable = [" + throwable + "]");
                     }
                 });
-        Log.d(TAG, "testRequestApi() called");
+        Log.d(TAG, "demoRequestApi() called");
     }
 
     /**
@@ -213,7 +251,7 @@ public class MainActivity extends BaseActivity {
      *
      * @param textView
      */
-    private void testLifeComponents(final TextView textView) {
+    private void demoLifeComponents(final TextView textView) {
         // 对 LiveData 进行测试
         LiveData<String> zkLiveData = new ZKLiveData();
 //        //这个方法向LiveData中添加观察者，LiveData 则通过 LifecycleOwner 来判断，当前传入的观察者是否是活跃的
@@ -243,111 +281,5 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-    }
-
-
-    public static class CategoryFragment extends Fragment {
-        @Nullable
-        @Override
-        public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_category, null);
-            view.findViewById(R.id.tv_category).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(getActivity(), BaseCategoryListActivity.class));
-                }
-            });
-            return view;
-        }
-    }
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-
-        private SectionsPagerAdapter mSectionsPagerAdapter;
-        private ViewPager mViewPager;
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-//            Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-//            setSupportActionBar(toolbar);
-
-            WQSectionsPagerAdapter mSectionsPagerAdapter = new WQSectionsPagerAdapter(getChildFragmentManager());
-
-            // Set up the ViewPager with the sections adapter.
-            mViewPager = (ViewPager) view.findViewById(R.id.container);
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-            TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-            mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-            tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-        }
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-
-            switch (position) {
-                case 0:
-                    return PlaceholderFragment.newInstance(0);
-                case 1:
-                    return StrategyFragment.newInstance();
-                case 2:
-                    return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
-                case 3:
-                    return QuestionFragment.newInstance("a", "b");
-            }
-
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            // Show 4 total pages.
-            return 4;
-        }
     }
 }

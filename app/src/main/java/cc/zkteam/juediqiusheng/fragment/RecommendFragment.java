@@ -25,11 +25,6 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
  */
 
 public class RecommendFragment extends BaseFragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     ZKBanner zkBanner;
     ZKRecyclerView zkRecyclerView;
@@ -42,10 +37,10 @@ public class RecommendFragment extends BaseFragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static RecommendFragment newInstance(String text) {
+    public static RecommendFragment newInstance() {
         RecommendFragment fragment = new RecommendFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_SECTION_NUMBER, text);
+//        args.putString(ARG_SECTION_NUMBER, text);
         fragment.setArguments(args);
         return fragment;
     }

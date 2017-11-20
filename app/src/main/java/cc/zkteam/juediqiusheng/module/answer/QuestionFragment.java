@@ -79,11 +79,11 @@ public class QuestionFragment extends Fragment {
                 });
     }
 
-    public static QuestionFragment newInstance(String param1, String param2) {
+    public static QuestionFragment newInstance() {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
