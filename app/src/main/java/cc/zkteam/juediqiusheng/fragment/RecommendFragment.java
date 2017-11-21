@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.TestData;
+import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
@@ -33,6 +36,24 @@ public class RecommendFragment extends BaseFragment {
     public RecommendFragment() {
     }
 
+    public void initZKRefreshLayout(ZKRefreshLayout zkRefreshLayout) {
+        zkRefreshLayout.setWaveColor(0x555555);
+        zkRefreshLayout.setLoadMore(true);
+    }
+
+    SimpleStringRecyclerViewAdapter adapter;
+
+    // TODO: 2017/11/21 去除这个 arrayList
+    protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
+        if (adapter == null) {
+            adapter = new SimpleStringRecyclerViewAdapter(arrayList);
+        }
+
+        zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
+        zkRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        zkRecyclerView.setAdapter(adapter);
+    }
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -43,6 +64,26 @@ public class RecommendFragment extends BaseFragment {
 //        args.putString(ARG_SECTION_NUMBER, text);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
+    @Override
+    public void initView(View rootView) {
+
+    }
+
+    @Override
+    public void initData(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initListener() {
+
     }
 
     @Override

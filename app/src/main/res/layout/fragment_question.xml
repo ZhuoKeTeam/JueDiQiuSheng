@@ -1,14 +1,12 @@
-<FrameLayout
+<cc.zkteam.juediqiusheng.view.ZKRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/zk_refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cc.zkteam.juediqiusheng.module.answer.QuestionFragment">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_sort"
+    <cc.zkteam.juediqiusheng.view.ZKRecyclerView
+        android:id="@+id/zk_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"/>
 
-</FrameLayout>
+</cc.zkteam.juediqiusheng.view.ZKRefreshLayout>

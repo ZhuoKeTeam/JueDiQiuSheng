@@ -1,16 +1,18 @@
 package cc.zkteam.juediqiusheng.adapter;
 
-import android.content.Context;
-import android.view.View;
+import android.support.annotation.Nullable;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.base.RvAdapter;
-import cc.zkteam.juediqiusheng.base.RvHolder;
-import cc.zkteam.juediqiusheng.base.RvListener;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
-import cc.zkteam.juediqiusheng.holder.SortHolder;
+import cc.zkteam.juediqiusheng.utils.ZKImageViewExtKt;
 
 /**
  * Created by wustor
@@ -18,18 +20,39 @@ import cc.zkteam.juediqiusheng.holder.SortHolder;
  * 邮箱  fat_chao@163.com
  */
 
-public class SortAdapter extends RvAdapter<SortDetailBean> {
-    public SortAdapter(Context context, List<SortDetailBean> list, RvListener listener) {
-        super(context, list, listener);
+public class SortAdapter extends BaseQuickAdapter<SortDetailBean, BaseViewHolder> {
+
+    public SortAdapter(@Nullable List<SortDetailBean> data) {
+        super(R.layout.item_sort_detail, data);
     }
 
     @Override
-    protected int getLayoutId(int viewType) {
-        return R.layout.item_sort_detail;
+    protected void convert(BaseViewHolder helper, SortDetailBean item) {
+//        helper.setText(R.id.text, item.getTitle());
+//        helper.setImageResource(R.id.icon, item.getImageResource());
+//        // 加载网络图片
+//        Glide.with(mContext).load(item.getUserAvatar()).crossFade().into((ImageView) helper.getView(R.id.iv));
+
+        Date date = TimestampToDate(item.getArtifactDate());
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd");
+
+        helper.setText(R.id.tv_content, item.getArtifactName());
+        helper.setText(R.id.tv_time, sf.format(date));
+
+        ZKImageViewExtKt.loadUrl(helper.getView(R.id.iv_sort), item.getPicUrl(), R.mipmap.ic_launcher);
     }
 
-    @Override
-    protected RvHolder getHolder(View view, int viewType) {
-        return new SortHolder(view,viewType,listener);
+
+    public static Date TimestampToDate(Integer time) {
+        long temp = (long) time * 1000;
+        Timestamp ts = new Timestamp(temp);
+        Date date = new Date();
+        try {
+            date = ts;
+            //System.out.println(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }

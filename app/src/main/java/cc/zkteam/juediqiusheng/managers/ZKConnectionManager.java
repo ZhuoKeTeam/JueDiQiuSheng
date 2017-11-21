@@ -5,10 +5,15 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.Constant;
+import cc.zkteam.juediqiusheng.ZKBase;
 import cc.zkteam.juediqiusheng.api.ZKApi;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -53,8 +58,25 @@ public class ZKConnectionManager {
     }
 
     private Retrofit getRetrofit() {
+
+        //http://blog.csdn.net/u014695188/article/details/52985514
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(10, TimeUnit.SECONDS);
+        builder.writeTimeout(10, TimeUnit.SECONDS);
+
+        if (ZKBase.isDebug) {
+            //log信息拦截器
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            //设置Debug Log模式
+            builder.addInterceptor(httpLoggingInterceptor);
+        }
+
         return new Retrofit.Builder()
                 .baseUrl(Constant.ZKTEAM_DOMAIN_URL)
+                .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create(getGson()))
                 .build();
     }

@@ -54,7 +54,7 @@ class BaseCategoryListActivity : AppCompatActivity() {
     private fun requestData() {
         val client = OkHttpClient()
 
-        val request: Request = Request.Builder().url("http://www.zkteam.cc/JueDiQiuSheng/categoryJson?pageCount=20").build()
+        val request: Request = Request.Builder().url("http://www.zkteam.cc/JueDiQiuSheng/categoryJson?PAGE_COUNT=20").build()
 
         val call: Call = client.newCall(request)
 

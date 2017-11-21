@@ -41,14 +41,21 @@ public class SimpleStringRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        RecommendedBean recommendedBean = list.get(position);
-        holder.textView.setText(recommendedBean.getContext());
-        holder.imageView.setImageURI(recommendedBean.getPicUrl());
+        Object obj = list.get(position);
+        if (obj == null)
+            return;
 
-        if (listener!=null){
-            holder.setOnClickListener(listener, recommendedBean);
+        if (obj instanceof RecommendedBean) {
+            RecommendedBean recommendedBean = list.get(position);
+            holder.textView.setText(recommendedBean.getContext());
+            holder.imageView.setImageURI(recommendedBean.getPicUrl());
+
+            if (listener!=null){
+                holder.setOnClickListener(listener, recommendedBean);
+            }
+        } else if (obj instanceof String) {
+            holder.textView.setText((CharSequence) obj);
         }
-
     }
 
     @Override

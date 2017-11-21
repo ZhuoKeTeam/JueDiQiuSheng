@@ -91,6 +91,7 @@ dependencies {
     //    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
 
     implementation deps.rvh
+    implementation deps.okhttp_interceptor
 
     testImplementation deps.junit
 

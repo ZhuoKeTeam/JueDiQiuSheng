@@ -1,6 +1,5 @@
 package cc.zkteam.juediqiusheng.holder;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +11,6 @@ import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.base.RvHolder;
 import cc.zkteam.juediqiusheng.base.RvListener;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
-import cc.zkteam.juediqiusheng.utils.ZKImageViewExtKt;
 import cc.zkteam.juediqiusheng.view.ZKImageView;
 
 /**
@@ -36,7 +34,6 @@ public class SortHolder extends RvHolder<SortDetailBean> {
     @Override
     public void bindHolder(SortDetailBean sortDetailBean, int position) {
 
-//        ZKImageViewExtKt.loadUrl(ivSort, sortDetailBean.getPicUrl(), R.mipmap.ic_launcher);
 
         tvContent.setText(sortDetailBean.getArtifactName());
         Date date = TimestampToDate(sortDetailBean.getArtifactDate());
