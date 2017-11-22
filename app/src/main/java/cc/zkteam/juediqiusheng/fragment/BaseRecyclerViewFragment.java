@@ -14,6 +14,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
+import cc.zkteam.juediqiusheng.module.answer.mvp.RequestFinishView;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
@@ -22,7 +23,9 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
  * Created by WangQing on 2017/11/21.
  */
 
-public abstract class BaseRecyclerViewFragment extends BaseFragment {
+public abstract class BaseRecyclerViewFragment extends BaseFragment implements RequestFinishView {
+
+    private static final String TAG = "BaseRecyclerViewFragment";
 
     public BaseQuickAdapter adapter;
 
@@ -48,6 +51,11 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
+    @Override
+    public void requestFinish() {
+        refreshFinish();
+    }
+
     public void initZKRefreshLayout(ZKRefreshLayout zkRefreshLayout) {
         zkRefreshLayout.setWaveColor(0x555555);
         zkRefreshLayout.setLoadMore(true);
@@ -68,7 +76,10 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
      * 加载完成
      */
     public void refreshFinish() {
-        zkRefreshLayout.finishRefresh();
-        zkRefreshLayout.finishRefreshLoadMore();
+        zkRefreshLayout.postDelayed(() -> {
+            zkRefreshLayout.finishRefresh();
+            zkRefreshLayout.finishRefreshLoadMore();
+        }, 1000);
+
     }
 }

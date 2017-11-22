@@ -1,39 +1,30 @@
 package cc.zkteam.juediqiusheng.module.answer;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 
-import java.util.List;
-
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.fragment.BaseRecyclerViewFragment;
-import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
+import cc.zkteam.juediqiusheng.module.answer.mvp.QFPresenterImpl;
+import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
 
 /**
  * 问答 Fragment
  */
-public class QuestionFragment extends BaseRecyclerViewFragment {
+public class QuestionFragment extends BaseRecyclerViewFragment implements QFView {
 
-    private static final String TAG = "QuestionFragment";
+    QFPresenterImpl presenter;
 
-    /**
-     * 当前页面对应 ID
-     */
-    public static final String CATEGORY_ID = "34425";
-    public static final int PAGE_COUNT = 5;
-
-    private int currentPage = 0;
 
     public static QuestionFragment newInstance() {
         QuestionFragment fragment = new QuestionFragment();
@@ -54,9 +45,20 @@ public class QuestionFragment extends BaseRecyclerViewFragment {
 
     }
 
+    private QuestionViewModel questionViewModel;
     @Override
     public void initData(Bundle savedInstanceState) {
-        loadData(false);
+
+        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
+
+        questionViewModel.getQuestionList().observe(this, sortDetailBeans -> {
+            adapter.setNewData(sortDetailBeans);
+            adapter.notifyDataSetChanged();
+        });
+
+
+        presenter = new QFPresenterImpl(this, questionViewModel);
+        presenter.loadData(false);
     }
 
     @Override
@@ -64,13 +66,13 @@ public class QuestionFragment extends BaseRecyclerViewFragment {
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                currentPage = 0;
-                loadData(false);
+                presenter.currentPage = 0;
+                presenter.loadData(false);
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-                loadData(true);
+                presenter.loadData(true);
             }
         });
 
@@ -92,30 +94,5 @@ public class QuestionFragment extends BaseRecyclerViewFragment {
     public BaseQuickAdapter getAdapter() {
         return new SortAdapter(null);
     }
-
-    private void loadData(boolean isLoadMore) {
-        ZKConnectionManager.getInstance().getZKApi().getSortDetail(CATEGORY_ID, PAGE_COUNT, currentPage++)
-                .enqueue(new ZKCallback<List<SortDetailBean>>() {
-                    @Override
-                    public void onResponse(final List<SortDetailBean> result) {
-                        Log.d(TAG, "onResponse() called with: result = [" + result.size() + "]");
-                        if (!isLoadMore) {
-                            adapter.setNewData(result);
-                        } else {
-                            adapter.getData().addAll(result);
-                            adapter.notifyDataSetChanged();
-                        }
-
-                        refreshFinish();
-                    }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.d(TAG, "onFailure() called with: throwable = [" + throwable + "]");
-                        refreshFinish();
-                    }
-                });
-    }
-
 
 }
