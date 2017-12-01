@@ -32,11 +32,8 @@ public class QFPresenterImpl implements QFPresenter {
     QuestionViewModel questionViewModel;
 
     @Inject
-    public QFPresenterImpl(QFView view) {
+    public QFPresenterImpl(QFView view, QuestionViewModel questionViewModel) {
         this.view = view;
-    }
-
-    public void setQuestionViewModel(QuestionViewModel questionViewModel) {
         this.questionViewModel = questionViewModel;
     }
 

@@ -45,9 +45,9 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
 
     public static final String TAG = "MainActivity";
 
+    // 2017/12/2 Dagger2 中 Fragment 的添加
     @Inject
     DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
-
 
     // 推荐
     public static final int NAV_TYPE_RECOMMEND = 0;
@@ -148,7 +148,6 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
-
 
     /**
      * MainActivity 中的四大底标签页面

@@ -1,7 +1,6 @@
 package cc.zkteam.juediqiusheng.module.answer;
 
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +29,9 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     @Inject
     QFPresenterImpl presenter;
 
+    @Inject
+    QuestionViewModel questionViewModel;
+
 
     public static QuestionFragment newInstance() {
         QuestionFragment fragment = new QuestionFragment();
@@ -56,21 +58,16 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
         super.onAttach(context);
     }
 
-    private QuestionViewModel questionViewModel;
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
-        questionViewModel = ViewModelProviders.of(this).get(QuestionViewModel.class);
 
         questionViewModel.getQuestionList().observe(this, sortDetailBeans -> {
             adapter.setNewData(sortDetailBeans);
             adapter.notifyDataSetChanged();
         });
 
-
-//        presenter = new QFPresenterImpl(this);
-        presenter.setQuestionViewModel(questionViewModel);
         presenter.loadData(false);
     }
 

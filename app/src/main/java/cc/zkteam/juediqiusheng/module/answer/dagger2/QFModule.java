@@ -1,6 +1,9 @@
 package cc.zkteam.juediqiusheng.module.answer.dagger2;
 
+import android.arch.lifecycle.ViewModelProviders;
+
 import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
+import cc.zkteam.juediqiusheng.module.answer.QuestionViewModel;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
 import dagger.Module;
 import dagger.Provides;
@@ -17,8 +20,9 @@ public class QFModule {
         return fragment;
     }
 
-//    @Provides
-//    QFPresenterImpl providerQFPresenterImpl(QFView qfView){
-//        return new QFPresenterImpl(qfView);
-//    }
+    @Provides
+    QuestionViewModel provideQuestionViewModel(QuestionFragment fragment) {
+        return ViewModelProviders.of(fragment).get(QuestionViewModel.class);
+    }
+
 }

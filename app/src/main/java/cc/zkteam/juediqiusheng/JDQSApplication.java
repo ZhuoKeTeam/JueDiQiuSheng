@@ -20,6 +20,7 @@ import dagger.android.HasActivityInjector;
 
 public class JDQSApplication extends Application implements HasActivityInjector {
 
+    // 2017/12/2 Dagger2 Activity 的注册
     @Inject
     DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
