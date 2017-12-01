@@ -33,13 +33,15 @@ import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
+import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import okhttp3.OkHttpClient;
 
 /**
  * 主 MainActivity
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements HasSupportFragmentInjector {
 
     public static final String TAG = "MainActivity";
 
@@ -142,10 +144,11 @@ public class MainActivity extends BaseActivity {
         demo();
     }
 
-//    @Override
-//    public AndroidInjector<Fragment> supportFragmentInjector() {
-//        return fragmentDispatchingAndroidInjector;
-//    }
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
+
 
     /**
      * MainActivity 中的四大底标签页面
