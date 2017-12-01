@@ -10,6 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 
+import javax.inject.Inject;
+
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
@@ -23,6 +25,7 @@ import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
  */
 public class QuestionFragment extends BaseRecyclerViewFragment implements QFView {
 
+    @Inject
     QFPresenterImpl presenter;
 
 
@@ -46,6 +49,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     }
 
     private QuestionViewModel questionViewModel;
+
     @Override
     public void initData(Bundle savedInstanceState) {
 
@@ -57,7 +61,8 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
         });
 
 
-        presenter = new QFPresenterImpl(this, questionViewModel);
+//        presenter = new QFPresenterImpl(this);
+        presenter.setQuestionViewModel(questionViewModel);
         presenter.loadData(false);
     }
 

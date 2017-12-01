@@ -4,6 +4,8 @@ import android.util.Log;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.module.answer.QuestionViewModel;
@@ -29,8 +31,12 @@ public class QFPresenterImpl implements QFPresenter {
     QFView view;
     QuestionViewModel questionViewModel;
 
-    public QFPresenterImpl(QFView view, QuestionViewModel questionViewModel) {
+    @Inject
+    public QFPresenterImpl(QFView view) {
         this.view = view;
+    }
+
+    public void setQuestionViewModel(QuestionViewModel questionViewModel) {
         this.questionViewModel = questionViewModel;
     }
 
