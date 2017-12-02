@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.module.answer;
+package cc.zkteam.juediqiusheng.ui.fragment.question;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;

@@ -2,8 +2,8 @@ package cc.zkteam.juediqiusheng.ui.fragment.question.dagger2;
 
 import android.arch.lifecycle.ViewModelProviders;
 
-import cc.zkteam.juediqiusheng.module.answer.QuestionViewModel;
 import cc.zkteam.juediqiusheng.ui.fragment.question.NewQuestionFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.question.QuestionViewModel;
 import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionPresenterImpl;
 import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionView;
 import dagger.Module;

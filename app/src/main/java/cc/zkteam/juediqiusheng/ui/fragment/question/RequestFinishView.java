@@ -1,8 +1,8 @@
-package cc.zkteam.juediqiusheng.module.answer.mvp;
+package cc.zkteam.juediqiusheng.ui.fragment.question;
 
 /**
  * RequestFinishView
- * Created by WangQing on 2017/11/22.
+ * Created by WangQing on 2017/12/3.
  */
 
 public interface RequestFinishView {

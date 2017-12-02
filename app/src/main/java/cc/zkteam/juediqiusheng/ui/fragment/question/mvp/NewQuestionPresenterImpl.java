@@ -9,8 +9,8 @@ import javax.inject.Inject;
 import cc.zkteam.juediqiusheng.base.mvp.BaseMVPPresenter;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.module.answer.QuestionViewModel;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
+import cc.zkteam.juediqiusheng.ui.fragment.question.QuestionViewModel;
 
 /**
  * Created by WangQing on 2017/12/2.

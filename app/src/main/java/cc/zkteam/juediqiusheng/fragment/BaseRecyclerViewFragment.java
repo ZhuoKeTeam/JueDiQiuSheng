@@ -14,7 +14,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
-import cc.zkteam.juediqiusheng.module.answer.mvp.RequestFinishView;
+import cc.zkteam.juediqiusheng.ui.fragment.question.RequestFinishView;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
