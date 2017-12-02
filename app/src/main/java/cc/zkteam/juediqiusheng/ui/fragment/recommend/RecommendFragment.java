@@ -1,7 +1,6 @@
-package cc.zkteam.juediqiusheng.fragment;
+package cc.zkteam.juediqiusheng.ui.fragment.recommend;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,9 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.cjj.MaterialRefreshLayout;
-import com.cjj.MaterialRefreshListener;
 
 import java.util.List;
 
@@ -103,52 +99,11 @@ public class RecommendFragment extends OldBaseFragment {
 
         final List testData = TestData.getDefaultTextData();
 
-        initZKBanner(zkBanner);
+
         initZKRecyclerView(zkRecyclerView, testData);
         initZKRefreshLayout(zkRefreshLayout);
-        zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
 
-            @Override
-            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                materialRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        testData.addAll(testData);
-                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-                        zkRefreshLayout.finishRefresh();
-                    }
-                }, 3000);
-                materialRefreshLayout.finishRefreshLoadMore();
-            }
-
-            @Override
-            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
-                super.onRefreshLoadMore(materialRefreshLayout);
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        testData.addAll(testData);
-                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-                        zkRefreshLayout.finishRefreshLoadMore();
-                    }
-                }, 3000);
-            }
-        });
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //开始轮播
-        zkBanner.startAutoPlay();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        //结束轮播
-        zkBanner.stopAutoPlay();
-    }
 }
