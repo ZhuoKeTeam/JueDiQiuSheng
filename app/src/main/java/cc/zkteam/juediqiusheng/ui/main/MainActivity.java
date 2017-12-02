@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
-import cc.zkteam.juediqiusheng.ui.fragment.recommend.NewRecommendFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.recommend.RecommendFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
@@ -159,7 +159,7 @@ public class MainActivity extends DaggerAppCompatActivity {
             switch (position) {
                 case NAV_TYPE_RECOMMEND:
 //                    return RecommendFragment.newInstance();
-                    return NewRecommendFragment.newInstance();
+                    return RecommendFragment.newInstance();
                 case NAV_TYPE_STRATEGY:
                     return StrategyFragment.newInstance();
                 case NAV_TYPE_GALLERY:

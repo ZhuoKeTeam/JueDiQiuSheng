@@ -1,6 +1,6 @@
 package cc.zkteam.juediqiusheng.ui.fragment.recommend.dagger2;
 
-import cc.zkteam.juediqiusheng.ui.fragment.recommend.NewRecommendFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.recommend.RecommendFragment;
 import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 
@@ -8,7 +8,7 @@ import dagger.android.AndroidInjector;
  * Created by WangQing on 2017/12/3.
  */
 @Subcomponent(modules = {RecommendModule.class})
-public interface RecommendComponent extends AndroidInjector<NewRecommendFragment> {
+public interface RecommendComponent extends AndroidInjector<RecommendFragment> {
     @Subcomponent.Builder
-    abstract class Builder extends AndroidInjector.Builder<NewRecommendFragment> {}
+    abstract class Builder extends AndroidInjector.Builder<RecommendFragment> {}
 }

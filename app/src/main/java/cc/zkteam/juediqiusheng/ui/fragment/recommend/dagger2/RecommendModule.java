@@ -1,6 +1,6 @@
 package cc.zkteam.juediqiusheng.ui.fragment.recommend.dagger2;
 
-import cc.zkteam.juediqiusheng.ui.fragment.recommend.NewRecommendFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.recommend.RecommendFragment;
 import cc.zkteam.juediqiusheng.ui.fragment.recommend.mvp.RecommendPresenterImpl;
 import cc.zkteam.juediqiusheng.ui.fragment.recommend.mvp.RecommendView;
 import dagger.Module;
@@ -14,12 +14,12 @@ import dagger.Provides;
 public class RecommendModule {
 
     @Provides
-    RecommendView provideRecommendView(NewRecommendFragment recommendFragment){
+    RecommendView provideRecommendView(RecommendFragment recommendFragment){
         return recommendFragment;
     }
 
     @Provides
-    RecommendPresenterImpl provideRecommendPresenter(NewRecommendFragment recommendFragment) {
+    RecommendPresenterImpl provideRecommendPresenter(RecommendFragment recommendFragment) {
         return new RecommendPresenterImpl();
     }
 }
