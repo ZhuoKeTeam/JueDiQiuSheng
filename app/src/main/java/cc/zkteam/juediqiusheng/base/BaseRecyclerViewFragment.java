@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.fragment;
+package cc.zkteam.juediqiusheng.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
-import cc.zkteam.juediqiusheng.base.NewBaseFragment;
+import cc.zkteam.juediqiusheng.base.BaseFragment;
 import cc.zkteam.juediqiusheng.base.mvp.BaseMVPPresenter;
 import cc.zkteam.juediqiusheng.ui.fragment.question.RequestFinishView;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
@@ -25,7 +25,7 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
  * Created by WangQing on 2017/11/21.
  */
 
-public abstract class NewBaseRecyclerViewFragment<P extends BaseMVPPresenter> extends NewBaseFragment<P> implements RequestFinishView {
+public abstract class BaseRecyclerViewFragment<P extends BaseMVPPresenter> extends BaseFragment<P> implements RequestFinishView {
 
     private static final String TAG = "BaseRecyclerViewFragment";
 

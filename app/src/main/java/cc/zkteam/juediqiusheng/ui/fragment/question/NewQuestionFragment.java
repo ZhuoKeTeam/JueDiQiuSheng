@@ -14,7 +14,7 @@ import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
-import cc.zkteam.juediqiusheng.fragment.NewBaseRecyclerViewFragment;
+import cc.zkteam.juediqiusheng.base.BaseRecyclerViewFragment;
 import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionPresenterImpl;
 import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionView;
 
@@ -24,7 +24,7 @@ import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionView;
  */
 
 
-public class NewQuestionFragment extends NewBaseRecyclerViewFragment<NewQuestionPresenterImpl> implements NewQuestionView {
+public class NewQuestionFragment extends BaseRecyclerViewFragment<NewQuestionPresenterImpl> implements NewQuestionView {
 
     @Inject
     QuestionViewModel questionViewModel;

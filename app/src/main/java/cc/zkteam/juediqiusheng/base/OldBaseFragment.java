@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.fragment;
+package cc.zkteam.juediqiusheng.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import dagger.android.support.DaggerFragment;
  * Created by WangQing on 2017/11/7.
  */
 
-public abstract class BaseFragment extends DaggerFragment {
+public abstract class OldBaseFragment extends DaggerFragment {
 
     protected View rootView;
     //context

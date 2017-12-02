@@ -24,7 +24,7 @@ import dagger.android.support.DaggerFragment;
  * Created by WangQing on 2017/12/2.
  */
 
-public abstract class NewBaseFragment<P extends BaseMVPPresenter> extends DaggerFragment implements BaseMVPView {
+public abstract class BaseFragment<P extends BaseMVPPresenter> extends DaggerFragment implements BaseMVPView {
 
     /**
      * Presenter 对象

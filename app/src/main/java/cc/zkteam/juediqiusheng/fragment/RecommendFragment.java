@@ -18,6 +18,7 @@ import java.util.List;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
+import cc.zkteam.juediqiusheng.base.OldBaseFragment;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
@@ -27,7 +28,7 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
  * Created by WangQing on 2017/10/30.
  */
 
-public class RecommendFragment extends BaseFragment {
+public class RecommendFragment extends OldBaseFragment {
 
     ZKBanner zkBanner;
     ZKRecyclerView zkRecyclerView;
