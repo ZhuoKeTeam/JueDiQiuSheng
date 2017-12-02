@@ -28,9 +28,9 @@ import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.question.NewQuestionFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 import dagger.android.support.DaggerAppCompatActivity;
@@ -164,7 +164,8 @@ public class MainActivity extends DaggerAppCompatActivity {
                 case NAV_TYPE_GALLERY:
                     return (Fragment) ARouter.getInstance().build("/modules/pic/main").navigation();
                 case NAV_TYPE_QUESTION:
-                    return QuestionFragment.newInstance();
+                    return NewQuestionFragment.newInstance();
+//                    return QuestionFragment.newInstance();
             }
 
             return null;

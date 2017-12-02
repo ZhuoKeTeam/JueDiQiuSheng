@@ -74,6 +74,8 @@ dependencies {
     implementation deps.material_refesh_layout
     implementation deps.banners
 
+    implementation deps.logger
+
     implementation deps.stetho
     implementation deps.stetho_okhttp3
 

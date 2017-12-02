@@ -1,8 +1,6 @@
 package cc.zkteam.juediqiusheng.utils;
 
-import android.util.Log;
-
-import java.util.Arrays;
+import com.orhanobut.logger.Logger;
 
 import cc.zkteam.juediqiusheng.ZKBase;
 
@@ -21,42 +19,32 @@ public class L {
 
     public static void i(Object... msg) {
         if (isDebug) {
-            String msgInfo = Arrays.toString(msg);
-            Log.i(TAG, msgInfo);
+            Logger.i(TAG, msg);
         }
-
     }
 
     public static void d(Object... msg) {
         if (isDebug) {
-            String msgInfo = Arrays.toString(msg);
-            Log.d(TAG, msgInfo);
+            Logger.d(TAG, msg);
         }
-
     }
 
     public static void w(Object... msg) {
         if (isDebug) {
-            String msgInfo = Arrays.toString(msg);
-            Log.w(TAG, msgInfo);
+            Logger.w(TAG, msg);
         }
-
     }
 
     public static void e(Object... msg) {
         if (isDebug) {
-            String msgInfo = Arrays.toString(msg);
-            Log.e(TAG, msgInfo);
+            Logger.e(TAG, msg);
         }
-
     }
 
     public static void m(Object... msg) {
         if (isDebug) {
-            String msgInfo = Arrays.toString(msg);
-            Log.d(TAG, msgInfo);
+            Logger.d(TAG, msg);
         }
-
     }
 
 

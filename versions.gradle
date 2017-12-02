@@ -18,6 +18,7 @@ versions.junit = "4.12"
 versions.kotlin_version = "1.1.51"
 versions.material_refesh_layout = "1.3.0"
 versions.networkbench_version = "2.7.0"
+versions.logger = "2.1.1"
 versions.okhttp = "3.9.1"
 versions.photo_view = "2.1.3"
 versions.photo_draweeview = "1.1.3"
@@ -110,6 +111,8 @@ deps.dagger = "com.google.dagger:dagger-android:$versions.dagger" //Dagger2 Andr
 // 如果使用支持包， 上面的Android包可以省略，支持包里面已经包含了
 deps.dagger_support = "com.google.dagger:dagger-android-support:$versions.dagger"
 deps.dagger_processor = "com.google.dagger:dagger-compiler:$versions.dagger" // 注解处理器
+
+deps.logger = "com.orhanobut:logger:$versions.logger"
 
 deps.support = support
 deps.lifecycle = lifecycle
