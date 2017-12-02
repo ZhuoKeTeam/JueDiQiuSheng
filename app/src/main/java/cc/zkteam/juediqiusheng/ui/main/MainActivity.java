@@ -158,7 +158,6 @@ public class MainActivity extends DaggerAppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case NAV_TYPE_RECOMMEND:
-//                    return RecommendFragment.newInstance();
                     return RecommendFragment.newInstance();
                 case NAV_TYPE_STRATEGY:
                     return StrategyFragment.newInstance();
