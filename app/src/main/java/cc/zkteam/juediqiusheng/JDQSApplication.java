@@ -1,28 +1,20 @@
 package cc.zkteam.juediqiusheng;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
-
-import javax.inject.Inject;
+import com.facebook.stetho.Stetho;
 
 import cc.zkteam.juediqiusheng.di.DaggerAppComponent;
 import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
+import dagger.android.support.DaggerApplication;
 
 /**
  * JDQSApplication
  * Created by WangQing on 2017/10/23.
  */
 
-public class JDQSApplication extends Application implements HasActivityInjector {
-
-    // 2017/12/2 Dagger2 Activity 的注册
-    @Inject
-    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+public class JDQSApplication extends DaggerApplication {
 
     Context mContext;
 
@@ -32,14 +24,17 @@ public class JDQSApplication extends Application implements HasActivityInjector 
         mContext = this;
         Utils.init(this);
         ZKBase.init(this);
-        DaggerAppComponent.builder()
-                .application(this)
-                .builder()
-                .inject(this);
+
+        // 2017/12/2  添加 Stetho，可以使用 chrome 方便调试
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+                .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                .build());
+
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return activityDispatchingAndroidInjector;
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
     }
 }

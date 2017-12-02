@@ -1,7 +1,6 @@
 package cc.zkteam.juediqiusheng.module.answer;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +18,6 @@ import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.fragment.BaseRecyclerViewFragment;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFPresenterImpl;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
-import dagger.android.support.AndroidSupportInjection;
 
 /**
  * 问答 Fragment
@@ -51,14 +49,6 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     public void initView(View rootView) {
 
     }
-
-    @Override
-    public void onAttach(Context context) {
-        AndroidSupportInjection.inject(this);
-        super.onAttach(context);
-    }
-
-
 
     @Override
     public void initData(Bundle savedInstanceState) {

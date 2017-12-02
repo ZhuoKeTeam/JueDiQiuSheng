@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.ui.main;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -21,7 +22,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
@@ -33,21 +33,15 @@ import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
-import dagger.android.AndroidInjector;
-import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
+import dagger.android.support.DaggerAppCompatActivity;
 import okhttp3.OkHttpClient;
 
 /**
  * 主 MainActivity
  */
-public class MainActivity extends BaseActivity implements HasSupportFragmentInjector {
+public class MainActivity extends DaggerAppCompatActivity {
 
     public static final String TAG = "MainActivity";
-
-    // 2017/12/2 Dagger2 中 Fragment 的添加
-    @Inject
-    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     // 推荐
     public static final int NAV_TYPE_RECOMMEND = 0;
@@ -121,11 +115,18 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     };
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
+        initViews();
+        initListener();
+        initData();
+    }
+
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
 
-    @Override
     protected void initViews() {
         navigation = findViewById(R.id.navigation);
         mViewPager = findViewById(R.id.container);
@@ -133,20 +134,13 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         mViewPager.setLifecycle(getLifecycle());
     }
 
-    @Override
     protected void initListener() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mViewPager.setViewPager(onPageChangeListener, new SectionsPagerAdapter(getSupportFragmentManager()));
     }
 
-    @Override
     protected void initData() {
         demo();
-    }
-
-    @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
-        return fragmentDispatchingAndroidInjector;
     }
 
     /**

@@ -74,7 +74,10 @@ dependencies {
     implementation deps.material_refesh_layout
     implementation deps.banners
 
-    implementation deps.dagger
+    implementation deps.stetho
+    implementation deps.stetho_okhttp3
+
+//    implementation deps.dagger
     implementation deps.dagger_support
     kapt deps.dagger_processor
 

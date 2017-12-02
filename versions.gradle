@@ -77,7 +77,6 @@ deps.okhttp_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.ok
 deps.stetho = "com.facebook.stetho:stetho:$versions.stetho"
 deps.stetho_okhttp3 = "com.facebook.stetho:stetho-okhttp3:$versions.stetho"
 deps.stetho_urlconnection = "com.facebook.stetho:stetho-urlconnection:$versions.stetho"
-deps.stetho_urlconnection = "com.facebook.stetho:stetho-urlconnection:$versions.stetho"
 
 deps.zk_fresco = "com.github.ZhuoKeTeam:WapperFrescoHelper:$versions.zk_fresco"
 
@@ -107,9 +106,10 @@ deps.banners = "com.youth.banner:banner:$versions.banners"
 
 deps.rvh = "com.github.CymChad:BaseRecyclerViewAdapterHelper:$versions.rvh"
 
-deps.dagger = "com.google.dagger:dagger:$versions.dagger"
+deps.dagger = "com.google.dagger:dagger-android:$versions.dagger" //Dagger2 Android包
+// 如果使用支持包， 上面的Android包可以省略，支持包里面已经包含了
 deps.dagger_support = "com.google.dagger:dagger-android-support:$versions.dagger"
-deps.dagger_processor = "com.google.dagger:dagger-compiler:$versions.dagger"
+deps.dagger_processor = "com.google.dagger:dagger-compiler:$versions.dagger" // 注解处理器
 
 deps.support = support
 deps.lifecycle = lifecycle
