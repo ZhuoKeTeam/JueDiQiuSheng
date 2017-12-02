@@ -21,4 +21,9 @@ public interface BaseMVPView {
      * 网络请求结束
      */
     void onNetFinished();
+
+    /**
+     * 请求完成
+     */
+    void requestFinish();
 }

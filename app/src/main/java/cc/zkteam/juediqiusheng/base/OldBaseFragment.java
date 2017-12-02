@@ -5,19 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKImageLoader;
-import dagger.android.support.DaggerFragment;
 
 /**
  * BaseFragment
  * Created by WangQing on 2017/11/7.
  */
 
-public abstract class OldBaseFragment extends DaggerFragment {
+public abstract class OldBaseFragment extends Fragment {
 
     protected View rootView;
     //context

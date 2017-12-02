@@ -2,7 +2,7 @@ package cc.zkteam.juediqiusheng.ui.fragment.question.dagger2;
 
 import android.support.v4.app.Fragment;
 
-import cc.zkteam.juediqiusheng.ui.fragment.question.NewQuestionFragment;
+import cc.zkteam.juediqiusheng.ui.fragment.question.QuestionFragment;
 import dagger.Binds;
 import dagger.Module;
 import dagger.android.AndroidInjector;
@@ -14,10 +14,10 @@ import dagger.multibindings.IntoMap;
  * Created by WangQing on 2017/12/2.
  */
 @Module
-public abstract class NewQuestionProvider {
+public abstract class QuestionProvider {
 
     @Binds
     @IntoMap
-    @FragmentKey(NewQuestionFragment.class)
-    abstract AndroidInjector.Factory<? extends Fragment> providerNewQuestionFragment(NewQuestionComponent.Builder builder);
+    @FragmentKey(QuestionFragment.class)
+    abstract AndroidInjector.Factory<? extends Fragment> providerNewQuestionFragment(QuestionComponent.Builder builder);
 }

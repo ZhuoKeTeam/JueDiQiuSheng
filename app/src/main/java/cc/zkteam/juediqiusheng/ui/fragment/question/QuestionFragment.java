@@ -13,10 +13,10 @@ import javax.inject.Inject;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
+import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.QuestionView;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.base.BaseRecyclerViewFragment;
-import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionPresenterImpl;
-import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionView;
+import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.QuestionPresenterImpl;
 
 /**
  * NewQuestionFragment
@@ -24,17 +24,17 @@ import cc.zkteam.juediqiusheng.ui.fragment.question.mvp.NewQuestionView;
  */
 
 
-public class NewQuestionFragment extends BaseRecyclerViewFragment<NewQuestionPresenterImpl> implements NewQuestionView {
+public class QuestionFragment extends BaseRecyclerViewFragment<QuestionPresenterImpl> implements QuestionView {
 
     @Inject
     QuestionViewModel questionViewModel;
 
     @Inject
-    NewQuestionPresenterImpl presenter;
+    QuestionPresenterImpl presenter;
 
 
-    public static NewQuestionFragment newInstance() {
-        NewQuestionFragment fragment = new NewQuestionFragment();
+    public static QuestionFragment newInstance() {
+        QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
 //        args.putString(ARG_PARAM1, param1);
 //        args.putString(ARG_PARAM2, param2);

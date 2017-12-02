@@ -14,9 +14,8 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
-import cc.zkteam.juediqiusheng.base.BaseFragment;
 import cc.zkteam.juediqiusheng.base.mvp.BaseMVPPresenter;
-import cc.zkteam.juediqiusheng.ui.fragment.question.RequestFinishView;
+import cc.zkteam.juediqiusheng.base.mvp.BaseMVPView;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
@@ -25,7 +24,7 @@ import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
  * Created by WangQing on 2017/11/21.
  */
 
-public abstract class BaseRecyclerViewFragment<P extends BaseMVPPresenter> extends BaseFragment<P> implements RequestFinishView {
+public abstract class BaseRecyclerViewFragment<P extends BaseMVPPresenter> extends BaseFragment<P> implements BaseMVPView {
 
     private static final String TAG = "BaseRecyclerViewFragment";
 

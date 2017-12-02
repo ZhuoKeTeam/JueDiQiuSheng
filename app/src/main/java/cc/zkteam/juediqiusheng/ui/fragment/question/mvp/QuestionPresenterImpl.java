@@ -16,8 +16,8 @@ import cc.zkteam.juediqiusheng.ui.fragment.question.QuestionViewModel;
  * Created by WangQing on 2017/12/2.
  */
 
-public class NewQuestionPresenterImpl extends BaseMVPPresenter<NewQuestionView, NewQuestionModule>
-        implements NewQuestionPresenter {
+public class QuestionPresenterImpl extends BaseMVPPresenter<QuestionView, QuestionModule>
+        implements QuestionPresenter {
 
     private static final String TAG = "NewQuestionPresenterImp";
 
@@ -29,12 +29,12 @@ public class NewQuestionPresenterImpl extends BaseMVPPresenter<NewQuestionView, 
 
     public int currentPage = 0;
 
-    NewQuestionView view;
+    QuestionView view;
     QuestionViewModel questionViewModel;
 
 
     @Inject
-    public NewQuestionPresenterImpl(NewQuestionView view, QuestionViewModel questionViewModel) {
+    public QuestionPresenterImpl(QuestionView view, QuestionViewModel questionViewModel) {
         super();
         this.view = view;
         this.questionViewModel = questionViewModel;
