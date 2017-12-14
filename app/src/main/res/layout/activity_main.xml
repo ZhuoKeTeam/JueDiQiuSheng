@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:itemIconTint="#D4904B"
+        app:itemTextColor="#D4904B"
         app:menu="@menu/navigation"/>
 
 </android.support.constraint.ConstraintLayout>
