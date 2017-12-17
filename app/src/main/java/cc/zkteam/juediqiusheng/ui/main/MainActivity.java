@@ -24,6 +24,7 @@ import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
+import cc.zkteam.juediqiusheng.fragment.WQFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
@@ -164,7 +165,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         public Fragment getItem(int position) {
             switch (position) {
                 case NAV_TYPE_RECOMMEND:
-                    return RecommendFragment.newInstance();
+                    return WQFragment.newInstance(0);
                 case NAV_TYPE_STRATEGY:
                     return StrategyFragment.newInstance();
                 case NAV_TYPE_GALLERY:

@@ -1,10 +1,14 @@
-package cc.zkteam.juediqiusheng.activity;
+package cc.zkteam.juediqiusheng.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.List;
+
 import cc.zkteam.juediqiusheng.fragment.HotInformationFragment;
+import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
 import cc.zkteam.juediqiusheng.fragment.SunflowerFragment;
 import cc.zkteam.juediqiusheng.module.recommend.JDQSRecommendFragment;
 
@@ -13,6 +17,8 @@ import cc.zkteam.juediqiusheng.module.recommend.JDQSRecommendFragment;
  */
 
 public class WQSectionsPagerAdapter extends FragmentPagerAdapter {
+    private String mTabs[] = new String[]{"热门资讯", "精品攻略推荐", "葵花宝典"};
+
     public WQSectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -27,7 +33,7 @@ public class WQSectionsPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                fragment = HotInformationFragment.newInstance("热门资讯");
+                fragment = RecommendFragment.newInstance();
                 break;
             case 1:
                 fragment = new JDQSRecommendFragment();
@@ -44,5 +50,11 @@ public class WQSectionsPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         // Show 3 total pages.
         return 3;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mTabs[position];
     }
 }

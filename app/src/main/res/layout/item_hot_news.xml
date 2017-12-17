@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_10">
+
+    <cc.zkteam.juediqiusheng.view.ZKImageView
+        android:id="@+id/pic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_toRightOf="@id/pic"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Hello"
+        android:textColor="@color/colorDark"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/pic"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text=""
+        android:textColor="@color/colorGrayLight"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="hhh"
+        android:textColor="@color/colorGrayLight"
+        android:textSize="@dimen/sp_14" />
+</RelativeLayout>

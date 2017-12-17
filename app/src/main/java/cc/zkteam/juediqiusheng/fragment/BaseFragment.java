@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKImageLoader;
@@ -25,7 +27,8 @@ public abstract class BaseFragment extends Fragment {
     protected Context mContext = null;
 
     // 获取布局资源文件
-    public abstract @LayoutRes int getLayoutId();
+    public abstract @LayoutRes
+    int getLayoutId();
 
     // 初始化布局
     public abstract void initView(View rootView);
@@ -68,6 +71,17 @@ public abstract class BaseFragment extends Fragment {
         zkBanner.setImageLoader(new ZKImageLoader());
         //设置图片集合
         zkBanner.setImages(TestData.getTestPics());
+        //banner设置方法全部调用完毕时最后调用
+        zkBanner.start();
+    }
+
+    protected void initZKBanner(ZKBanner zkBanner, List<String> bannerData, List<String> titles) {
+        //设置图片加载器
+        zkBanner.setImageLoader(new ZKImageLoader());
+        //设置图片集合
+        zkBanner.setImages(bannerData);
+        //设置标题
+        zkBanner.setBannerTitles(titles);
         //banner设置方法全部调用完毕时最后调用
         zkBanner.start();
     }
