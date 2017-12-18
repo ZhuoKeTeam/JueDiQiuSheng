@@ -71,6 +71,6 @@ public class RecycleAdapter extends BaseQuickAdapter<ItemBean, BaseViewHolder> {
             params.height = randomHeight.get(itemBean.getId());
         }
         imageView.setLayoutParams(params);
-        ImageLoader.loadImage(imageView, itemBean.getPicUrl());
+        ImageLoader.loadImage(imageView, itemBean.getPicTinyUrl());
     }
 }

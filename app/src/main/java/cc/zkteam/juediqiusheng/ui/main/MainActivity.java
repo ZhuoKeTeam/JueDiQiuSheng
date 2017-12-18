@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.ui.main;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -23,7 +24,6 @@ import javax.inject.Inject;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
-import cc.zkteam.juediqiusheng.fragment.RecommendFragment;
 import cc.zkteam.juediqiusheng.fragment.WQFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
@@ -34,6 +34,7 @@ import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
+import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -120,6 +121,12 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
             return false;
         }
     };
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     protected int getLayoutId() {

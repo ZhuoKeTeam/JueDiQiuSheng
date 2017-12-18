@@ -17,7 +17,7 @@ class PicMainHolder(v: View) : RecyclerView.ViewHolder(v), ICovertData<PicCatego
     private val textView = v.item_pic_main_item_category_name
 
     override fun covertData(dt: PicCategoryBean?) {
-        imageView.loadUrl("https://modao.cc/uploads3/images/1361/13616427/raw_1508656162.png")
+        imageView.loadUrl(dt?.picCategoryPic)
         textView.text = dt?.picCategoryName
         itemView.setOnClickListener {
             ARouter.getInstance().build("/modules/waterfall/WaterfallActivity").withString("categoryId", dt?.id).navigation()

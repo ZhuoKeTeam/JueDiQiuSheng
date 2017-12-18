@@ -10,6 +10,7 @@ import cc.zkteam.juediqiusheng.bean.PicCategoryBean
 class PicMainAdapter : RecyclerView.Adapter<PicMainHolder>(), ICovertData<List<PicCategoryBean>> {
     override fun covertData(dt: List<PicCategoryBean>?) {
         dt?.let {
+            data.clear()
             data.addAll(it)
             notifyDataSetChanged()
         }

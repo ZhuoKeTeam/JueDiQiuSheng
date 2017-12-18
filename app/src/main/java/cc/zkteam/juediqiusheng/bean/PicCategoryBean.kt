@@ -12,6 +12,9 @@ data class PicCategoryBean(
         val picCategoryName: String,
         @SerializedName("picCategoryUrl")
         val picCategoryUrl: String,
+        @SerializedName("picCategoryPic")
+        val picCategoryPic: String,
         @SerializedName("picCategoryCollection")
         val picCategoryCollection: String
+
 )

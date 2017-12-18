@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
+import dagger.android.AndroidInjection;
 import okhttp3.OkHttpClient;
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -106,6 +107,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
         Log.i(TAG, "WebViewActivity: " + zkConnectionManager1.toString());

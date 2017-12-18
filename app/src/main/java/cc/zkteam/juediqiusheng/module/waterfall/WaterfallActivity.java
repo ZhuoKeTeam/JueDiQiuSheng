@@ -1,9 +1,12 @@
 package cc.zkteam.juediqiusheng.module.waterfall;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +66,13 @@ public class WaterfallActivity extends BaseActivity {
     @Override
     protected void initData() {
         refresh();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ARouter.getInstance().inject(this);
+        super.onCreate(savedInstanceState);
+        Log.d("param", categoryId);
     }
 
     private void initWidget() {

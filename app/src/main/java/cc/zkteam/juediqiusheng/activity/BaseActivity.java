@@ -13,7 +13,6 @@ import com.yw.game.floatmenu.FloatLogoMenu;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.managers.ZKFloatMenuManager;
-import dagger.android.AndroidInjection;
 
 /**
  * BaseActivity
@@ -30,7 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        AndroidInjection.inject(this);
+//        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getLayoutId());
