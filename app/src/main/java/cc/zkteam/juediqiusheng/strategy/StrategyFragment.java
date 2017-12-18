@@ -15,12 +15,14 @@ import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.SortActivity;
+import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.bean.BannerBean;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.lifecycle.strategy.ZKStrategyViewModel;
@@ -154,7 +156,7 @@ public class StrategyFragment extends Fragment {
                         for (int i = 0; i < bannerBeans.size(); i++) {
                             bannerData.add(bannerBeans.get(i).getTjPicUrl());
                         }
-                        initZKBanner(zkBanner, bannerData);
+                        initZKBanner(zkBanner, bannerData, bannerBeans);
                     }
 
                     @Override
@@ -168,13 +170,29 @@ public class StrategyFragment extends Fragment {
 
     }
 
-    protected void initZKBanner(ZKBanner zkBanner, List<String> bannerData) {
+    protected void initZKBanner(ZKBanner zkBanner, List<String> bannerData, List<BannerBean> bannerBeans) {
         //设置图片加载器
         zkBanner.setImageLoader(new ZKImageLoader());
         //设置图片集合
         zkBanner.setImages(bannerData);
         //banner设置方法全部调用完毕时最后调用
         zkBanner.start();
+        zkBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                BannerBean bannerBean = bannerBeans.get(position);
+
+
+                // TODO: 2017/12/18 test data
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), WebViewActivity.class);
+                String url = bannerBean.getTjUrl();
+                //url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
+                url = url.substring(url.lastIndexOf("\">") + 2, url.lastIndexOf("</a>"));
+                intent.putExtra("url", url);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initHeaderAndFooter() {
