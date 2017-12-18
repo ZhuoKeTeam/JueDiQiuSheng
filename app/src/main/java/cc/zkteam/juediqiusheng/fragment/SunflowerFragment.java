@@ -112,7 +112,7 @@ public class SunflowerFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "轮播图", Toast.LENGTH_SHORT).show();
             }
         });
-        mHeaderAndFooterWrapper.addHeaderView(imageView);
+//        mHeaderAndFooterWrapper.addHeaderView(imageView);
     }
 
     /**
