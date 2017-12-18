@@ -1,5 +1,7 @@
 package cc.zkteam.juediqiusheng.adapter;
 
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +11,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
-import cc.zkteam.juediqiusheng.view.ZKImageView;
+import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 
 /**
  * HotNewsAdapter
@@ -19,7 +22,7 @@ import cc.zkteam.juediqiusheng.view.ZKImageView;
 public class HotNewsAdapter
         extends RecyclerView.Adapter<HotNewsAdapter.ViewHolder> {
 
-    List<SortDetailBean> list;
+    List<HotNewsBean> list;
 
 
     private onItemClickListener listener;
@@ -45,15 +48,11 @@ public class HotNewsAdapter
         if (obj == null)
             return;
 
-        if (obj instanceof SortDetailBean) {
-            SortDetailBean sortDetailBean = list.get(position);
-            holder.tvArticalName.setText(sortDetailBean.getArtifactName());
-            holder.imageView.setImageURI(sortDetailBean.getPicUrl());
-            holder.tvOrigin.setText("来源：XX");
-            holder.tvTime.setText("2017/12/17");
-            if (listener != null) {
-                holder.setOnClickListener(listener, sortDetailBean);
-            }
+        if (obj instanceof HotNewsBean) {
+            HotNewsBean hotNewsBean = list.get(position);
+            holder.tvTitle.setText(hotNewsBean.getTitle());
+            initZKRecyclerView(holder.zkRecyclerView, hotNewsBean.getSortDetailBeans());
+
         } else if (obj instanceof String) {
 //            holder.textView.setText((CharSequence) obj);
         }
@@ -66,37 +65,30 @@ public class HotNewsAdapter
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final ZKImageView imageView;
-        public final TextView tvArticalName;
-        public final TextView tvOrigin;
-        public final TextView tvTime;
+        public final ZKRecyclerView zkRecyclerView;
+        public final TextView tvTitle;
 
 
         public View contentView;
-        private SortDetailBean data;
+
 
         public ViewHolder(View view) {
             super(view);
             this.contentView = view;
-            imageView = view.findViewById(R.id.pic);
-            tvArticalName = view.findViewById(R.id.tv_title);
-            tvOrigin = view.findViewById(R.id.tv_origin);
-            tvTime = view.findViewById(R.id.tv_time);
+            zkRecyclerView = view.findViewById(R.id.zk_recycler_view);
+            tvTitle = view.findViewById(R.id.tv_title);
         }
 
-        public void setOnClickListener(final onItemClickListener listener, SortDetailBean data) {
-            this.data = data;
-            contentView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClicked(ViewHolder.this.data);
-                }
-            });
-        }
     }
 
     public interface onItemClickListener {
         void onItemClicked(SortDetailBean data);
     }
 
+    protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
+        HotNewsItemAdapter hotNewsItemAdapter = new HotNewsItemAdapter(arrayList);
+        zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
+        zkRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        zkRecyclerView.setAdapter(hotNewsItemAdapter);
+    }
 }

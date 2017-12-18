@@ -24,6 +24,7 @@ import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
 import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
+import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
@@ -45,7 +46,7 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
     ZKRecyclerView zkRecyclerView;
     ZKRefreshLayout zkRefreshLayout;
     private List<RecommendedBean> bannerBeans = new ArrayList<>();
-    private List<SortDetailBean> listBeans = new ArrayList<>();
+    private List<HotNewsBean> listBeans = new ArrayList<>();
     private int pageIndex = 1;
 
     public RecommendFragment() {
@@ -123,15 +124,18 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
 
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
-                materialRefreshLayout.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+                listBeans.clear();
+                getUpdatesData();
+                getVideoData();
+//                materialRefreshLayout.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
 //                        listBeans.addAll(testData);
-                        getListData(pageIndex);
-                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-                        zkRefreshLayout.finishRefresh();
-                    }
-                }, 3000);
+//                        getListData(pageIndex);
+//                        zkRecyclerView.getAdapter().notifyDataSetChanged();
+//                        zkRefreshLayout.finishRefresh();
+//                    }
+//                }, 3000);
                 materialRefreshLayout.finishRefreshLoadMore();
             }
 
@@ -139,21 +143,23 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
                 super.onRefreshLoadMore(materialRefreshLayout);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
 //                        testData.addAll(testData);
-                        pageIndex++;
-                        getListData(pageIndex);
-                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-                        zkRefreshLayout.finishRefreshLoadMore();
-                    }
-                }, 3000);
+//                        pageIndex++;
+//                        getListData(pageIndex);
+//                        zkRecyclerView.getAdapter().notifyDataSetChanged();
+//                        zkRefreshLayout.finishRefreshLoadMore();
+//                    }
+//                }, 3000);
             }
         });
         zkBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
         getBannerDatas();
-        getListData(pageIndex);
+//        getNewsListData();
+        getUpdatesData();
+        getVideoData();
     }
 
     @Override
@@ -211,25 +217,72 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         startActivity(intent);
     }
 
-    private void getListData(int page) {
+    private void getNewsData() {
         ZKConnectionManager.getInstance().getZKApi()
-                .getSortDetail("10000", 20, page)
+                .getSortDetail("10000", 20, 1)
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(List<SortDetailBean> result) {
-                        if (pageIndex == 1) {
-                            listBeans.clear();
-                        }
-                        listBeans.addAll(result);
+
+
+                        HotNewsBean hotNewsBean = new HotNewsBean();
+                        hotNewsBean.setTitle("最新更新");
+//                        hotNewsBean.setSortDetailBeans(result.subList(0, 3));
+                        listBeans.add(0, hotNewsBean);
+//                        listBeans.addAll(result);
                         zkRecyclerView.getAdapter().notifyDataSetChanged();
                         zkRefreshLayout.finishRefresh();
                     }
 
                     @Override
                     public void onFailure(Throwable throwable) {
-                        if (pageIndex > 1) {
-                            pageIndex--;
-                        }
+
+                    }
+                });
+    }
+
+    private void getUpdatesData() {
+        ZKConnectionManager.getInstance().getZKApi()
+                .getRecommended("10006", "3")
+                .enqueue(new ZKCallback<List<RecommendedBean>>() {
+                    @Override
+                    public void onResponse(List<RecommendedBean> result) {
+
+                        HotNewsBean hotNewsBean = new HotNewsBean();
+                        hotNewsBean.setTitle("游戏更新");
+                        hotNewsBean.setSortDetailBeans(result);
+                        listBeans.add(0, hotNewsBean);
+//                        listBeans.addAll(result);
+                        zkRecyclerView.getAdapter().notifyDataSetChanged();
+                        zkRefreshLayout.finishRefresh();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+    }
+
+    private void getVideoData() {
+        ZKConnectionManager.getInstance().getZKApi()
+                .getRecommended("10008", "3")
+                .enqueue(new ZKCallback<List<RecommendedBean>>() {
+                    @Override
+                    public void onResponse(List<RecommendedBean> result) {
+
+                        HotNewsBean hotNewsBean = new HotNewsBean();
+                        hotNewsBean.setTitle("精彩视频");
+                        hotNewsBean.setSortDetailBeans(result);
+                        listBeans.add(hotNewsBean);
+//                        listBeans.addAll(result);
+                        zkRecyclerView.getAdapter().notifyDataSetChanged();
+                        zkRefreshLayout.finishRefresh();
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
                     }
                 });
     }

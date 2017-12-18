@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp_10">
+    android:orientation="vertical">
 
-    <cc.zkteam.juediqiusheng.view.ZKImageView
-        android:id="@+id/pic"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg" />
-
-    <TextView
-        android:id="@+id/tv_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_toRightOf="@id/pic"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="Hello"
-        android:textColor="@color/colorDark"
-        android:textSize="18sp" />
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10">
 
-    <TextView
-        android:id="@+id/tv_origin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/pic"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text=""
-        android:textColor="@color/colorGrayLight"
-        android:textSize="@dimen/sp_14" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2px"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/colorGrayLight" />
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="hhh"
-        android:textColor="@color/colorGrayLight"
-        android:textSize="@dimen/sp_14" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:text="热门"
+            android:textColor="@color/colorDark" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2px"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@color/colorGrayLight" />
+    </LinearLayout>
+
+    <cc.zkteam.juediqiusheng.view.ZKRecyclerView
+        android:id="@+id/zk_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
+</LinearLayout>

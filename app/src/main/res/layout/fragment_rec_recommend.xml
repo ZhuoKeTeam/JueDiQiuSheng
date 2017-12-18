@@ -25,7 +25,8 @@
         app:progress_size_type="normal"
         app:wave_color="@color/colorPrimary"
         app:wave_height_type="normal"
-        app:wave_show="true">
+        app:wave_show="true"
+        app:isLoadMore="false">
 
         <cc.zkteam.juediqiusheng.view.ZKRecyclerView
             android:id="@+id/zk_recycler_view"
