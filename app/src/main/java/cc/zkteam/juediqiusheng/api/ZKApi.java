@@ -27,13 +27,13 @@ public interface ZKApi {
      * @return 分类的数据
      */
     @GET("JueDiQiuSheng/categoryJson")
-    Call<BaseBean<List<CategoryBean>>> categoryData(@Query("PAGE_COUNT") int count);
+    Call<BaseBean<List<CategoryBean>>> categoryData(@Query("pageCount") int count);
 
     /**
      * 攻略banner
      */
     @GET("JueDiQiuSheng/recommendedItemJson?jid=10003")
-    Call<BaseBean<List<BannerBean>>>  getStrategy(@Query("PAGE_COUNT") int count);
+    Call<BaseBean<List<BannerBean>>>  getStrategy(@Query("pageCount") int count);
 
     /**
      * 图片分类
@@ -48,19 +48,19 @@ public interface ZKApi {
      * @return
      */
     @GET("JueDiQiuSheng/picUrlJson")
-    Call<BaseBean<List<PicBean>>> getCategoryList(@Query("jid")String id,@Query("PAGE_COUNT") int count);
+    Call<BaseBean<List<PicBean>>> getCategoryList(@Query("jid")String id,@Query("pageCount") int count);
 
     /**
      * 精品推荐
      */
     @GET("JueDiQiuSheng/recommendedItemJson")
-    Call<BaseBean<List<RecommendedBean>>> getRecommended(@Query("jid") String jId, @Query("PAGE_COUNT") String pageCount);
+    Call<BaseBean<List<RecommendedBean>>> getRecommended(@Query("jid") String jId, @Query("pageCount") String pageCount);
 
     /**
      * 分类详情
      */
     @GET("JueDiQiuSheng/itemJson")
-    Call<BaseBean<List<SortDetailBean>>> getSortDetail(@Query("jid") String jId, @Query("PAGE_COUNT") int count, @Query("page") int page);
+    Call<BaseBean<List<SortDetailBean>>> getSortDetail(@Query("jid") String jId, @Query("pageCount") int count, @Query("page") int page);
 
     /**
      * 瀑布流
@@ -70,6 +70,6 @@ public interface ZKApi {
      * @return
      */
     @GET("JueDiQiuSheng/picUrlJson")
-    Call<BaseBean<List<ItemBean>>> getCategoryListByJId(@Query("jid")String id, @Query("PAGE_COUNT") int count, @Query("page") int page);
+    Call<BaseBean<List<ItemBean>>> getCategoryListByJId(@Query("jid")String id, @Query("pageCount") int count, @Query("page") int page);
 
 }

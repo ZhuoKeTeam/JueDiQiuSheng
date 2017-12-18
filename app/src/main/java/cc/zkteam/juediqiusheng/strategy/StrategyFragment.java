@@ -31,6 +31,7 @@ import cc.zkteam.juediqiusheng.strategy.wrapper.HeaderAndFooterWrapper;
 import cc.zkteam.juediqiusheng.strategy.wrapper.LoadMoreWrapper;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKImageLoader;
+import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
 
@@ -38,7 +39,7 @@ public class StrategyFragment extends Fragment {
     private static String TAG = "StrategyFragment";
     private ZKBanner zkBanner;
     private ZKRefreshLayout zkRefreshLayout;
-    private RecyclerView mRecyclerView;
+    private ZKRecyclerView mRecyclerView;
     private List<CategoryBean> mDatas = new ArrayList<>();
     private CommonAdapter<CategoryBean> mAdapter;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
