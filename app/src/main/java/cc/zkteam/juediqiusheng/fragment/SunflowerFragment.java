@@ -88,7 +88,7 @@ public class SunflowerFragment extends Fragment {
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), WebViewActivity.class);
-                String artifactUrl = mDatas.get(position - 1).getNewsSourceUrl();
+                String artifactUrl = mDatas.get(position).getNewsSourceUrl();
                 String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
                 intent.putExtra("url", url);
                 startActivity(intent);
