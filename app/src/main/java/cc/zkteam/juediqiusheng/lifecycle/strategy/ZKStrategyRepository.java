@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.lifecycle.strategy;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.api.ZKApi;
@@ -44,7 +45,19 @@ public class ZKStrategyRepository {
         zkApi.categoryData(20).enqueue(new ZKCallback<List<CategoryBean>>() {
             @Override
             public void onResponse(List<CategoryBean> result) {
-                mutableLiveData.setValue(result);
+
+                // 2017/12/19 过滤掉 1000X 的自定义分类。
+                List<CategoryBean> newCategoryBean = new ArrayList<>();
+                for (CategoryBean bean : result) {
+                    int id = bean.getId();
+                    String myId = String.valueOf(id);
+
+                    if (!myId.contains("1000")) {
+                        newCategoryBean.add(bean);
+                    }
+                }
+
+                mutableLiveData.setValue(newCategoryBean);
             }
 
             @Override
