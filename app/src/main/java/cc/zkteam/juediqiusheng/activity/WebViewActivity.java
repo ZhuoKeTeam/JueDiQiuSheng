@@ -17,6 +17,7 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
+import cc.zkteam.juediqiusheng.utils.L;
 import dagger.android.AndroidInjection;
 import okhttp3.OkHttpClient;
 
@@ -116,8 +117,6 @@ public class WebViewActivity extends BaseActivity {
         Log.i(TAG, "OkHttpClient: " + okHttpClient1.toString());
         Log.i(TAG, "OkHttpClient: " + okHttpClient2.toString());
 
-
-
     }
 
     @Override
@@ -125,8 +124,11 @@ public class WebViewActivity extends BaseActivity {
         super.onResume();
         mWebSettings.setJavaScriptEnabled(true);
         Intent intent = getIntent();
-        if (intent != null)
-            webView.loadUrl(intent.getStringExtra("url"));
+        if (intent != null) {
+            String url = intent.getStringExtra("url");
+            L.i("当前加载的页面地址是： " + url);
+            webView.loadUrl(url);
+        }
     }
 
     @Override
