@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
     android:paddingLeft="23dp"
     android:paddingRight="23dp"
     android:paddingTop="16dp"
@@ -26,7 +25,7 @@
         <TextView
             android:id="@+id/tv_author"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="6dp"
             android:layout_toRightOf="@id/iv_head"
@@ -53,7 +52,6 @@
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="8dp"
         android:text="分类内容"
@@ -62,8 +60,9 @@
         />
 
     <View
-        android:background="#9e9e9e"
         android:layout_width="match_parent"
-        android:layout_height="0.8dp"/>
+        android:layout_height="0.1dp"
+        android:layout_marginTop="10dp"
+        android:background="#9e9e9e"/>
 
 </LinearLayout>
