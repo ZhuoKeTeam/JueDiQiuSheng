@@ -39,7 +39,7 @@ public class SortAdapter extends BaseQuickAdapter<SortDetailBean, BaseViewHolder
         helper.setText(R.id.tv_content, item.getArtifactName());
         helper.setText(R.id.tv_time, sf.format(date));
 
-        ZKImageViewExtKt.loadUrl(helper.getView(R.id.iv_sort), item.getPicUrl(), R.mipmap.ic_launcher);
+        ZKImageViewExtKt.loadUrl(helper.getView(R.id.iv_head), item.getPicUrl(), R.mipmap.iv_head);
     }
 
 

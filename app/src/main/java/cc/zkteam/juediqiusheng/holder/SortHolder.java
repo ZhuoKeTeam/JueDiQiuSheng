@@ -25,7 +25,7 @@ public class SortHolder extends RvHolder<SortDetailBean> {
 
     public SortHolder(View itemView, int type, RvListener listener) {
         super(itemView, type, listener);
-        ivSort = itemView.findViewById(R.id.iv_sort);
+        ivSort = itemView.findViewById(R.id.iv_head);
         tvContent = itemView.findViewById(R.id.tv_content);
         tvTime = itemView.findViewById(R.id.tv_time);
 

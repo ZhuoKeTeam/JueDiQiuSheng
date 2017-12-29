@@ -1,47 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="3dp">
-
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="23dp"
+    android:paddingRight="23dp"
+    android:paddingTop="16dp"
+    >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"
-        android:background="@drawable/shape_gradient">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
 
         <cc.zkteam.juediqiusheng.view.ZKImageView
-            android:id="@+id/iv_sort"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"/>
+            android:id="@+id/iv_head"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/iv_head"/>
 
         <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_author"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_centerInParent="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/iv_head"
             android:gravity="center"
-            android:text="20sp"
-            android:textColor="@android:color/black"
-            tools:text="分类内容"/>
+            android:text="专业吃鸡"
+            android:textColor="#9e9e9e"
+            android:textSize="12sp"
+            />
 
         <TextView
             android:id="@+id/tv_time"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_below="@id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            tools:text="发布时间"/>
-
+            android:text="2017/09/02"
+            android:textColor="#9e9e9e"
+            android:textSize="12sp"
+            />
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:text="分类内容"
+        android:textColor="#3e423f"
+        android:textSize="16sp"
+        />
+
+    <View
+        android:background="#9e9e9e"
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"/>
+
+</LinearLayout>
