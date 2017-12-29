@@ -3,6 +3,7 @@ package cc.zkteam.juediqiusheng.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -43,8 +44,25 @@ public class WebViewActivity extends BaseActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                String[] split = url.split("\\?");
-                ARouter.getInstance().build("/module/pic/details").withString("url", split[1]).navigation();
+                System.out.println(url);
+                String[] split = null;
+                if (url.contains("jpg") || url.contains("png") || url.contains("gif")) {
+                    //图片链接
+                    try {
+                        split = url.split("\\?");
+                        String jumpUrl = split[1];
+                        ARouter.getInstance().build("/module/pic/details").withString("url", jumpUrl).navigation();
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        e.printStackTrace();
+                    }
+                } else if (url.contains("video")) {
+                    //视频链接
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    Uri content_url = Uri.parse(url);
+                    intent.setData(content_url);
+                    startActivity(intent);
+                }
 //                view.loadUrl(url);
                 return true;
             }
