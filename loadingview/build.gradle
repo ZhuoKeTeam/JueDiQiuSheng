@@ -5,8 +5,8 @@ android {
     buildToolsVersion build_versions.build_tools
 
     defaultConfig {
-        minSdkVersion 12
-        targetSdkVersion 23
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
         versionCode 1
         versionName "1.0"
     }
@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:23.2.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:23.2.1'
 }

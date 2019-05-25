@@ -11,8 +11,8 @@ kapt {
 }
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '26.0.3'
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         applicationId "cc.zkteam.juediqiusheng"
@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':loadingview')
+    implementation project(':loadingview')
     //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
     // Support libraries
     implementation deps.support.app_compat
