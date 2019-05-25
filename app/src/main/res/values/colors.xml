@@ -5,5 +5,7 @@
     <color name="colorPrimaryDark">#D4904B</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorGrayLight">#aeaeae</color>
+    <color name="color_pic_bg">#88D5904C</color>
+    <color name="color_pic_text">#FFFFFF</color>
     <color name="colorDark">#323232</color>
 </resources>

@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
-  <android.support.v4.widget.Space
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="10dp"/>
-
-  <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="100dp">
-    <cc.zkteam.juediqiusheng.view.ZKImageView
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/item_pic_main_list_pic"
-      android:layout_width="match_parent"
-      android:layout_height="100dp"
-      android:src="@mipmap/ic_launcher"/>
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
-    <TextView
-      android:id="@+id/item_pic_main_item_category_name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="start|bottom"
-      android:textColor="#FFFFFF"
-      android:textSize="25sp"/>
-  </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <cc.zkteam.juediqiusheng.view.ZKImageView
+            android:id="@+id/item_pic_main_list_pic"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/item_pic_main_item_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:textColor="@color/color_pic_text"
+            android:background="@color/color_pic_bg"
+            android:padding="@dimen/dp_10"
+            android:textSize="25sp"/>
+    </FrameLayout>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
 </LinearLayout>
