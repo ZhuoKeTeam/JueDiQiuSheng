@@ -4,10 +4,11 @@
                 android:layout_height="wrap_content"
     >
 
-    <ImageView
+    <cc.zkteam.juediqiusheng.view.ZKImageView
         android:id="@+id/id_item_list_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:src="@mipmap/ic_launcher"/>
 

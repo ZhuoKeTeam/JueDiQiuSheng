@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
+import com.facebook.fresco.helper.ImageLoader;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ import cc.zkteam.juediqiusheng.strategy.wrapper.HeaderAndFooterWrapper;
 import cc.zkteam.juediqiusheng.strategy.wrapper.LoadMoreWrapper;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
 import cc.zkteam.juediqiusheng.view.ZKImageLoader;
+import cc.zkteam.juediqiusheng.view.ZKImageView;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
@@ -103,6 +105,9 @@ public class StrategyFragment extends Fragment {
             @Override
             protected void convert(ViewHolder holder, CategoryBean s, int position) {
                 holder.setText(R.id.id_item_list_title, s.getCategoryName());
+
+                ZKImageView imageView = holder.getView(R.id.id_item_list_icon);
+                ImageLoader.loadImage(imageView, s.getCategoryPicUrl());
             }
         };
         initHeaderAndFooter();
@@ -146,7 +151,7 @@ public class StrategyFragment extends Fragment {
                 mLoadMoreWrapper.notifyDataSetChanged();
             }
         });
-        ZKConnectionManager.getInstance().getZKApi().getStrategy(5)
+        ZKConnectionManager.getInstance().getZKApi().getStrategy(5, "10004")
                 .enqueue(new ZKCallback<List<BannerBean>>() {
                     @Override
                     public void onResponse(List<BannerBean> bannerBeans) {

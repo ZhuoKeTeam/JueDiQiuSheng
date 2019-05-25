@@ -17,6 +17,7 @@ public class CategoryBean {
     private int id;
     private String categoryName;
     private String categoryUrl;
+    private String categoryPicUrl;
     private int artifactCollection;
 
     public int getId() {
@@ -41,6 +42,14 @@ public class CategoryBean {
 
     public void setCategoryUrl(String categoryUrl) {
         this.categoryUrl = categoryUrl;
+    }
+
+    public String getCategoryPicUrl() {
+        return categoryPicUrl;
+    }
+
+    public void setCategoryPicUrl(String categoryPicUrl) {
+        this.categoryPicUrl = categoryPicUrl;
     }
 
     public int getArtifactCollection() {

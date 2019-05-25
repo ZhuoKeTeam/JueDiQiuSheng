@@ -32,8 +32,8 @@ public interface ZKApi {
     /**
      * 攻略banner
      */
-    @GET("JueDiQiuSheng/recommendedItemJson?jid=10003")
-    Call<BaseBean<List<BannerBean>>>  getStrategy(@Query("pageCount") int count);
+    @GET("JueDiQiuSheng/recommendedItemJson")
+    Call<BaseBean<List<BannerBean>>>  getStrategy(@Query("pageCount") int count, @Query("jid") String jid);
 
     /**
      * 图片分类

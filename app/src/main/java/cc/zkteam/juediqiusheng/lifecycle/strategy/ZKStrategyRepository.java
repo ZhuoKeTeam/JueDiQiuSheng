@@ -68,9 +68,9 @@ public class ZKStrategyRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<List<BannerBean>> getBanerBeanList(int number){
+    public MutableLiveData<List<BannerBean>> getBanerBeanList(int number, String jid){
         MutableLiveData<List<BannerBean>>  mutableLiveData=new MutableLiveData<>();
-        zkApi.getStrategy(number).enqueue(new ZKCallback<List<BannerBean>>() {
+        zkApi.getStrategy(number, jid).enqueue(new ZKCallback<List<BannerBean>>() {
             @Override
             public void onResponse(List<BannerBean> result) {
                 mutableLiveData.setValue(result);
