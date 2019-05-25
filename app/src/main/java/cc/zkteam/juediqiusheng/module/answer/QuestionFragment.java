@@ -68,6 +68,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
             adapter.notifyDataSetChanged();
         });
 
+        presenter.currentPage = 0;
         presenter.loadData(false);
     }
 
