@@ -51,7 +51,7 @@ public class SortActivity extends BaseActivity {
         if (intent != null)
             jid = intent.getStringExtra("id");
 
-        ZKConnectionManager.getInstance().getZKApi().getSortDetail(jid, 20, 0)
+        ZKConnectionManager.getInstance().getZKApi().itemJson(jid, 20, 0)
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(final List<SortDetailBean> result) {

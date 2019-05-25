@@ -39,7 +39,7 @@ public class QFPresenterImpl implements QFPresenter {
 
     @Override
     public void loadData(boolean isLoadMore) {
-        ZKConnectionManager.getInstance().getZKApi().getSortDetail(CATEGORY_ID, PAGE_COUNT, currentPage++)
+        ZKConnectionManager.getInstance().getZKApi().itemJson(CATEGORY_ID, PAGE_COUNT, currentPage++)
                 .enqueue(new ZKCallback<List<SortDetailBean>>() {
                     @Override
                     public void onResponse(final List<SortDetailBean> result) {

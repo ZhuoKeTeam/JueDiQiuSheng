@@ -26,8 +26,8 @@ class RecommendHolder(v: View) : RecyclerView.ViewHolder(v), ICovertData<Recomme
             // TODO: 2017/12/18 test data
             val intent = Intent()
             intent.setClass(ZKBase.getContext(), WebViewActivity::class.java)
-            var url = dt?.newsSourceUrl
-            //url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
+            var url = dt?.tjSourceUrl
+//            url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
             url = url?.substring(url.lastIndexOf("\">") + 2, url.lastIndexOf("</a>"))
             intent.putExtra("url", url)
             ZKBase.getContext().startActivity(intent)

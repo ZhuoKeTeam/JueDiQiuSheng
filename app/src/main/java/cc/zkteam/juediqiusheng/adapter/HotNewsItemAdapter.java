@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.Utils;
+
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
@@ -22,15 +25,15 @@ public class HotNewsItemAdapter
         extends RecyclerView.Adapter<HotNewsItemAdapter.ViewHolder> {
 
     //    List<SortDetailBean> list;
-    List<RecommendedBean> list;
+    public List<RecommendedBean> list;
 
-    private onItemClickListener listener;
+    private HotNewsAdapter.onItemClickListener listener;
 
     public HotNewsItemAdapter(List list) {
         this.list = list;
     }
 
-    public void setListener(onItemClickListener listener) {
+    public void setListener(HotNewsAdapter.onItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -64,8 +67,8 @@ public class HotNewsItemAdapter
             else{
                 holder.imageView.setImageResource(R.mipmap.ic_launcher);
             }
-            holder.tvOrigin.setText("来源：XX");
-            holder.tvTime.setText("2017/12/17");
+            holder.tvOrigin.setText(Utils.getApp().getResources().getString(R.string.source_text));
+            holder.tvTime.setText(TimeUtils.millis2String(recommendedBean.getCollectionDate()*1000));
             if (listener != null) {
                 holder.setOnClickListener(listener, recommendedBean);
             }
@@ -77,7 +80,7 @@ public class HotNewsItemAdapter
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return list == null ? 0 : list.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,19 +103,10 @@ public class HotNewsItemAdapter
             tvTime = view.findViewById(R.id.tv_time);
         }
 
-        public void setOnClickListener(final onItemClickListener listener, RecommendedBean data) {
+        public void setOnClickListener(final HotNewsAdapter.onItemClickListener listener, RecommendedBean data) {
             this.data = data;
-            contentView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onItemClicked(ViewHolder.this.data);
-                }
-            });
+            contentView.setOnClickListener(view -> listener.onItemClicked(ViewHolder.this.data));
         }
-    }
-
-    public interface onItemClickListener {
-        void onItemClicked(RecommendedBean data);
     }
 
 }

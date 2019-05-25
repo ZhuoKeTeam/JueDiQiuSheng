@@ -12,7 +12,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
-import cc.zkteam.juediqiusheng.bean.SortDetailBean;
+import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 
 /**
@@ -22,7 +22,7 @@ import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 public class HotNewsAdapter
         extends RecyclerView.Adapter<HotNewsAdapter.ViewHolder> {
 
-    List<HotNewsBean> list;
+    public List<HotNewsBean> list;
 
 
     private onItemClickListener listener;
@@ -82,11 +82,12 @@ public class HotNewsAdapter
     }
 
     public interface onItemClickListener {
-        void onItemClicked(SortDetailBean data);
+        void onItemClicked(RecommendedBean data);
     }
 
     protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
         HotNewsItemAdapter hotNewsItemAdapter = new HotNewsItemAdapter(arrayList);
+        hotNewsItemAdapter.setListener(listener);
         zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
         zkRecyclerView.setItemAnimator(new DefaultItemAnimator());
         zkRecyclerView.setAdapter(hotNewsItemAdapter);

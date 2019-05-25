@@ -9,7 +9,10 @@
     <cc.zkteam.juediqiusheng.view.ZKBanner
         android:id="@+id/zk_banner"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="200dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:ignore="MissingConstraints"/>
 
 
     <cc.zkteam.juediqiusheng.view.ZKRefreshLayout

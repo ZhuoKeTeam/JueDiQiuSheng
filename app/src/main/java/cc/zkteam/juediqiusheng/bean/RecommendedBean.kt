@@ -17,9 +17,11 @@ data class RecommendedBean(
         @SerializedName("tjPicUrl")
         val picUrl: String,
         @SerializedName("tjUrl")
+        val tjSourceUrl: String,
+        @SerializedName("tjSourceUrl")
         val newsSourceUrl: String,
         @SerializedName("tjDate")
-        val date: String,
+        val date: Long,
         @SerializedName("tjCollection")
-        val collectionDate: String
+        val collectionDate: Long
 )

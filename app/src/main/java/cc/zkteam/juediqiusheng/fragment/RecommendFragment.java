@@ -2,15 +2,13 @@ package cc.zkteam.juediqiusheng.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.Utils;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.youth.banner.BannerConfig;
@@ -20,18 +18,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.TestData;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
-import cc.zkteam.juediqiusheng.adapter.SimpleStringRecyclerViewAdapter;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
-import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
-import cc.zkteam.juediqiusheng.module.waterfall.ItemBean;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.view.ZKBanner;
-import cc.zkteam.juediqiusheng.view.ZKImageLoader;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 import cc.zkteam.juediqiusheng.view.ZKRefreshLayout;
 
@@ -63,6 +56,13 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
     protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
         if (adapter == null) {
             adapter = new HotNewsAdapter(arrayList);
+            adapter.setListener(data -> {
+                Intent intent = new Intent(Utils.getApp(), WebViewActivity.class);
+                String artifactUrl = data.getTjSourceUrl();
+                String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
+                intent.putExtra("url", url);
+                Utils.getApp().startActivity(intent);
+            });
         }
 
         zkRecyclerView.setLayoutManager(new LinearLayoutManager(zkRecyclerView.getContext()));
@@ -117,7 +117,6 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        initZKBanner(zkBanner);
         initZKRecyclerView(zkRecyclerView, listBeans);
         initZKRefreshLayout(zkRefreshLayout);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
@@ -125,23 +124,20 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
                 listBeans.clear();
-                getUpdatesData();
-                getVideoData();
-//                materialRefreshLayout.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        listBeans.addAll(testData);
-//                        getListData(pageIndex);
-//                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-//                        zkRefreshLayout.finishRefresh();
-//                    }
-//                }, 3000);
+                updateListData();
+//                materialRefreshLayout.postDelayed(() -> {
+//                    listBeans.addAll(testData);
+//                    getListData(pageIndex);
+//                    zkRecyclerView.getAdapter().notifyDataSetChanged();
+//                    zkRefreshLayout.finishRefresh();
+//                }, 1000);
                 materialRefreshLayout.finishRefreshLoadMore();
             }
 
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
                 super.onRefreshLoadMore(materialRefreshLayout);
+                materialRefreshLayout.finishRefreshLoadMore();
 
 //                new Handler().postDelayed(new Runnable() {
 //                    @Override
@@ -157,8 +153,13 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         });
         zkBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
         getBannerDatas();
-//        getNewsListData();
+        updateListData();
+    }
+
+    private void updateListData() {
+        listBeans.clear();
         getUpdatesData();
+        getNewsData();
         getVideoData();
     }
 
@@ -211,25 +212,24 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
     public void OnBannerClick(int position) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), WebViewActivity.class);
-        String artifactUrl = bannerBeans.get(position).getNewsSourceUrl();
+        String artifactUrl = bannerBeans.get(position).getTjSourceUrl();
         String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
         intent.putExtra("url", url);
         startActivity(intent);
     }
 
-    private void getNewsData() {
+    private void getUpdatesData() {
         ZKConnectionManager.getInstance().getZKApi()
-                .getSortDetail("10000", 20, 1)
-                .enqueue(new ZKCallback<List<SortDetailBean>>() {
+                .getRecommended("10006", "5")
+                .enqueue(new ZKCallback<List<RecommendedBean>>() {
                     @Override
-                    public void onResponse(List<SortDetailBean> result) {
-
+                    public void onResponse(List<RecommendedBean> result) {
 
                         HotNewsBean hotNewsBean = new HotNewsBean();
-                        hotNewsBean.setTitle("最新更新");
-//                        hotNewsBean.setSortDetailBeans(result.subList(0, 3));
+                        hotNewsBean.setTitle("游戏更新");
+                        hotNewsBean.setSortDetailBeans(result);
                         listBeans.add(0, hotNewsBean);
-//                        listBeans.addAll(result);
+
                         zkRecyclerView.getAdapter().notifyDataSetChanged();
                         zkRefreshLayout.finishRefresh();
                     }
@@ -241,18 +241,18 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
                 });
     }
 
-    private void getUpdatesData() {
+    private void getNewsData() {
         ZKConnectionManager.getInstance().getZKApi()
-                .getRecommended("10006", "3")
+                .getRecommended("10007", "5")
                 .enqueue(new ZKCallback<List<RecommendedBean>>() {
                     @Override
                     public void onResponse(List<RecommendedBean> result) {
 
                         HotNewsBean hotNewsBean = new HotNewsBean();
-                        hotNewsBean.setTitle("游戏更新");
-                        hotNewsBean.setSortDetailBeans(result);
+                        hotNewsBean.setTitle("上手体验");
+                        hotNewsBean.setSortDetailBeans(result.subList(0, 5));
                         listBeans.add(0, hotNewsBean);
-//                        listBeans.addAll(result);
+
                         zkRecyclerView.getAdapter().notifyDataSetChanged();
                         zkRefreshLayout.finishRefresh();
                     }
@@ -266,18 +266,18 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
 
     private void getVideoData() {
         ZKConnectionManager.getInstance().getZKApi()
-                .getRecommended("10008", "3")
+                .getRecommended("10008", "5")
                 .enqueue(new ZKCallback<List<RecommendedBean>>() {
                     @Override
                     public void onResponse(List<RecommendedBean> result) {
 
-                        HotNewsBean hotNewsBean = new HotNewsBean();
-                        hotNewsBean.setTitle("精彩视频");
-                        hotNewsBean.setSortDetailBeans(result);
-                        listBeans.add(hotNewsBean);
-//                        listBeans.addAll(result);
-                        zkRecyclerView.getAdapter().notifyDataSetChanged();
-                        zkRefreshLayout.finishRefresh();
+//                        HotNewsBean hotNewsBean = new HotNewsBean();
+//                        hotNewsBean.setTitle("精彩视频");
+//                        hotNewsBean.setSortDetailBeans(result);
+//                        listBeans.add(hotNewsBean);
+////                        listBeans.addAll(result);
+//                        zkRecyclerView.getAdapter().notifyDataSetChanged();
+//                        zkRefreshLayout.finishRefresh();
                     }
 
                     @Override

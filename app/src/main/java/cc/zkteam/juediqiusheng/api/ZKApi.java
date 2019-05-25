@@ -60,7 +60,7 @@ public interface ZKApi {
      * 分类详情
      */
     @GET("JueDiQiuSheng/itemJson")
-    Call<BaseBean<List<SortDetailBean>>> getSortDetail(@Query("jid") String jId, @Query("pageCount") int count, @Query("page") int page);
+    Call<BaseBean<List<SortDetailBean>>> itemJson(@Query("jid") String jId, @Query("pageCount") int count, @Query("page") int page);
 
     /**
      * 瀑布流
