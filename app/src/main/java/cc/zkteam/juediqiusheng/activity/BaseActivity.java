@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.yw.game.floatmenu.FloatLogoMenu;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.managers.ZKFloatMenuManager;
 
 /**
  * BaseActivity
@@ -78,25 +78,28 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mFloatMenu == null) {
-            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this, getFragmentManager());
-        }
-        try {
-            mFloatMenu.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        MobclickAgent.onResume(this);
+
+//        if (mFloatMenu == null) {
+//            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this, getFragmentManager());
+//        }
+//        try {
+//            mFloatMenu.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        ZKFloatMenuManager.getInstance().hideFloat();
+        MobclickAgent.onPause(this);
+//        ZKFloatMenuManager.getInstance().hideFloat();
     }
 
     @Override
     protected void onDestroy() {
-        ZKFloatMenuManager.getInstance().destroyFloat();
+//        ZKFloatMenuManager.getInstance().destroyFloat();
         super.onDestroy();
     }
 

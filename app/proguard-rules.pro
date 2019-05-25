@@ -52,3 +52,13 @@
 -dontwarn com.networkbench.**
 -keepattributes Exceptions, Signature, InnerClasses
 # End NetworkBench Lens
+
+# 友盟统计
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

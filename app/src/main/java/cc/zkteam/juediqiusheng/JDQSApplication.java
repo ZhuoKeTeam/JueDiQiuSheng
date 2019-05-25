@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.blankj.utilcode.util.Utils;
+import com.umeng.commonsdk.UMConfigure;
 
 import javax.inject.Inject;
 
@@ -36,6 +37,8 @@ public class JDQSApplication extends Application implements HasActivityInjector 
                 .application(this)
                 .builder()
                 .inject(this);
+
+        UMConfigure.init(this, "5ce947420cafb23dee000572", "google_play", UMConfigure.DEVICE_TYPE_PHONE, null);
     }
 
     @Override

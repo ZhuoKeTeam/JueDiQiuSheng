@@ -11,7 +11,7 @@ kapt {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '26.0.2'
 
     defaultConfig {
@@ -94,4 +94,8 @@ dependencies {
     //    androidTestImplementation support.v4
     //    androidTestImplementation support.app_compat
     //    androidTestImplementation support.design
+
+//    添加统计
+    implementation  'com.umeng.umsdk:analytics:7.5.4'
+    implementation  'com.umeng.umsdk:common:1.5.4'
 }

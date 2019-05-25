@@ -129,6 +129,7 @@ def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.mavenCentral()
+    handler.maven { url 'https://dl.bintray.com/umsdk/release' }
     handler.maven { url 'https://jitpack.io' }
     //阿里的maven仓国内镜像，如果gradle下载很慢，建议使用该仓库
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
