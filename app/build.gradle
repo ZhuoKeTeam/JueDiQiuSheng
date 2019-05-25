@@ -12,7 +12,7 @@ kapt {
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '26.0.3'
 
     defaultConfig {
         applicationId "cc.zkteam.juediqiusheng"
@@ -98,4 +98,9 @@ dependencies {
 //    添加统计
     implementation  'com.umeng.umsdk:analytics:7.5.4'
     implementation  'com.umeng.umsdk:common:1.5.4'
+
+//    //动态申请权限
+//    implementation('com.yanzhenjie.permission:support:2.0.1') {
+//        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
+//    }
 }

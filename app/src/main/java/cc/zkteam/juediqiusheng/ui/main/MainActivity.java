@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.ui.main;
 
+import android.Manifest;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.List;
 
@@ -61,6 +64,15 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     public static final int NAV_TYPE_QUESTION= 3;
 
     public static int [] NAV_TYPE = new int[]{NAV_TYPE_RECOMMEND, NAV_TYPE_STRATEGY, NAV_TYPE_GALLERY, NAV_TYPE_QUESTION};
+
+
+    private static final int FLAG_REQUEST_PERMISSION =  100;
+
+
+    private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 
     private ZKViewPager mViewPager;
     private BottomNavigationView navigation;
@@ -149,13 +161,28 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
 
     @Override
     protected void initData() {
-        demo();
+//        demo();
+
+        PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
+
+            @Override
+            public void onPermissionGranted() {
+            }
+
+            @Override
+            public void onPermissionDenied(String[] deniedPermissions) {
+                ToastUtils.showShort(getString(R.string.question_permission_tip));
+            }
+        });
+
     }
 
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return fragmentDispatchingAndroidInjector;
     }
+
+
 
     /**
      * MainActivity 中的四大底标签页面
@@ -204,16 +231,16 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
  */
 
 
-    /**
-     * 范例使用
-     */
-    private void demo() {
-        // 演示如何快速使用网络请求
-        demoRequestApi();
-
-        // 演示 如何使用 LifeComponents
-        demoLifeComponents(new TextView(this));
-    }
+//    /**
+//     * 范例使用
+//     */
+//    private void demo() {
+//        // 演示如何快速使用网络请求
+//        demoRequestApi();
+//
+//        // 演示 如何使用 LifeComponents
+//        demoLifeComponents(new TextView(this));
+//    }
 
 
     @Inject

@@ -1,8 +1,10 @@
 package cc.zkteam.juediqiusheng.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -15,6 +17,26 @@ import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 public class SplashActivity extends BaseActivity {
+
+
+    private static final int DELAY_TIME =  3000;
+    private static final int FLAG_ENTER_MAIN =  0;
+
+    @SuppressLint("HandlerLeak")
+    private Handler splashHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == FLAG_ENTER_MAIN) {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                finish();
+            }
+        }
+    };
+
+
 
     private ImageView img1,img2,img3;
     private LinearLayout linear;
@@ -61,16 +83,8 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initAnimation() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                finish();
-            }
-        }, 2000);
+        permissionCheck();
+
         WindowManager wm = (WindowManager)
                 getSystemService(this.WINDOW_SERVICE);
 
@@ -116,4 +130,31 @@ public class SplashActivity extends BaseActivity {
         view.startAnimation(as);
     }
 
+
+    //####################################### 权限 startActivity ############################################
+    private void permissionCheck() {
+//        if (PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
+//            PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
+//
+//                @Override
+//                public void onPermissionGranted() {
+//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
+//                }
+//
+//                @Override
+//                public void onPermissionDenied(String[] deniedPermissions) {
+//                    ToastUtils.showShort(getString(R.string.question_permission_tip));
+//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
+//                }
+//            });
+//        } else {
+            splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
+//        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        splashHandler.removeMessages(FLAG_ENTER_MAIN);
+    }
 }
