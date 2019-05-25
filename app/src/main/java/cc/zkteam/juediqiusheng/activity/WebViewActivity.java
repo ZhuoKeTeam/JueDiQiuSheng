@@ -4,15 +4,24 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -21,6 +30,9 @@ import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.utils.L;
 import dagger.android.AndroidInjection;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 @SuppressLint("SetJavaScriptEnabled")
 
@@ -42,6 +54,33 @@ public class WebViewActivity extends BaseActivity {
     @Override
     protected void initListener() {
         webView.setWebViewClient(new WebViewClient() {
+
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Nullable
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+
+                try {
+                    String url = request.getUrl().toString();
+                    if (url.contains("jpg") || url.contains("png") || url.contains("gif")) {
+                        WebResourceResponse webResourceResponse = null;
+
+                        OkHttpClient client = new OkHttpClient();
+                        Request requestReq = new Request.Builder()
+                                    .url(url)
+                                    .build();
+
+                        webResourceResponse = getOkHttpWebResourceResponse(url, client, requestReq);
+                        setWebResourceResponseHeader(webResourceResponse);
+                        return webResourceResponse;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return super.shouldInterceptRequest(view, request);
+            }
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 System.out.println(url);
@@ -156,5 +195,59 @@ public class WebViewActivity extends BaseActivity {
 
     }
 
+
+    /**
+     * 兼容在 5.0 手机上无法加载字体库和其他资源的问题。
+     */
+    private void setWebResourceResponseHeader(WebResourceResponse webResourceResponse) {
+        if (webResourceResponse != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Map<String, String> map = webResourceResponse.getResponseHeaders();
+
+            if (map == null) {
+                map = new HashMap<>();
+            }
+
+            map.put("Access-Control-Allow-Origin", "*");
+            webResourceResponse.setResponseHeaders(map);
+        }
+    }
+
+    private WebResourceResponse getOkHttpWebResourceResponse(String url, OkHttpClient client, Request request) {
+        WebResourceResponse webResourceResponse = null;
+
+        if (request != null) {
+            try {
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful()) {
+                    ResponseBody responseBody = response.body();
+                    InputStream inputStream = responseBody.byteStream();
+
+                    if (inputStream != null) {
+                        L.i("contentType : " + responseBody.contentType().toString());
+
+                        String type = null;
+                        if (responseBody.contentType() != null) {
+                            type = responseBody.contentType().toString();
+
+                            if (type.contains(";"))
+                                type = type.substring(0, type.indexOf(";"));
+                        }
+
+                        webResourceResponse = new WebResourceResponse(type, "utf-8", inputStream);
+                        L.d("webResourceResponse1: " + response.toString());
+                    } else {
+                        L.e("关于 responseBody:" + responseBody + "url:" + url + ",  type: " +
+                                responseBody.contentType());
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return webResourceResponse;
+    }
 
 }

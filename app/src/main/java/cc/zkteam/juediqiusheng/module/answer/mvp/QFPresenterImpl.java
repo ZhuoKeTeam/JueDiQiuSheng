@@ -24,7 +24,7 @@ public class QFPresenterImpl implements QFPresenter {
      * 当前页面对应 ID
      */
     public static final String CATEGORY_ID = "34425";
-    public static final int PAGE_COUNT = 5;
+    public static final int PAGE_COUNT = 10;
 
     public int currentPage = 0;
 
