@@ -2,13 +2,13 @@ package cc.zkteam.juediqiusheng.module.category
 
 import android.graphics.Color
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.Window
 import cc.zkteam.juediqiusheng.R
+import cc.zkteam.juediqiusheng.activity.BaseActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
@@ -16,7 +16,19 @@ import okhttp3.*
 import java.io.IOException
 
 @Route(path = "/module/category")
-class BaseCategoryListActivity : AppCompatActivity() {
+class BaseCategoryListActivity : BaseActivity() {
+    override fun getLayoutId(): Int {
+        return R.layout.activity_base_category_list
+    }
+
+    override fun initViews() {//function
+    }
+
+    override fun initListener() {//function
+    }
+
+    override fun initData() {//function
+    }
 
     private var toolbar: Toolbar? = null
     private var list: RecyclerView? = null
@@ -26,7 +38,6 @@ class BaseCategoryListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_base_category_list)
         toolbar = findViewById(R.id.toolbar_category)
         setSupportActionBar(toolbar)
 

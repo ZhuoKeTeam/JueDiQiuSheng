@@ -3,7 +3,6 @@ package cc.zkteam.juediqiusheng.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -15,7 +14,7 @@ import android.widget.LinearLayout;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     private ImageView img1,img2,img3;
     private LinearLayout linear;
@@ -23,13 +22,28 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+//        setContentView(R.layout.activity_splash);
         initView();
         initData();
         initAnimation();
     }
 
-    private void initData() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    protected void initViews() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+    @Override
+    protected void initData() {
 //        // 初始化听云 SDK
 //        NBSAppAgent.setLicenseKey(Constant.ZKTEAM_TINGYUN_KEY)
 //                .withLocationServiceEnabled(true)

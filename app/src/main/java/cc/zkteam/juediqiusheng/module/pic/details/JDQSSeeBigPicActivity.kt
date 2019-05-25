@@ -2,15 +2,13 @@ package cc.zkteam.juediqiusheng.module.pic.details
 
 import android.graphics.drawable.Animatable
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import app.dinus.com.loadingdrawable.LoadingView
-import app.dinus.com.loadingdrawable.render.LoadingRenderer
-import app.dinus.com.loadingdrawable.render.circle.jump.DanceLoadingRenderer
 import cc.zkteam.juediqiusheng.R
+import cc.zkteam.juediqiusheng.activity.BaseActivity
 import cc.zkteam.juediqiusheng.utils.L
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -28,14 +26,26 @@ import kotlinx.android.synthetic.main.activity_see_big_pic_layout.*
  * 大图预览
  */
 @Route(path = "/module/pic/details")
-class JDQSSeeBigPicActivity : AppCompatActivity() {
+class JDQSSeeBigPicActivity : BaseActivity() {
+    override fun getLayoutId(): Int {//function
+        return R.layout.activity_see_big_pic_layout
+    }
+
+    override fun initViews() {//function
+    }
+
+    override fun initListener() {//function
+    }
+
+    override fun initData() {//function
+    }
+
     @Autowired(name = "url")
     lateinit var url: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
-        setContentView(R.layout.activity_see_big_pic_layout)
         ARouter.getInstance().inject(this)
 
         initToolbar()
