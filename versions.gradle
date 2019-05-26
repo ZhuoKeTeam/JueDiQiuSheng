@@ -17,7 +17,7 @@ versions.fresco = "1.3.0"
 versions.junit = "4.12"
 versions.kotlin_version = "1.3.21"
 versions.material_refesh_layout = "1.3.0"
-versions.networkbench_version = "2.7.0"
+versions.networkbench_version = "2.13.1"
 versions.okhttp = "3.9.1"
 versions.photo_view = "2.1.3"
 versions.photo_draweeview = "1.1.3"
@@ -133,6 +133,7 @@ def addRepos(RepositoryHandler handler) {
     handler.maven { url 'https://jitpack.io' }
     //阿里的maven仓国内镜像，如果gradle下载很慢，建议使用该仓库
     handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url "http://nexus2.tingyun.com/nexus/content/repositories/snapshots/" }
 //    handler.maven { url 'https://maven.google.com'}
 
 }

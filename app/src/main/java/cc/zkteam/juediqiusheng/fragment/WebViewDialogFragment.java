@@ -17,6 +17,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
+import com.networkbench.agent.impl.instrumentation.NBSWebChromeClient;
+
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.L;
@@ -142,7 +144,6 @@ public class WebViewDialogFragment extends DialogFragment {
         webSettings.setAppCacheEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
-
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 L.i("当前的 shouldOverrideUrlLoading Url:" + url);
@@ -153,7 +154,7 @@ public class WebViewDialogFragment extends DialogFragment {
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-//                NBSWebChromeClient.initJSMonitor(view, newProgress);
+                NBSWebChromeClient.initJSMonitor(view, newProgress);
                 super.onProgressChanged(view, newProgress);
             }
         });

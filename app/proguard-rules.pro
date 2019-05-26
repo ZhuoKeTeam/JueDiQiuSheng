@@ -62,3 +62,15 @@
     public static **[] values();
     public static ** valueOf(java.lang.String);
 }
+
+# 听云统计
+# ProGuard configurations for NetworkBench Lens
+
+-keep class com.networkbench.** { *; }
+
+-dontwarn com.networkbench.**
+
+-keepattributes Exceptions, Signature, InnerClasses
+-keepattributes SourceFile,LineNumberTable
+
+# End NetworkBench Lens

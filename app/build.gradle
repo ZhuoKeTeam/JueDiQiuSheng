@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'newlens'
+apply plugin: 'newlens'
 
 kapt {
     arguments {
@@ -62,7 +62,7 @@ dependencies {
     implementation deps.zk_fresco
     implementation deps.okhttp
     implementation deps.floatmenu
-    //    implementation deps.nbs_newlens_agent
+    implementation deps.nbs_newlens_agent
     //    implementation deps.photo_view
     implementation deps.fresco
     implementation deps.photo_draweeview
