@@ -28,16 +28,21 @@ public class ZKAD {
     }
 
     private static View initGoogleADView() {
-        AdView adView = new AdView(Utils.getApp());
-        adView.setAdSize(AdSize.SMART_BANNER);
-        if (BuildConfig.DEBUG) {
-            adView.setAdUnitId(AD_GOOGLE_TEST_KEY);
-        } else {
-            adView.setAdUnitId(AD_GOOGLE_RELEASE_DTS_GL_HF_KEY);
+        try {
+            AdView adView = new AdView(Utils.getApp());
+            adView.setAdSize(AdSize.SMART_BANNER);
+            if (BuildConfig.DEBUG) {
+                adView.setAdUnitId(AD_GOOGLE_TEST_KEY);
+            } else {
+                adView.setAdUnitId(AD_GOOGLE_RELEASE_DTS_GL_HF_KEY);
+            }
+            AdRequest adRequest = new AdRequest.Builder().build();
+            adView.loadAd(adRequest);
+            return adView;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        AdRequest adRequest = new AdRequest.Builder().build();
-        adView.loadAd(adRequest);
-        return adView;
+        return null;
     }
 
     public static void initHFAD(Activity activity) {
@@ -46,8 +51,12 @@ public class ZKAD {
     }
 
     public static void initHFAD(View rootView) {
-        RelativeLayout adContentView = rootView.findViewById(R.id.ad_content_view);
-        if (adContentView != null)
-            adContentView.addView(ZKAD.initADView());
+        try {
+            RelativeLayout adContentView = rootView.findViewById(R.id.ad_content_view);
+            if (adContentView != null)
+                adContentView.addView(ZKAD.initADView());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

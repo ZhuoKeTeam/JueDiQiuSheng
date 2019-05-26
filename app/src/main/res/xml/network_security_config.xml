@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+
+    <domain-config>
+        <domain includeSubdomains="true">gateway.dahai.com</domain>
+        <trust-anchors>
+            <certificates src="system"/>
+            <certificates src="user" />
+        </trust-anchors>
+    </domain-config>
+
+    <!-- 配置7.0抓包  debug的包才能访问这个 -start -->
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust user added CAs while debuggable only -->
+            <certificates src="user"/>
+            <certificates src="system"/>
+        </trust-anchors>
+    </debug-overrides>
+    <!-- 配置7.0抓包-end -->
+
+    <!-- 配置9.0明文请求-start -->
+    <base-config cleartextTrafficPermitted="true"/>
+    <!-- 配置9.0明文请求-end -->
+
+</network-security-config>

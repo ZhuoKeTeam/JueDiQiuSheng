@@ -62,7 +62,7 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
                 String artifactUrl = data.getTjSourceUrl();
                 String url = artifactUrl.substring(artifactUrl.lastIndexOf("\">") + 2, artifactUrl.lastIndexOf("</a>"));
                 intent.putExtra("url", url);
-                Utils.getApp().startActivity(intent);
+                getActivity().startActivity(intent);
             });
         }
 
