@@ -36,7 +36,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/cardview_light_background"
-            android:text="绝 地 求 生"
+            android:text="吃 鸡 攻 略"
+            android:layout_marginBottom="@dimen/dp_10"
             android:textSize="40sp"/>
     </LinearLayout>
 
