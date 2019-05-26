@@ -1,9 +1,14 @@
 package cc.zkteam.juediqiusheng.ui.main;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +22,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -27,6 +33,7 @@ import javax.inject.Inject;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
+import cc.zkteam.juediqiusheng.bean.UpdateBean;
 import cc.zkteam.juediqiusheng.fragment.WQFragment;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
@@ -174,6 +181,71 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                 ToastUtils.showShort(getString(R.string.question_permission_tip));
             }
         });
+
+
+        Context context = this;
+        ZKConnectionManager.getInstance().getZKApi().update()
+                .enqueue(new ZKCallback<UpdateBean>() {
+                    @Override
+                    public void onResponse(UpdateBean result) {
+
+                        if (result != null) {
+                            boolean check = result.isCheck();
+                            int version = result.getApp_version();
+                            String info = result.getInfo();
+                            if (check && version > 0 && version != AppUtils.getAppVersionCode()) {
+
+
+                                final AlertDialog.Builder normalDialog =
+                                        new AlertDialog.Builder(MainActivity.this);
+                                normalDialog.setTitle("升级提示");
+                                normalDialog.setMessage(info);
+                                normalDialog.setPositiveButton("确定",
+                                        (dialog, which) -> {
+
+                                            try {
+                                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                                intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getPackageName()));
+                                                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                                                    context.startActivity(intent);
+                                                } else {
+                                                    //没有Google Play 也没有浏览器
+                                                }
+                                            } catch (ActivityNotFoundException activityNotFoundException1) {
+                                            }
+
+                                        });
+                                normalDialog.setNegativeButton("关闭",
+                                        (dialog, which) -> {
+                                            //...To-do
+                                        });
+                                // 显示
+                                normalDialog.show();
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable throwable) {
+
+                    }
+                });
+
+
+
+
+//                .zkApi.picCategory
+//                .enqueue(object : ZKCallback<List<PicCategoryBean>>() {
+//            override fun onFailure(throwable: Throwable?) {
+//
+//            }
+//
+//            override fun onResponse(result: List<PicCategoryBean>?) {
+//                adapter.covertData(result)
+//            }
+//
+//        })
 
     }
 

@@ -9,6 +9,7 @@ import cc.zkteam.juediqiusheng.bean.PicBean;
 import cc.zkteam.juediqiusheng.bean.PicCategoryBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
+import cc.zkteam.juediqiusheng.bean.UpdateBean;
 import cc.zkteam.juediqiusheng.module.waterfall.ItemBean;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -28,6 +29,12 @@ public interface ZKApi {
      */
     @GET("JueDiQiuSheng/categoryJson")
     Call<BaseBean<List<CategoryBean>>> categoryData(@Query("pageCount") int count);
+
+    /**
+     * App 升级
+     */
+    @GET("android/versions/dtsyxgl.json")
+    Call<BaseBean<UpdateBean>> update();
 
     /**
      * 攻略banner
