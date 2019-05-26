@@ -1,14 +1,17 @@
 package cc.zkteam.juediqiusheng;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
+import com.google.android.gms.ads.MobileAds;
 import com.umeng.commonsdk.UMConfigure;
 
 import javax.inject.Inject;
 
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.di.DaggerAppComponent;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -19,7 +22,7 @@ import dagger.android.HasActivityInjector;
  * Created by WangQing on 2017/10/23.
  */
 
-public class JDQSApplication extends Application implements HasActivityInjector {
+public class JDQSApplication extends MultiDexApplication implements HasActivityInjector {
 
     // 2017/12/2 Dagger2 Activity 的注册
     @Inject
@@ -39,6 +42,14 @@ public class JDQSApplication extends Application implements HasActivityInjector 
                 .inject(this);
 
         UMConfigure.init(this, "5ce947420cafb23dee000572", "google_play", UMConfigure.DEVICE_TYPE_PHONE, null);
+        // google 广告
+        MobileAds.initialize(this, ZKAD.AD_GOOGLE_APP_ID);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this) ;
     }
 
     @Override

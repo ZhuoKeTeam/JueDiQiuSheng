@@ -16,7 +16,7 @@
 
     <string name="category_list">分类列表</string>
     <string name="category">分类</string>
-    <string name="pic_detail">图片浏览</string>
+    <string name="pic_detail">大图欣赏</string>
     <string name="source_text">来源：ZKTeam</string>
     <string name="question_permission_tip">获取权限失败</string>
 </resources>

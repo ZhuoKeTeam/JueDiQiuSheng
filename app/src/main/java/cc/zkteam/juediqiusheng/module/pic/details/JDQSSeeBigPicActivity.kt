@@ -9,6 +9,7 @@ import android.view.View
 import android.view.Window
 import app.dinus.com.loadingdrawable.LoadingView
 import cc.zkteam.juediqiusheng.R
+import cc.zkteam.juediqiusheng.ad.ZKAD
 import cc.zkteam.juediqiusheng.utils.L
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -39,6 +40,8 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
 
         initToolbar()
         loadImg()
+
+        ZKAD.initHFAD(this)
     }
 
     private fun loadImg() {

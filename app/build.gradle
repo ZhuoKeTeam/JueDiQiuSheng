@@ -18,8 +18,9 @@ android {
         applicationId "cc.zkteam.juediqiusheng"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 10004
-        versionName "1.0.4"
+        versionCode 10005
+        versionName "1.0.5"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -98,6 +99,11 @@ dependencies {
 //    添加统计
     implementation  'com.umeng.umsdk:analytics:7.5.4'
     implementation  'com.umeng.umsdk:common:1.5.4'
+
+//    接入 google 广告
+    implementation 'com.google.android.gms:play-services-ads:17.2.1'
+
+    implementation 'com.android.support:multidex:1.0.3'
 
 //    //动态申请权限
 //    implementation('com.yanzhenjie.permission:support:2.0.1') {

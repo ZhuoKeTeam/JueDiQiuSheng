@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.utils.L;
 import dagger.android.AndroidInjection;
@@ -49,6 +50,7 @@ public class WebViewActivity extends BaseActivity {
     protected void initViews() {
         setTitle("详情");
         webView = findViewById(R.id.wb_sort);
+        ZKAD.initHFAD(this);
     }
 
     @Override

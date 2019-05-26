@@ -19,6 +19,7 @@
         android:id="@+id/zk_refresh_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:isLoadMore="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +29,28 @@
         app:progress_size_type="normal"
         app:wave_color="@color/colorPrimary"
         app:wave_height_type="normal"
-        app:wave_show="true"
-        app:isLoadMore="false">
+        app:wave_show="true">
 
-        <cc.zkteam.juediqiusheng.view.ZKRecyclerView
-            android:id="@+id/zk_recycler_view"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"/>
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <cc.zkteam.juediqiusheng.view.ZKRecyclerView
+                    android:id="@+id/zk_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"/>
+
+                <include layout="@layout/ad_rl_view"/>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
 
     </cc.zkteam.juediqiusheng.view.ZKRefreshLayout>
 </android.support.constraint.ConstraintLayout>

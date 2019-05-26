@@ -19,6 +19,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
@@ -92,6 +93,8 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         zkBanner = rootView.findViewById(R.id.zk_banner);
         zkRecyclerView = rootView.findViewById(R.id.zk_recycler_view);
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
+
+        ZKAD.initHFAD(rootView);
     }
 
     @Override

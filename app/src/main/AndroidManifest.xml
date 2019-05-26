@@ -48,6 +48,13 @@
             android:theme="@style/DarkActionBarTheme"/>
         <activity android:name=".ui.main.MainActivity"/>
 
+
+
+        <!--添加 google 广告-->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5576379109949376~6821793256"/>
+
     </application>
 
 </manifest>

@@ -8,9 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_pic_detail"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="#ffffff"
+        android:layout_height="50dp"
         app:title="@string/pic_detail" />
 
     <RelativeLayout
@@ -30,5 +28,10 @@
             android:background="#fff1c02e"
             app:loading_renderer="GhostsEyeLoadingRenderer"
             android:visibility="gone"/>
+
+        <include layout="@layout/ad_rl_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </LinearLayout>
