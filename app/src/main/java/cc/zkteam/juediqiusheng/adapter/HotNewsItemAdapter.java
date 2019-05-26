@@ -65,7 +65,7 @@ public class HotNewsItemAdapter
             if (!TextUtils.isEmpty(recommendedBean.getPicUrl())){
                 holder.imageView.setImageURI(recommendedBean.getPicUrl());}
             else{
-                holder.imageView.setImageResource(R.mipmap.ic_launcher);
+                holder.imageView.setImageResource(R.drawable.ic_default);
             }
             holder.tvOrigin.setText(Utils.getApp().getResources().getString(R.string.source_text));
             holder.tvTime.setText(TimeUtils.millis2String(recommendedBean.getCollectionDate()*1000));

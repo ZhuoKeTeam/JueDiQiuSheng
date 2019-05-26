@@ -15,7 +15,7 @@
             android:id="@+id/item_pic_main_list_pic"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_default"/>
 
         <TextView
             android:id="@+id/item_pic_main_item_category_name"

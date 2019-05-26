@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_default" />
 
 </android.support.v7.widget.CardView>

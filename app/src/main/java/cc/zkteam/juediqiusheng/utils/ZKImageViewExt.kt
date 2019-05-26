@@ -11,7 +11,7 @@ import com.facebook.fresco.helper.ImageLoader
 /**
  * 加载图片
  */
-fun ZKImageView.loadUrl(url: String?, defHolderImage: Int = R.mipmap.ic_launcher) {
+fun ZKImageView.loadUrl(url: String?, defHolderImage: Int = R.drawable.ic_default) {
     url?.let {
         ImageLoader.loadImage(this, it)
     }

@@ -105,7 +105,7 @@ public class SunflowerFragment extends Fragment {
     private void initHeaderAndFooter() {
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
         ImageView imageView = new ImageView(getActivity());
-        imageView.setImageResource(R.mipmap.ic_launcher);
+        imageView.setImageResource(R.drawable.ic_default);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
