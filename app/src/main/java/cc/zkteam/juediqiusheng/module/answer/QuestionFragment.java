@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
@@ -24,7 +25,9 @@ import dagger.android.support.AndroidSupportInjection;
 /**
  * 问答 Fragment
  */
-public class QuestionFragment extends BaseRecyclerViewFragment implements QFView {
+public class QuestionFragment extends BaseRecyclerViewFragment implements QFView, View.OnClickListener {
+
+    LinearLayout llAbout;
 
     @Inject
     QFPresenterImpl presenter;
@@ -49,6 +52,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
 
     @Override
     public void initView(View rootView) {
+        llAbout = rootView.findViewById(R.id.ll_about);
 
     }
 
@@ -74,6 +78,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
 
     @Override
     public void initListener() {
+        llAbout.setOnClickListener(this);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -106,4 +111,17 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
         return new SortAdapter(null);
     }
 
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.ll_about:
+                String url = "file:///android_asset/about_rules.html";
+                Intent intent = new Intent(mContext, WebViewActivity.class);
+                intent.putExtra("url", url);
+                mContext.startActivity(intent);
+                break;
+        }
+
+    }
 }
