@@ -145,6 +145,9 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+
+//        Log.d("WangQing", PhoneUtils.getDeviceId());
+//        ToastUtils.showShort(PhoneUtils.getDeviceId());
     }
 
     @Override
@@ -169,18 +172,19 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     @Override
     protected void initData() {
 //        demo();
+        PermissionUtils.permission(permissions)
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
 
-        PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
+                    }
 
-            @Override
-            public void onPermissionGranted() {
-            }
-
-            @Override
-            public void onPermissionDenied(String[] deniedPermissions) {
-                ToastUtils.showShort(getString(R.string.question_permission_tip));
-            }
-        });
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                        ToastUtils.showShort(getString(R.string.question_permission_tip));
+                    }
+                })
+                .request();
 
 
         Context context = this;

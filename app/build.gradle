@@ -102,6 +102,8 @@ dependencies {
 
 //    接入 google 广告
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
+//    接入 Facebook 广告
+    implementation 'com.facebook.android:audience-network-sdk:5.3.1'
 
     implementation 'com.android.support:multidex:1.0.3'
 
