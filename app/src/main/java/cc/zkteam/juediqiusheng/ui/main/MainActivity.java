@@ -25,7 +25,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -146,8 +150,32 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
 
-//        Log.d("WangQing", PhoneUtils.getDeviceId());
-//        ToastUtils.showShort(PhoneUtils.getDeviceId());
+        getAAID();
+    }
+
+    // 获取 AAID
+    private void getAAID() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 本地获取 Google 的 AAID， 作为测试使用
+                    AdvertisingIdClient.Info  info = AdvertisingIdClient.getAdvertisingIdInfo(mContext);
+                    if (info != null) {
+                        String aaid = info.getId();
+                        boolean adTrackingEnabled = info.isLimitAdTrackingEnabled();
+
+                        Log.d("WangQing", "gms AAID==" + aaid + ", adTrackingEnabled=" +adTrackingEnabled);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

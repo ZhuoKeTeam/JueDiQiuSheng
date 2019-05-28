@@ -30,7 +30,7 @@ public class ZKAD {
     public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/9427296362";
 
     // facebook 的横幅广告
-    public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "872993369704116_872993936370726";
+    public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "2457797387617458_2458180154245848";
 
     private static Application application;
 
