@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:name=".JDQSApplication"
@@ -49,6 +52,39 @@
             android:theme="@style/DarkActionBarTheme"/>
         <activity android:name=".ui.main.MainActivity"/>
 
+        <!--&lt;!&ndash;腾讯广告&ndash;&gt;-->
+        <!--<service android:name="com.qq.e.comm.DownloadService" android:exported="false" />-->
+        <!--<activity android:name="com.qq.e.ads.ADActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />-->
+        <!--<activity android:name="com.qq.e.ads.PortraitADActivity" android:screenOrientation="portrait" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />-->
+        <!--<activity android:name="com.qq.e.ads.LandscapeADActivity" android:screenOrientation="landscape" android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />-->
+
+        <!-- targetSDKVersion >= 24时才需要添加这个 provider。provider 的 authorities 属性的值为 ${applicationId}.fileprovider，请开发者根据自己的 ${applicationId} 来设置这个值 -->
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="${applicationId}.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/gdt_file_path" />-->
+        <!--</provider>-->
+
+        <!--&lt;!&ndash; 声明 SDK 所需要的组件 &ndash;&gt;-->
+        <!--<service-->
+            <!--android:name="com.qq.e.comm.DownloadService"-->
+            <!--android:exported="false"/>-->
+        <!--&lt;!&ndash; 请开发者注意字母的大小写，ADActivity，而不是 AdActivity &ndash;&gt;-->
+        <!--<activity-->
+            <!--android:name="com.qq.e.ads.ADActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>-->
+        <!--<activity-->
+            <!--android:name="com.qq.e.ads.PortraitADActivity"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />-->
+        <!--<activity-->
+            <!--android:name="com.qq.e.ads.LandscapeADActivity"-->
+            <!--android:screenOrientation="landscape"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />-->
 
 
         <!--添加 google 广告-->
@@ -56,6 +92,9 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-5576379109949376~6821793256"/>
 
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
     </application>
 
 </manifest>

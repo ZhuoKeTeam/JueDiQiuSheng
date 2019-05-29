@@ -74,3 +74,24 @@
 -keepattributes SourceFile,LineNumberTable
 
 # End NetworkBench Lens
+
+# 腾讯广告
+-keep class com.qq.e.** {
+    public protected *;
+}
+-keep class android.support.v4.**{
+    public *;
+}
+-keep class android.support.v7.**{
+    public *;
+}
+
+# 腾讯X5
+-keep class MTT.ThirdAppInfoNew {
+    *;
+}
+-keep class com.tencent.** {
+    *;
+}
+-dontwarn dalvik.**
+-dontwarn com.tencent.smtt.**
