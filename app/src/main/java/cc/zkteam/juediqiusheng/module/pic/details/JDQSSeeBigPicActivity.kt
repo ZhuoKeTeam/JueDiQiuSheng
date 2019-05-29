@@ -41,7 +41,7 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         initToolbar()
         loadImg()
 
-        ZKAD.initHFAD(this)
+        ZKAD.initHFAD(this, false)
     }
 
     private fun loadImg() {

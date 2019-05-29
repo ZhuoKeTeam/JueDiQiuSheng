@@ -3,7 +3,7 @@ package cc.zkteam.juediqiusheng.ad;
 import android.app.Activity;
 import android.app.Application;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.AudienceNetworkAds;
@@ -50,7 +50,7 @@ public class ZKAD {
 //        return initGoogleADView();
     }
 
-    private static View initFacebookADView() {
+    public static View initFacebookADView() {
         try {
             fbAdView = new com.facebook.ads.AdView(application,
                     AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY, com.facebook.ads.AdSize.BANNER_HEIGHT_50);
@@ -62,7 +62,7 @@ public class ZKAD {
         return null;
     }
 
-    private static View initGoogleADView() {
+    public static View initGoogleADView() {
         try {
             AdView adView = new AdView(Utils.getApp());
             adView.setAdSize(AdSize.SMART_BANNER);
@@ -81,15 +81,24 @@ public class ZKAD {
     }
 
     public static void initHFAD(Activity activity) {
-        View view = activity.getWindow().getDecorView().getRootView();
-        initHFAD(view);
+        initHFAD(activity, false);
     }
 
-    public static void initHFAD(View rootView) {
+    public static void initHFAD(Activity activity, boolean isFacebookAd) {
+        View view = activity.getWindow().getDecorView().getRootView();
+        initHFAD(view, isFacebookAd);
+    }
+
+    public static void initHFAD(View rootView, boolean isFacebookAd) {
         try {
-            RelativeLayout adContentView = rootView.findViewById(R.id.ad_content_view);
-            if (adContentView != null)
-                adContentView.addView(ZKAD.initADView());
+            LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
+            if (adContentView != null) {
+                if (isFacebookAd) {
+                    adContentView.addView(ZKAD.initFacebookADView());
+                } else  {
+                    adContentView.addView(ZKAD.initGoogleADView());
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
