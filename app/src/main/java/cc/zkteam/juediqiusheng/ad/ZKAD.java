@@ -2,10 +2,12 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
@@ -15,15 +17,16 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.rewarded.RewardItem;
+import com.google.android.gms.ads.rewarded.RewardedAd;
+import com.google.android.gms.ads.rewarded.RewardedAdCallback;
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 
 import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
-
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdSize;
-//import com.google.android.gms.ads.AdView;
 
 public class ZKAD {
 
@@ -37,6 +40,7 @@ public class ZKAD {
     public static final String AD_GOOGLE_RELEASE_DTS_GL_HF_KEY = "ca-app-pub-5576379109949376/8466047413";
     // 激励广告
     public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/9427296362";
+    public static final String AD_GOOGLE_TEST_GL_DTS_JL_KEY = "ca-app-pub-3940256099942544/5224354917";
 
     // facebook 的横幅广告
     public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "2457797387617458_2458180154245848";
@@ -203,4 +207,100 @@ public class ZKAD {
         if (fbAdView != null)
             fbAdView.destroy();
     }
+
+
+
+
+    /**---------------------------------------------google 激励广告-----------------------------------------------------------*/
+
+    private static RewardedAd rewardedAD;
+
+    public static void initGoogleRewardedAd() {
+        rewardedAD = getGoogleRewardedAd();
+    }
+
+    public static RewardedAd getCurrentRewardedAd() {
+        return rewardedAD;
+    }
+
+    /**
+     * 获取 google 激励广告
+     * @return 返回激励广告
+     */
+    public static RewardedAd getGoogleRewardedAd() {
+        String adUnitId = AD_GOOGLE_TEST_GL_DTS_JL_KEY;
+
+        if (!BuildConfig.DEBUG)
+            adUnitId = AD_GOOGLE_RELEASE_GL_DTS_JL_KEY;
+
+        return createAndLoadRewardedAd(adUnitId);
+    }
+
+    private static RewardedAd createAndLoadRewardedAd(String adUnitId) {
+        RewardedAd rewardedAd = new RewardedAd(application, adUnitId);
+        RewardedAdLoadCallback adLoadCallback = new RewardedAdLoadCallback() {
+            @Override
+            public void onRewardedAdLoaded() {
+                // Ad successfully loaded.
+                event(EVENT_GG_JL_AD_LOADED);
+                logD(EVENT_GG_JL_AD_LOADED + "—>onRewardedAdLoaded");
+            }
+
+            @Override
+            public void onRewardedAdFailedToLoad(int errorCode) {
+                // Ad failed to load.
+                event(EVENT_GG_JL_AD_LOADED_FAILED);
+                logD(EVENT_GG_JL_AD_LOADED_FAILED + "—>onRewardedAdFailedToLoad， errorCode==" + errorCode);
+            }
+        };
+        event(EVENT_GG_JL_AD_AA);
+        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+        return rewardedAd;
+    }
+
+    /**
+     * 展示 google 激励广告
+     * @param activity      Activity
+     * @param rewardedAd    激励广告
+     */
+    public static void showGoogleJLAD(Activity activity, RewardedAd rewardedAd) {
+        if (rewardedAd.isLoaded()) {
+            RewardedAdCallback adCallback = new RewardedAdCallback() {
+                public void onRewardedAdOpened() {
+                    // Ad opened.
+                    event(EVENT_GG_JL_AD_OPENED);
+                    logD(EVENT_GG_JL_AD_OPENED + "—>onRewardedAdOpened");
+                }
+
+                public void onRewardedAdClosed() {
+                    // Ad closed.
+                    rewardedAD = getGoogleRewardedAd();
+                    event(EVENT_GG_JL_AD_CLOSED);
+                    logD(EVENT_GG_JL_AD_CLOSED + "—>onRewardedAdClosed");
+                }
+
+                public void onUserEarnedReward(@NonNull RewardItem reward) {
+                    // User earned reward.
+                    ZKSP.reset();
+                    rewardedAD = getGoogleRewardedAd();
+
+                    int amount = reward.getAmount();
+                    String type = reward.getType();
+
+                    event(EVENT_GG_JL_AD_EARNED_JL);
+                    logD(EVENT_GG_JL_AD_EARNED_JL + "—>onRewardedAdLoaded, amount==" + amount + ", type==" + type);
+                }
+
+                public void onRewardedAdFailedToShow(int errorCode) {
+                    // Ad failed to display
+                    event(EVENT_GG_JL_AD_SHOW_FAILED);
+                    logD(EVENT_GG_JL_AD_SHOW_FAILED + "—>onRewardedAdFailedToShow， errorCode==" + errorCode);
+                }
+            };
+            rewardedAd.show(activity, adCallback);
+        } else {
+            ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
+        }
+    }
+
 }

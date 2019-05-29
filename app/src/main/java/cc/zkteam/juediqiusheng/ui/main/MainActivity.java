@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -47,12 +48,17 @@ import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import okhttp3.OkHttpClient;
+
+import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_FILE_NAME;
+import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_INIT;
+import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_KEY;
 
 /**
  * 主 MainActivity
@@ -151,6 +157,14 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         super.onCreate(savedInstanceState);
 
         getAAID();
+        saveLifeCount();
+    }
+
+    /**
+     * 初始化 X 点生命值
+     */
+    private void saveLifeCount() {
+        ZKSP.init();
     }
 
     // 获取 AAID

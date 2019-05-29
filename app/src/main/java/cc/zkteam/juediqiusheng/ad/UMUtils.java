@@ -28,6 +28,16 @@ public class UMUtils {
     public static final String EVENT_GG_HF_AD_IMPRESSION = "event_gg_hf_ad_impression"; // GG日志Impression
 
 
+    public static final String EVENT_GG_JL_AD_AA = "event_gg_jl_ad_aa"; // GG奖励广告添加
+    public static final String EVENT_GG_JL_AD_LOADED = "event_gg_jl_ad_loaded"; // GG奖励广告已经加载
+    public static final String EVENT_GG_JL_AD_LOADED_FAILED = "event_gg_jl_ad_loaded_failed"; // GG奖励广告加载失败
+
+    public static final String EVENT_GG_JL_AD_OPENED = "event_gg_jl_ad_opened"; // GG奖励广告已经打开
+    public static final String EVENT_GG_JL_AD_CLOSED = "event_gg_jl_ad_closed"; // GG奖励广告已经关闭
+    public static final String EVENT_GG_JL_AD_EARNED_JL = "event_gg_jl_ad_earned_jl"; // GG奖励广告获取奖励成功
+    public static final String EVENT_GG_JL_AD_SHOW_FAILED= "event_gg_jl_ad_show_failed"; // GG奖励广告显示失败
+
+
     /**
      * 友盟统计事件
      * @param event event
