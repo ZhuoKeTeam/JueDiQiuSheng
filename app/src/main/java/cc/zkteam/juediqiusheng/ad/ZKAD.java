@@ -10,6 +10,7 @@ import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
@@ -33,11 +34,12 @@ public class ZKAD {
     public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "2457797387617458_2458180154245848";
 
     private static Application application;
+    private static com.facebook.ads.AdView fbAdView;
 
     public static void init(Application appContext) {
         application = appContext;
         // google 广告
-//        MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
+        MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
 
         // facebook 广告
         AudienceNetworkAds.initialize(appContext);
@@ -50,10 +52,10 @@ public class ZKAD {
 
     private static View initFacebookADView() {
         try {
-            com.facebook.ads.AdView adView = new com.facebook.ads.AdView(application,
+            fbAdView = new com.facebook.ads.AdView(application,
                     AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY, com.facebook.ads.AdSize.BANNER_HEIGHT_50);
-            adView.loadAd();
-            return adView;
+            fbAdView.loadAd();
+            return fbAdView;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,5 +93,10 @@ public class ZKAD {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void destory() {
+        if (fbAdView != null)
+            fbAdView.destroy();
     }
 }

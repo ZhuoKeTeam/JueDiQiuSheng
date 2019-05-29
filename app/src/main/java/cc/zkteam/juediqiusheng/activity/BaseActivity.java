@@ -13,6 +13,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.yw.game.floatmenu.FloatLogoMenu;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 
 /**
  * BaseActivity
@@ -100,6 +101,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
 //        ZKFloatMenuManager.getInstance().destroyFloat();
+        ZKAD.destory();
         super.onDestroy();
     }
 
