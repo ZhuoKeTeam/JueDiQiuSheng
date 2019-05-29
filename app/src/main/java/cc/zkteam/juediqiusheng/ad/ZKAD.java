@@ -2,10 +2,14 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.Utils;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdListener;
 import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -15,11 +19,15 @@ import com.google.android.gms.ads.MobileAds;
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 
+import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdSize;
 //import com.google.android.gms.ads.AdView;
 
 public class ZKAD {
+
+    private static final String TAG = "ZKAD";
 
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
@@ -54,12 +62,41 @@ public class ZKAD {
         try {
             fbAdView = new com.facebook.ads.AdView(application,
                     AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY, com.facebook.ads.AdSize.BANNER_HEIGHT_50);
+            fbAdView.setAdListener(new AdListener() {
+                @Override
+                public void onError(Ad ad, AdError adError) {
+                    event(EVENT_FB_HF_AD_ERROR);
+                    logD(EVENT_FB_HF_AD_ERROR + "—>adError Msg=" + adError.getErrorMessage() + ", code=" + adError.getErrorCode());
+                }
+
+                @Override
+                public void onAdLoaded(Ad ad) {
+                    event(EVENT_FB_HF_AD_LOADED);
+                    logD(EVENT_FB_HF_AD_LOADED + "—>onAdLoaded: " + ad.getPlacementId());
+                }
+
+                @Override
+                public void onAdClicked(Ad ad) {
+                    event(EVENT_FB_HF_AD_CLICKED);
+                    logD(EVENT_FB_HF_AD_CLICKED + "—>onAdClicked: " + ad.getPlacementId());
+                }
+
+                @Override
+                public void onLoggingImpression(Ad ad) {
+                    event(EVENT_FB_HF_AD_LOGGING_IMPRESSION);
+                    logD(EVENT_FB_HF_AD_LOGGING_IMPRESSION + "—>onLoggingImpression: " + ad.getPlacementId());
+                }
+            });
             fbAdView.loadAd();
             return fbAdView;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private static void logD(String msg) {
+        Log.d(TAG, msg);
     }
 
     public static View initGoogleADView() {
@@ -71,6 +108,58 @@ public class ZKAD {
             } else {
                 adView.setAdUnitId(AD_GOOGLE_RELEASE_DTS_GL_HF_KEY);
             }
+
+            adView.setAdListener(new com.google.android.gms.ads.AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                    event(EVENT_GG_HF_AD_CLOSED);
+                    logD(EVENT_GG_HF_AD_CLOSED + "—>onAdClosed");
+                }
+
+                @Override
+                public void onAdFailedToLoad(int i) {
+                    super.onAdFailedToLoad(i);
+                    event(EVENT_GG_HF_AD_FAILED_TO_LOAD);
+                    logD(EVENT_GG_HF_AD_FAILED_TO_LOAD + "—>onAdFailedToLoad");
+                }
+
+                @Override
+                public void onAdLeftApplication() {
+                    super.onAdLeftApplication();
+                    event(EVENT_GG_HF_AD_LEFT_APPLICATION);
+                    logD(EVENT_GG_HF_AD_LEFT_APPLICATION + "—>onAdLeftApplication");
+                }
+
+                @Override
+                public void onAdOpened() {
+                    super.onAdOpened();
+                    event(EVENT_GG_HF_AD_OPENED);
+                    logD(EVENT_GG_HF_AD_OPENED + "—>onAdOpened");
+                }
+
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                    event(EVENT_GG_HF_AD_LOADED);
+                    logD(EVENT_GG_HF_AD_LOADED + "—>onAdLoaded");
+                }
+
+                @Override
+                public void onAdClicked() {
+                    super.onAdClicked();
+                    event(EVENT_GG_HF_AD_CLICKED);
+                    logD(EVENT_GG_HF_AD_CLICKED + "—>onAdClicked");
+                }
+
+                @Override
+                public void onAdImpression() {
+                    super.onAdImpression();
+                    event(EVENT_GG_HF_AD_IMPRESSION);
+                    logD(EVENT_GG_HF_AD_IMPRESSION + "—>onAdImpression");
+                }
+            });
+
             AdRequest adRequest = new AdRequest.Builder().build();
             adView.loadAd(adRequest);
             return adView;
@@ -94,14 +183,20 @@ public class ZKAD {
             LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
             if (adContentView != null) {
                 if (isFacebookAd) {
+                    event(EVENT_FB_HF_AD_ADD);
                     adContentView.addView(ZKAD.initFacebookADView());
-                } else  {
+                } else {
+                    event(EVENT_GG_HF_AD_ADD);
                     adContentView.addView(ZKAD.initGoogleADView());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void event(String event) {
+        UMUtils.event(event);
     }
 
     public static void destory() {
