@@ -28,7 +28,7 @@ public class UMUtils {
     public static final String EVENT_GG_HF_AD_IMPRESSION = "event_gg_hf_ad_impression"; // GG日志Impression
 
 
-    public static final String EVENT_GG_JL_AD_AA = "event_gg_jl_ad_aa"; // GG奖励广告添加
+    public static final String EVENT_GG_JL_AD_ADD = "event_gg_jl_ad_add"; // GG奖励广告添加
     public static final String EVENT_GG_JL_AD_LOADED = "event_gg_jl_ad_loaded"; // GG奖励广告已经加载
     public static final String EVENT_GG_JL_AD_LOADED_FAILED = "event_gg_jl_ad_loaded_failed"; // GG奖励广告加载失败
 

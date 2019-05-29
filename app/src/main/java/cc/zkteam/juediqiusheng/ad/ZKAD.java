@@ -253,7 +253,7 @@ public class ZKAD {
                 logD(EVENT_GG_JL_AD_LOADED_FAILED + "—>onRewardedAdFailedToLoad， errorCode==" + errorCode);
             }
         };
-        event(EVENT_GG_JL_AD_AA);
+        event(EVENT_GG_JL_AD_ADD);
         rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
         return rewardedAd;
     }
