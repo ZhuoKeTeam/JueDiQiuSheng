@@ -107,6 +107,9 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    // 添加 Facebook 的登录SDK
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 //    //动态申请权限
 //    implementation('com.yanzhenjie.permission:support:2.0.1') {
 //        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
