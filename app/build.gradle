@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'newlens'
+apply plugin: 'com.mob.sdk'
 
 kapt {
     arguments {
@@ -36,6 +37,27 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+MobSDK {
+    appKey "d580ad56b4b5"
+    appSecret "7fcae59a62342e7e2759e9e397c82bdd"
+
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+//            Wechat {
+//                appId "wx4868b35061f87885"
+//                appSecret "64020361b8ec4c99936c0e3999a9f249"
+//            }
+            Facebook {
+                appKey "1412473428822331"
+                appSecret "a42f4f3f867dc947b9ed6020c2e93558"
+                callbackUri "https://mob.com"
+            }
+        }
+    }
+
 }
 
 dependencies {
@@ -106,6 +128,7 @@ dependencies {
     implementation 'com.facebook.android:audience-network-sdk:5.3.1'
 
     implementation 'com.android.support:multidex:1.0.3'
+
 
 //    //动态申请权限
 //    implementation('com.yanzhenjie.permission:support:2.0.1') {
