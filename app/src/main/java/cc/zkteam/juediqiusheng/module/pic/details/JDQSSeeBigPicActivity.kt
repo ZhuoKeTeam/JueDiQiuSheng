@@ -76,9 +76,10 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
     // 关于 Toolbar 的使用
     private fun initToolbar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar_pic_detail)
-        toolbar.setTitle(R.string.pic_detail)
-        toolbar.setTitleTextColor(resources.getColor(android.R.color.black))
+//        toolbar.setTitle(R.string.pic_detail)
+//        toolbar.setTitleTextColor(resources.getColor(android.R.color.black))
         toolbar.inflateMenu(R.menu.pic_top_right)
+        toolbar.title = ""
         setSupportActionBar(toolbar)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
