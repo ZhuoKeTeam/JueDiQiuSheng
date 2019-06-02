@@ -89,3 +89,7 @@ ZKBase 初始化 必须在 Application 中 ZKBase.init()。
 
 参见 dagger2 module
 https://github.com/gdky005/dagger-android-injection
+
+## 关于 Toolbar 的使用
+
+https://juejin.im/post/5ad84f38f265da50412ebc75

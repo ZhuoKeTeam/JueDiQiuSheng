@@ -15,6 +15,7 @@ import com.facebook.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
@@ -25,26 +26,7 @@ import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ADD;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_CLICKED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ERROR;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOADED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOGGING_IMPRESSION;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_ADD;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLICKED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLOSED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_FAILED_TO_LOAD;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_IMPRESSION;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LEFT_APPLICATION;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LOADED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_OPENED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_ADD;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_CLOSED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_EARNED_JL;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED_FAILED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_OPENED;
-import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_SHOW_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
 
 public class ZKAD {
 
@@ -66,10 +48,18 @@ public class ZKAD {
     private static Application application;
     private static com.facebook.ads.AdView fbAdView;
 
+    // google 插屏广告，每个 Activity 唯一
+    private static InterstitialAd mInterstitialAd;
+
     public static void init(Application appContext) {
         application = appContext;
         // google 广告
         MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
+        // init google 插页广告
+        mInterstitialAd = new InterstitialAd(appContext);
+        if (BuildConfig.DEBUG) {
+            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        }
 
 //        // facebook 广告
 //        AudienceNetworkAds.initialize(appContext);
@@ -318,6 +308,76 @@ public class ZKAD {
             rewardedAd.show(activity, adCallback);
         } else {
             ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
+        }
+    }
+
+    // load google 插屏广告
+    public static void loadGoogleCPAD() {
+        mInterstitialAd.setAdListener(new com.google.android.gms.ads.AdListener() {
+            @Override
+            public void onAdClosed() {
+                super.onAdClosed();
+                // Load the next interstitial.
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                event(EVENT_GG_CP_AD_CLOSED);
+                logD(EVENT_GG_CP_AD_CLOSED + "—>onAdClosed");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                event(EVENT_GG_CP_AD_LOAD_FAILED);
+                logD(EVENT_GG_CP_AD_LOAD_FAILED + "—>onAdFailedToLoad， errorCode==" + i);
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                super.onAdLeftApplication();
+                event(EVENT_GG_CP_AD_LEFT_APPLICATION);
+                logD(EVENT_GG_CP_AD_LEFT_APPLICATION + "—>onAdLeftApplication");
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                logD(EVENT_GG_CP_AD_LEFT_APPLICATION + "—>onAdOpened");
+                event(EVENT_GG_CP_AD_LEFT_APPLICATION);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                logD(EVENT_GG_CP_AD_LEFT_APPLICATION + "—>onAdLoaded");
+                event(EVENT_GG_CP_AD_LEFT_APPLICATION);
+
+            }
+
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                logD(EVENT_GG_CP_AD_LEFT_APPLICATION + "—>onAdClicked");
+                event(EVENT_GG_CP_AD_LEFT_APPLICATION);
+
+            }
+
+            @Override
+            public void onAdImpression() {
+                super.onAdImpression();
+                logD(EVENT_GG_CP_AD_LEFT_APPLICATION + "—>onAdImpression");
+                event(EVENT_GG_CP_AD_LEFT_APPLICATION);
+            }
+        });
+        event(EVENT_GG_CP_AD_ADD);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+    }
+
+    // show google 插屏广告
+    public static void showGoogleCPAD() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            logD("插屏广告飞了: The interstitial wasn't loaded yet.");
+            ToastUtils.showShort("插屏广告飞了");
         }
     }
 
