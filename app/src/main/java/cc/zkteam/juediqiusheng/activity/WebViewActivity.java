@@ -50,7 +50,7 @@ public class WebViewActivity extends BaseActivity {
     protected void initViews() {
         setTitle("详情");
         webView = findViewById(R.id.wb_sort);
-        ZKAD.initHFAD(this, true);
+        ZKAD.initHFAD(this, false);
     }
 
     @Override
