@@ -96,3 +96,6 @@ https://github.com/gdky005/dagger-android-injection
 - MeterialDesign系列文章（一）ToolBar的使用: https://juejin.im/post/5ad84f38f265da50412ebc75
 - Toolbar的使用详解: https://blog.csdn.net/qq_30806949/article/details/51407169
 - android 修改menu 背景及添加图标: https://blog.csdn.net/qq_25912415/article/details/81988133
+
+## Android Studio 批量删除注释 空格
+https://blog.csdn.net/pcisit/article/details/84825390
