@@ -1,20 +1,12 @@
 package cc.zkteam.juediqiusheng.strategy.base;
-
 import android.support.v4.util.SparseArrayCompat;
-
-
-/**
- * Created by zhy on 16/6/22.
- */
 public class ItemViewDelegateManager<T>
 {
     SparseArrayCompat<ItemViewDelegate<T>> delegates = new SparseArrayCompat();
-
     public int getItemViewDelegateCount()
     {
         return delegates.size();
     }
-
     public ItemViewDelegateManager<T> addDelegate(ItemViewDelegate<T> delegate)
     {
         int viewType = delegates.size();
@@ -25,7 +17,6 @@ public class ItemViewDelegateManager<T>
         }
         return this;
     }
-
     public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewDelegate<T> delegate)
     {
         if (delegates.get(viewType) != null)
@@ -39,7 +30,6 @@ public class ItemViewDelegateManager<T>
         delegates.put(viewType, delegate);
         return this;
     }
-
     public ItemViewDelegateManager<T> removeDelegate(ItemViewDelegate<T> delegate)
     {
         if (delegate == null)
@@ -47,25 +37,21 @@ public class ItemViewDelegateManager<T>
             throw new NullPointerException("ItemViewDelegate is null");
         }
         int indexToRemove = delegates.indexOfValue(delegate);
-
         if (indexToRemove >= 0)
         {
             delegates.removeAt(indexToRemove);
         }
         return this;
     }
-
     public ItemViewDelegateManager<T> removeDelegate(int itemType)
     {
         int indexToRemove = delegates.indexOfKey(itemType);
-
         if (indexToRemove >= 0)
         {
             delegates.removeAt(indexToRemove);
         }
         return this;
     }
-
     public int getItemViewType(T item, int position)
     {
         int delegatesCount = delegates.size();
@@ -80,14 +66,12 @@ public class ItemViewDelegateManager<T>
         throw new IllegalArgumentException(
                 "No ItemViewDelegate added that matches position=" + position + " in data source");
     }
-
     public void convert(ViewHolder holder, T item, int position)
     {
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++)
         {
             ItemViewDelegate<T> delegate = delegates.valueAt(i);
-
             if (delegate.isForViewType( item, position))
             {
                 delegate.convert(holder, item, position);
@@ -97,18 +81,14 @@ public class ItemViewDelegateManager<T>
         throw new IllegalArgumentException(
                 "No ItemViewDelegateManager added that matches position=" + position + " in data source");
     }
-
-
     public ItemViewDelegate getItemViewDelegate(int viewType)
     {
         return delegates.get(viewType);
     }
-
     public int getItemViewLayoutId(int viewType)
     {
         return getItemViewDelegate(viewType).getItemViewLayoutId();
     }
-
     public int getItemViewType(ItemViewDelegate itemViewDelegate)
     {
         return delegates.indexOfValue(itemViewDelegate);

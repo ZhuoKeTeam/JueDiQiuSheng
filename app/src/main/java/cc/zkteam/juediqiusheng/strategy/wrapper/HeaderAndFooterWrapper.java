@@ -1,33 +1,22 @@
 package cc.zkteam.juediqiusheng.strategy.wrapper;
-
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 import cc.zkteam.juediqiusheng.strategy.base.ViewHolder;
 import cc.zkteam.juediqiusheng.strategy.utils.WrapperUtils;
-
-
-/**
- * Created by zhy on 16/6/23.
- */
 public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private static final int BASE_ITEM_TYPE_HEADER = 100000;
     private static final int BASE_ITEM_TYPE_FOOTER = 200000;
-
     private SparseArrayCompat<View> mHeaderViews = new SparseArrayCompat<>();
     private SparseArrayCompat<View> mFootViews = new SparseArrayCompat<>();
-
     private RecyclerView.Adapter mInnerAdapter;
-
     public HeaderAndFooterWrapper(RecyclerView.Adapter adapter)
     {
         mInnerAdapter = adapter;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -35,7 +24,6 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         {
             ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), mHeaderViews.get(viewType));
             return holder;
-
         } else if (mFootViews.get(viewType) != null)
         {
             ViewHolder holder = ViewHolder.createViewHolder(parent.getContext(), mFootViews.get(viewType));
@@ -43,7 +31,6 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         }
         return mInnerAdapter.onCreateViewHolder(parent, viewType);
     }
-
     @Override
     public int getItemViewType(int position)
     {
@@ -56,13 +43,10 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         }
         return mInnerAdapter.getItemViewType(position - getHeadersCount());
     }
-
     private int getRealItemCount()
     {
         return mInnerAdapter.getItemCount();
     }
-
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
@@ -76,13 +60,11 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
         }
         mInnerAdapter.onBindViewHolder(holder, position - getHeadersCount());
     }
-
     @Override
     public int getItemCount()
     {
         return getHeadersCount() + getFootersCount() + getRealItemCount();
     }
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView)
     {
@@ -105,7 +87,6 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
             }
         });
     }
-
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder)
     {
@@ -116,37 +97,28 @@ public class HeaderAndFooterWrapper<T> extends RecyclerView.Adapter<RecyclerView
             WrapperUtils.setFullSpan(holder);
         }
     }
-
     private boolean isHeaderViewPos(int position)
     {
         return position < getHeadersCount();
     }
-
     private boolean isFooterViewPos(int position)
     {
         return position >= getHeadersCount() + getRealItemCount();
     }
-
-
     public void addHeaderView(View view)
     {
         mHeaderViews.put(mHeaderViews.size() + BASE_ITEM_TYPE_HEADER, view);
     }
-
     public void addFootView(View view)
     {
         mFootViews.put(mFootViews.size() + BASE_ITEM_TYPE_FOOTER, view);
     }
-
     public int getHeadersCount()
     {
         return mHeaderViews.size();
     }
-
     public int getFootersCount()
     {
         return mFootViews.size();
     }
-
-
 }

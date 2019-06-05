@@ -1,5 +1,4 @@
 package cc.zkteam.juediqiusheng.fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
@@ -26,30 +23,15 @@ import cc.zkteam.juediqiusheng.strategy.base.ViewHolder;
 import cc.zkteam.juediqiusheng.strategy.wrapper.HeaderAndFooterWrapper;
 import cc.zkteam.juediqiusheng.strategy.wrapper.LoadMoreWrapper;
 import cc.zkteam.juediqiusheng.view.ZKImageView;
-
-/**
- * Created by WangQing on 2017/10/30.
- */
-
 public class SunflowerFragment extends Fragment {
-    /**
-     * The fragment argument representing the section number for this
-     * fragment.
-     */
     private static final String ARG_SECTION_NUMBER = "section_number";
     private RecyclerView mRecyclerView;
     private List<RecommendedBean> mDatas = new ArrayList<>();
     private CommonAdapter<RecommendedBean> mAdapter;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LoadMoreWrapper mLoadMoreWrapper;
-
     public SunflowerFragment() {
     }
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
     public static SunflowerFragment newInstance(String text) {
         SunflowerFragment fragment = new SunflowerFragment();
         Bundle args = new Bundle();
@@ -57,7 +39,6 @@ public class SunflowerFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,7 +61,6 @@ public class SunflowerFragment extends Fragment {
         };
         initHeaderAndFooter();
         mLoadMoreWrapper = new LoadMoreWrapper(mHeaderAndFooterWrapper);
-//        mLoadMoreWrapper.setLoadMoreView(R.item_banner.default_loading);
         initDatas();
         mRecyclerView.setAdapter(mLoadMoreWrapper);
         mAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
@@ -93,7 +73,6 @@ public class SunflowerFragment extends Fragment {
                 intent.putExtra("url", url);
                 startActivity(intent);
             }
-
             @Override
             public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
                 return false;
@@ -101,7 +80,6 @@ public class SunflowerFragment extends Fragment {
         });
         return rootView;
     }
-
     private void initHeaderAndFooter() {
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(mAdapter);
         ImageView imageView = new ImageView(getActivity());
@@ -112,12 +90,7 @@ public class SunflowerFragment extends Fragment {
                 Toast.makeText(getActivity().getApplicationContext(), "轮播图", Toast.LENGTH_SHORT).show();
             }
         });
-//        mHeaderAndFooterWrapper.addHeaderView(imageView);
     }
-
-    /**
-     * 演示快速使用测试 Api
-     */
     private void initDatas() {
         ZKConnectionManager.getInstance().getZKApi().getRecommended("10002", "20")
                 .enqueue(new ZKCallback<List<RecommendedBean>>() {
@@ -127,7 +100,6 @@ public class SunflowerFragment extends Fragment {
                         mDatas.addAll(result);
                         mLoadMoreWrapper.notifyDataSetChanged();
                     }
-
                     @Override
                     public void onFailure(Throwable throwable) {
                     }

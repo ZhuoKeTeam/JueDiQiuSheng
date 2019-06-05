@@ -1,10 +1,5 @@
 package cc.zkteam.juediqiusheng.bean
-
 import com.google.gson.annotations.SerializedName
-
-/**
- * Created by Gzw on 2017/10/30 0030.
- */
 data class RecommendedBean(
         @SerializedName("id")
         val id: String,

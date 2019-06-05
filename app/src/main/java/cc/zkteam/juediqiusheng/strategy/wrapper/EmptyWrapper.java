@@ -1,36 +1,24 @@
 package cc.zkteam.juediqiusheng.strategy.wrapper;
-
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-
 import cc.zkteam.juediqiusheng.strategy.base.ViewHolder;
 import cc.zkteam.juediqiusheng.strategy.utils.WrapperUtils;
-
-
-/**
- * Created by zhy on 16/6/23.
- */
 public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     public static final int ITEM_TYPE_EMPTY = Integer.MAX_VALUE - 1;
-
     private RecyclerView.Adapter mInnerAdapter;
     private View mEmptyView;
     private int mEmptyLayoutId;
-
-
     public EmptyWrapper(RecyclerView.Adapter adapter)
     {
         mInnerAdapter = adapter;
     }
-
     private boolean isEmpty()
     {
         return (mEmptyView != null || mEmptyLayoutId != 0) && mInnerAdapter.getItemCount() == 0;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -48,7 +36,6 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         return mInnerAdapter.onCreateViewHolder(parent, viewType);
     }
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView)
     {
@@ -68,10 +55,7 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 return 1;
             }
         });
-
-
     }
-
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder)
     {
@@ -81,8 +65,6 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
             WrapperUtils.setFullSpan(holder);
         }
     }
-
-
     @Override
     public int getItemViewType(int position)
     {
@@ -92,7 +74,6 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         return mInnerAdapter.getItemViewType(position);
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
@@ -102,24 +83,18 @@ public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
         mInnerAdapter.onBindViewHolder(holder, position);
     }
-
     @Override
     public int getItemCount()
     {
         if (isEmpty()) return 1;
         return mInnerAdapter.getItemCount();
     }
-
-
-
     public void setEmptyView(View emptyView)
     {
         mEmptyView = emptyView;
     }
-
     public void setEmptyView(int layoutId)
     {
         mEmptyLayoutId = layoutId;
     }
-
 }
