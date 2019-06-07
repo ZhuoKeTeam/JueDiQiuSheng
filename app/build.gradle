@@ -18,8 +18,8 @@ android {
         applicationId "cc.zkteam.juediqiusheng"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 10010
-        versionName "1.0.10"
+        versionCode 10011
+        versionName "1.0.11"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

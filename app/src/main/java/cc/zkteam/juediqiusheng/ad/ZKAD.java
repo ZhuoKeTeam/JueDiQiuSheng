@@ -56,10 +56,10 @@ public class ZKAD {
         // google 广告
         MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
         // init google 插页广告
-        mInterstitialAd = new InterstitialAd(appContext);
-        if (BuildConfig.DEBUG) {
-            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        }
+//        mInterstitialAd = new InterstitialAd(appContext);
+//        if (BuildConfig.DEBUG) {
+//            mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+//        }  暂时去掉插屏广告
 
 //        // facebook 广告
 //        AudienceNetworkAds.initialize(appContext);

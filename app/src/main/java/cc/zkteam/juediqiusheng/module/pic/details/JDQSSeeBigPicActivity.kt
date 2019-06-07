@@ -44,7 +44,7 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         loadImg()
 
         ZKAD.initHFAD(this, false)
-        ZKAD.loadGoogleCPAD()
+//        ZKAD.loadGoogleCPAD()
     }
 
     private fun loadImg() {
