@@ -236,9 +236,11 @@ public class ZKAD {
      * @return 返回激励广告
      */
     public static RewardedAd getGoogleRewardedAd() {
-        String adUnitId = AD_GOOGLE_TEST_GL_DTS_JL_KEY;
+        String adUnitId;
 
-        if (!BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG)
+            adUnitId = AD_GOOGLE_TEST_GL_DTS_JL_KEY;
+        else
             adUnitId = AD_GOOGLE_RELEASE_GL_DTS_JL_KEY;
 
         return createAndLoadRewardedAd(adUnitId);

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -55,10 +54,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import okhttp3.OkHttpClient;
-
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_FILE_NAME;
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_INIT;
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_KEY;
 
 /**
  * 主 MainActivity
@@ -239,7 +234,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                             boolean check = result.isCheck();
                             int version = result.getApp_version();
                             String info = result.getInfo();
-                            if (check && version > 0 && version != AppUtils.getAppVersionCode()) {
+                            if (check && version > 0 && version > AppUtils.getAppVersionCode()) {
 
 
                                 final AlertDialog.Builder normalDialog =
