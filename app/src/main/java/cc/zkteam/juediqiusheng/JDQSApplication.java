@@ -6,7 +6,6 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
 import com.blankj.utilcode.util.Utils;
-import com.google.android.gms.ads.MobileAds;
 import com.umeng.commonsdk.UMConfigure;
 
 import javax.inject.Inject;
@@ -42,8 +41,7 @@ public class JDQSApplication extends MultiDexApplication implements HasActivityI
                 .inject(this);
 
         UMConfigure.init(this, "5ce947420cafb23dee000572", "google_play", UMConfigure.DEVICE_TYPE_PHONE, null);
-        // google 广告
-        MobileAds.initialize(this, ZKAD.AD_GOOGLE_APP_ID);
+        ZKAD.init(this);
     }
 
     @Override

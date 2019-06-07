@@ -48,6 +48,7 @@
             android:name=".module.category.BaseCategoryListActivity"
             android:theme="@style/DarkActionBarTheme"/>
         <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".activity.ToolbarActivityDemo"/>
 
 
 

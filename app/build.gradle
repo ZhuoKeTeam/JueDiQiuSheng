@@ -18,8 +18,8 @@ android {
         applicationId "cc.zkteam.juediqiusheng"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 10006
-        versionName "1.0.6"
+        versionCode 10011
+        versionName "1.0.11"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -102,6 +102,8 @@ dependencies {
 
 //    接入 google 广告
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
+//    接入 Facebook 广告
+    implementation 'com.facebook.android:audience-network-sdk:5.3.1'
 
     implementation 'com.android.support:multidex:1.0.3'
 

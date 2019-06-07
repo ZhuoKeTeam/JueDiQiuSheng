@@ -1,6 +1,10 @@
 package cc.zkteam.juediqiusheng.module.waterfall;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,14 +24,19 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.android.gms.ads.rewarded.RewardedAd;
 
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
+import cc.zkteam.juediqiusheng.ui.main.MainActivity;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 
@@ -73,6 +82,8 @@ public class WaterfallActivity extends BaseActivity {
         ARouter.getInstance().inject(this);
         super.onCreate(savedInstanceState);
         Log.d("param", categoryId);
+
+        ZKAD.initGoogleRewardedAd();
     }
 
     private void initWidget() {
@@ -159,12 +170,35 @@ public class WaterfallActivity extends BaseActivity {
         adapter.addHeaderView(headView);
         adapter.addFooterView(footerView);
         adapter.isFirstOnly(false);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ItemBean itemBean = (ItemBean) adapter.getData().get(position);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            ItemBean itemBean = (ItemBean) adapter.getData().get(position);
+
+
+            if (ZKSP.isLiving()) {
+                ZKSP.save();
+                ToastUtils.showShort("消耗10点生命值");
                 ARouter.getInstance().build("/module/pic/details").withString("url", itemBean.getPicUrl()).navigation();
+            } else {
+                // 2019-05-30 Dialog 提示观看广告赚生命值
+                final AlertDialog.Builder normalDialog =
+                        new AlertDialog.Builder(this);
+                normalDialog.setTitle("是否续命？");
+                normalDialog.setMessage("您的生命值每次启动 App 就会分配了30点。 \r\n 每看一次高清无码大图会消耗10点，目前已经用尽。\r\n 点击 续命 可以自动获取30点。");
+                normalDialog.setPositiveButton("我要续命",
+                        (dialog, which) -> {
+                            // 2019-05-30 启动广告，等广告完成后直接继续操作。
+                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+                        });
+                normalDialog.setNegativeButton("不看了吧",
+                        (dialog, which) -> {
+                            //...To-do
+                        });
+                // 显示
+                normalDialog.show();
+
             }
+
+
         });
         recyclerView.setAdapter(adapter);
     }

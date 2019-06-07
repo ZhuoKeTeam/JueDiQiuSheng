@@ -25,7 +25,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -43,6 +47,7 @@ import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -145,6 +150,41 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+
+        getAAID();
+        saveLifeCount();
+    }
+
+    /**
+     * 初始化 X 点生命值
+     */
+    private void saveLifeCount() {
+        ZKSP.init();
+    }
+
+    // 获取 AAID
+    private void getAAID() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 本地获取 Google 的 AAID， 作为测试使用
+                    AdvertisingIdClient.Info  info = AdvertisingIdClient.getAdvertisingIdInfo(mContext);
+                    if (info != null) {
+                        String aaid = info.getId();
+                        boolean adTrackingEnabled = info.isLimitAdTrackingEnabled();
+
+                        Log.d("WangQing", "gms AAID==" + aaid + ", adTrackingEnabled=" +adTrackingEnabled);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                } catch (GooglePlayServicesRepairableException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -169,18 +209,19 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     @Override
     protected void initData() {
 //        demo();
+        PermissionUtils.permission(permissions)
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
 
-        PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
+                    }
 
-            @Override
-            public void onPermissionGranted() {
-            }
-
-            @Override
-            public void onPermissionDenied(String[] deniedPermissions) {
-                ToastUtils.showShort(getString(R.string.question_permission_tip));
-            }
-        });
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                        ToastUtils.showShort(getString(R.string.question_permission_tip));
+                    }
+                })
+                .request();
 
 
         Context context = this;
@@ -193,7 +234,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                             boolean check = result.isCheck();
                             int version = result.getApp_version();
                             String info = result.getInfo();
-                            if (check && version > 0 && version != AppUtils.getAppVersionCode()) {
+                            if (check && version > 0 && version > AppUtils.getAppVersionCode()) {
 
 
                                 final AlertDialog.Builder normalDialog =
