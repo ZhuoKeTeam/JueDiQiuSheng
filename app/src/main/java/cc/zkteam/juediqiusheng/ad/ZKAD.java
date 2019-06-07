@@ -22,15 +22,41 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
-import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ERROR;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOGGING_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LOAD_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_FAILED_TO_LOAD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_EARNED_JL;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_SHOW_FAILED;
 
 public class ZKAD {
 
     private static final String TAG = "ZKAD";
+    // 是否启用测试广告
+    private static final boolean IS_TEST_DEVICE = true;
+    // *************** 请使用 log 过滤 ADS，添加自己的设备 ID
+    private static final String TEST_DEVICE_ID = "";
 
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
@@ -38,6 +64,7 @@ public class ZKAD {
     public static final String AD_GOOGLE_TEST_KEY = "ca-app-pub-3940256099942544/6300978111";
     // 横幅广告
     public static final String AD_GOOGLE_RELEASE_DTS_GL_HF_KEY = "ca-app-pub-5576379109949376/8466047413";
+    public static final String AD_GOOGLE_RELEASE_DTS_GL_HF2_KEY = "ca-app-pub-5576379109949376/1049497917";
     // 激励广告
     public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/9427296362";
     public static final String AD_GOOGLE_TEST_GL_DTS_JL_KEY = "ca-app-pub-3940256099942544/5224354917";
@@ -115,11 +142,11 @@ public class ZKAD {
         try {
             AdView adView = new AdView(Utils.getApp());
             adView.setAdSize(AdSize.SMART_BANNER);
-            if (BuildConfig.DEBUG) {
-                adView.setAdUnitId(AD_GOOGLE_TEST_KEY);
-            } else {
+//            if (BuildConfig.DEBUG) {
+//                adView.setAdUnitId(AD_GOOGLE_TEST_KEY);
+//            } else {
                 adView.setAdUnitId(AD_GOOGLE_RELEASE_DTS_GL_HF_KEY);
-            }
+//            }
 
             adView.setAdListener(new com.google.android.gms.ads.AdListener() {
                 @Override
@@ -172,7 +199,7 @@ public class ZKAD {
                 }
             });
 
-            AdRequest adRequest = new AdRequest.Builder().build();
+            AdRequest adRequest = getGGBuilder(new AdRequest.Builder()).build();
             adView.loadAd(adRequest);
             return adView;
         } catch (Exception e) {
@@ -238,9 +265,9 @@ public class ZKAD {
     public static RewardedAd getGoogleRewardedAd() {
         String adUnitId;
 
-        if (BuildConfig.DEBUG)
-            adUnitId = AD_GOOGLE_TEST_GL_DTS_JL_KEY;
-        else
+//        if (BuildConfig.DEBUG)
+//            adUnitId = AD_GOOGLE_TEST_GL_DTS_JL_KEY;
+//        else
             adUnitId = AD_GOOGLE_RELEASE_GL_DTS_JL_KEY;
 
         return createAndLoadRewardedAd(adUnitId);
@@ -264,7 +291,8 @@ public class ZKAD {
             }
         };
         event(EVENT_GG_JL_AD_ADD);
-        rewardedAd.loadAd(new AdRequest.Builder().build(), adLoadCallback);
+
+        rewardedAd.loadAd(getGGBuilder(new AdRequest.Builder()).build(), adLoadCallback);
         return rewardedAd;
     }
 
@@ -370,7 +398,7 @@ public class ZKAD {
             }
         });
         event(EVENT_GG_CP_AD_ADD);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(getGGBuilder(new AdRequest.Builder()).build());
     }
 
     // show google 插屏广告
@@ -381,6 +409,12 @@ public class ZKAD {
             logD("插屏广告飞了: The interstitial wasn't loaded yet.");
             ToastUtils.showShort("插屏广告飞了");
         }
+    }
+
+    public static AdRequest.Builder getGGBuilder(AdRequest.Builder builder) {
+        if (IS_TEST_DEVICE)
+            return builder.addTestDevice(TEST_DEVICE_ID);
+        return builder;
     }
 
 }
