@@ -1,6 +1,7 @@
 package cc.zkteam.juediqiusheng.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -8,15 +9,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.baidu.mobads.AdView;
+import com.baidu.mobads.AdViewListener;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,8 +118,71 @@ public class WebViewActivity extends BaseActivity {
         });
     }
 
+
+    private static void logD(String msg) {
+        Log.d("WangQing", msg);
+    }
+
     @Override
     protected void initData() {
+
+        RelativeLayout adViewContent = findViewById(R.id.ad_content_view_new);
+
+
+        String adPlaceID = "6288996";//广告位 ID
+        AdView adView = new AdView(this, adPlaceID);
+        adView.setListener(new AdViewListener() {
+            @Override
+            public void onAdReady(AdView adView) {
+                logD("onAdReady->");
+            }
+
+            @Override
+            public void onAdShow(JSONObject jsonObject) {
+                logD("onAdShow->");
+            }
+
+            @Override
+            public void onAdClick(JSONObject jsonObject) {
+                logD("onAdClick->");
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                logD("onAdFailed->" + s);
+            }
+
+            @Override
+            public void onAdSwitch() {
+                logD("onAdSwitch->");
+            }
+
+            @Override
+            public void onAdClose(JSONObject jsonObject) {
+                logD("onAdClose->");
+            }
+        });
+
+//        DisplayMetrics dm = new DisplayMetrics();
+//        ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(dm);
+//        int winW = dm.widthPixels;
+//        int winH = dm.heightPixels;
+//        int width = Math.min(winW, winH);
+//        int height = width * 3 / 20;
+//        //把横幅 view 添加到自己的 viewGroup 组件中，必须写，才可以展示横幅广告
+//        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(width, height);
+//        rllp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        adViewContent.addView(adView);
+
+
+
+
+
+
+
+
+
+
         mWebSettings = webView.getSettings();
         // 在 onStop 和 onResume 里分别把 setJavaScriptEnabled() 给设置成 false 和 true 即可
         //设置自适应屏幕，两者合用
