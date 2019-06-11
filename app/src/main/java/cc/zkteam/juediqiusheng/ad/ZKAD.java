@@ -5,18 +5,20 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bytedance.sdk.openadsdk.AdSlot;
 import com.bytedance.sdk.openadsdk.TTAdConfig;
 import com.bytedance.sdk.openadsdk.TTAdConstant;
+import com.bytedance.sdk.openadsdk.TTAdDislike;
 import com.bytedance.sdk.openadsdk.TTAdManager;
 import com.bytedance.sdk.openadsdk.TTAdNative;
 import com.bytedance.sdk.openadsdk.TTAdSdk;
 import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
+import com.bytedance.sdk.openadsdk.TTBannerAd;
 import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
@@ -35,7 +37,30 @@ import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ERROR;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOGGING_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LOAD_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_FAILED_TO_LOAD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_EARNED_JL;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_SHOW_FAILED;
 
 public class ZKAD {
 
@@ -218,7 +243,9 @@ public class ZKAD {
 
     public static void initHFAD(Activity activity, boolean isFacebookAd) {
         View view = activity.getWindow().getDecorView().getRootView();
-        initHFAD(view, isFacebookAd);
+//        initHFAD(view, isFacebookAd);
+        LinearLayout adContentView = view.findViewById(R.id.ad_content_view);
+        showTouTiaoBannerAd(adContentView, "918599611", activity);
     }
 
     public static void initHFAD(View rootView, boolean isFacebookAd) {
@@ -417,7 +444,7 @@ public class ZKAD {
     private static RewardedAd rewardedAD;
 
     /**
-     * ---------------------------------------------头条激励广告-----------------------------------------------------------
+     * ---------------------------------------------头条激励广告与 Banner -----------------------------------------------------------
      */
 
     private static TTAdNative mTTAdNative;
@@ -538,4 +565,96 @@ public class ZKAD {
             }
         });
     }
+
+    private static ViewGroup mBannerContainer;
+
+    public static void showTouTiaoBannerAd(ViewGroup root, String codeId, Activity activity) {
+        mBannerContainer = root;
+        if (mTTAdNative == null) {
+            mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
+        }
+        TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
+        //step4:创建广告请求参数AdSlot,具体参数含义参考文档
+        AdSlot adSlot = new AdSlot.Builder()
+                .setCodeId(codeId) //广告位id
+                .setSupportDeepLink(true)
+                .setImageAcceptedSize(600, 257)
+                .build();
+        //step5:请求广告，对请求回调的广告作渲染处理
+        mTTAdNative.loadBannerAd(adSlot, new TTAdNative.BannerAdListener() {
+
+            @Override
+            public void onError(int code, String message) {
+//                mBannerContainer.removeAllViews();
+                logD("showTouTiaoBannerAd onError -> " + message);
+                logD("showTouTiaoBannerAd onError -> " + code);
+            }
+
+            @Override
+            public void onBannerAdLoad(final TTBannerAd ad) {
+                if (ad == null) {
+                    return;
+                }
+                View bannerView = ad.getBannerView();
+                if (bannerView == null) {
+                    return;
+                }
+                //设置轮播的时间间隔  间隔在30s到120秒之间的值，不设置默认不轮播
+                ad.setSlideIntervalTime(30 * 1000);
+//                mBannerContainer.removeAllViews();
+                mBannerContainer.addView(bannerView);
+                //设置广告互动监听回调
+                ad.setBannerInteractionListener(new TTBannerAd.AdInteractionListener() {
+                    @Override
+                    public void onAdClicked(View view, int type) {
+                        logD("showTouTiaoJLAD 广告被点击");
+                    }
+
+                    @Override
+                    public void onAdShow(View view, int type) {
+                        logD("showTouTiaoJLAD 广告展示");
+                    }
+                });
+//                //（可选）设置下载类广告的下载监听
+//                bindDownloadListener(ad);
+                //在banner中显示网盟提供的dislike icon，有助于广告投放精准度提升
+                ad.setShowDislikeIcon(new TTAdDislike.DislikeInteractionCallback() {
+                    @Override
+                    public void onSelected(int position, String value) {
+                        logD("showTouTiaoJLAD 点击 -> " + value);
+                        //用户选择不喜欢原因后，移除广告展示
+//                        mBannerContainer.removeAllViews();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        logD("showTouTiaoJLAD 点击取消");
+                    }
+                });
+
+                //获取网盟dislike dialog，您可以在您应用中本身自定义的dislike icon 按钮中设置 mTTAdDislike.showDislikeDialog();
+                /*mTTAdDislike = ad.getDislikeDialog(new TTAdDislike.DislikeInteractionCallback() {
+                        @Override
+                        public void onSelected(int position, String value) {
+                            TToast.show(mContext, "点击 " + value);
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            TToast.show(mContext, "点击取消 ");
+                        }
+                    });
+                if (mTTAdDislike != null) {
+                    XXX.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mTTAdDislike.showDislikeDialog();
+                        }
+                    });
+                } */
+
+            }
+        });
+    }
+
 }
