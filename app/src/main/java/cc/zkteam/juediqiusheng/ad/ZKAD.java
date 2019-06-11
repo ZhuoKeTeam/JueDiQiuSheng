@@ -47,6 +47,7 @@ public class ZKAD {
     public static final String AD_BAIDU_RELEASE_DTS_HF_KEY = "6288996";
     // 百度激励广告ID
     public static final String AD_BAIDU_RELEASE_DTS_JL_KEY = "6288997";
+    public static final String AD_BAIDU_RELEASE_DTS_KP_KEY = "6289086";
 
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
