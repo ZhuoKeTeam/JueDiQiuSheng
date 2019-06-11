@@ -38,6 +38,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':loadingview')
@@ -97,8 +103,8 @@ dependencies {
     //    androidTestImplementation support.design
 
 //    添加统计
-    implementation  'com.umeng.umsdk:analytics:7.5.4'
-    implementation  'com.umeng.umsdk:common:1.5.4'
+    implementation 'com.umeng.umsdk:analytics:7.5.4'
+    implementation 'com.umeng.umsdk:common:1.5.4'
 
 //    接入 google 广告
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
@@ -107,6 +113,9 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    //  头条穿山甲广告
+    implementation(name: 'open_ad_sdk', ext: 'aar')
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
 //    //动态申请权限
 //    implementation('com.yanzhenjie.permission:support:2.0.1') {
 //        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'

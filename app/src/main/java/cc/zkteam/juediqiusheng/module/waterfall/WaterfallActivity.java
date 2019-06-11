@@ -187,7 +187,9 @@ public class WaterfallActivity extends BaseActivity {
                 normalDialog.setPositiveButton("我要续命",
                         (dialog, which) -> {
                             // 2019-05-30 启动广告，等广告完成后直接继续操作。
-                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+//                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+                            //  TODO 918599496 是测试 Id 新建的广告
+                            ZKAD.showTouTiaoJLAD("918599496", this);
                         });
                 normalDialog.setNegativeButton("不看了吧",
                         (dialog, which) -> {
