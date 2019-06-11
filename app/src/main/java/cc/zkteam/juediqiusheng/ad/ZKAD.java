@@ -12,8 +12,10 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.baidu.mobad.video.XAdManager;
 import com.baidu.mobads.AdViewListener;
 import com.baidu.mobads.AppActivity;
+import com.baidu.mobads.rewardvideo.RewardVideoAd;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.Ad;
@@ -368,6 +370,82 @@ public class ZKAD {
         } else {
             ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
         }
+    }
+
+    /**---------------------------------------------BaiDu 激励广告-----------------------------------------------------------*/
+    private static RewardVideoAd rewardVideoAd;
+
+    public static void initBadiDuRewardVideoAd() {
+        XAdManager.getInstance(application).setAppSid(ZKAD.AD_BAIDU_APP_ID);
+        rewardVideoAd = getBadiDuRewardedAd();
+    }
+
+    public static RewardVideoAd getCurrentBDRewardedAd() {
+        return rewardVideoAd;
+    }
+
+    public static RewardVideoAd getBadiDuRewardedAd() {
+        String adUnitId = AD_BAIDU_RELEASE_DTS_JL_KEY;
+
+//        if (!BuildConfig.DEBUG)
+//            adUnitId = AD_GOOGLE_RELEASE_GL_DTS_JL_KEY;
+
+        return createBDAndLoadRewardedAd(adUnitId);
+    }
+
+    private static RewardVideoAd createBDAndLoadRewardedAd(String adUnitId) {
+
+        rewardVideoAd = new RewardVideoAd(application, adUnitId, new RewardVideoAd.RewardVideoAdListener() {
+            @Override
+            public void onAdShow() {
+                logD("BD—JL->onAdShow:");
+            }
+
+            @Override
+            public void onAdClick() {
+                logD("BD—JL->onAdClick:");
+            }
+
+            @Override
+            public void onAdClose(float v) {
+                logD("BD—JL->onAdClose: " + v);
+                rewardVideoAd.load();
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                logD("BD—JL->onAdFailed:" + s);
+                rewardVideoAd.load();
+            }
+
+            @Override
+            public void onVideoDownloadSuccess() {
+                logD("BD—JL->onVideoDownloadSuccess:");
+            }
+
+            @Override
+            public void onVideoDownloadFailed() {
+                logD("BD—JL->onVideoDownloadFailed:");
+            }
+
+            @Override
+            public void playCompletion() {
+                logD("BD—JL->playCompletion:");
+                ZKSP.reset();
+            }
+        });
+
+        rewardVideoAd.load();
+        return rewardVideoAd;
+    }
+
+    public static void showBaiDuJLAD(RewardVideoAd rewardVideoAd) {
+        rewardVideoAd.show();
+//        if (rewardVideoAd.isReady()) {
+//            rewardVideoAd.show();
+//        } else {
+//            ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
+//        }
     }
 
 }

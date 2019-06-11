@@ -83,7 +83,8 @@ public class WaterfallActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Log.d("param", categoryId);
 
-        ZKAD.initGoogleRewardedAd();
+//        ZKAD.initGoogleRewardedAd();
+        ZKAD.initBadiDuRewardVideoAd();
     }
 
     private void initWidget() {
@@ -187,7 +188,8 @@ public class WaterfallActivity extends BaseActivity {
                 normalDialog.setPositiveButton("我要续命",
                         (dialog, which) -> {
                             // 2019-05-30 启动广告，等广告完成后直接继续操作。
-                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+//                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+                            ZKAD.showBaiDuJLAD(ZKAD.getCurrentBDRewardedAd());
                         });
                 normalDialog.setNegativeButton("不看了吧",
                         (dialog, which) -> {
