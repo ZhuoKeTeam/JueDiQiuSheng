@@ -27,8 +27,9 @@ public class ZKAD {
 
 
     // 腾讯 APP ID
-    public static final String AD_TENCENT_APP_ID = "1109262416";
-    public static final String AD_TENCENT_RELEASE_DTS_GL_HF_KEY = "3080363613965415";
+    public static final String AD_TENCENT_APP_ID = "1109306826";
+    public static final String AD_TENCENT_RELEASE_DTS_GL_HF_KEY = "4060363860868383";
+    public static final String AD_TENCENT_REWARD_KEY = "9070065724358455";
 
 
     // Appid
@@ -125,16 +126,18 @@ public class ZKAD {
 
     public static void initHFAD(Activity activity) {
         View view = activity.getWindow().getDecorView().getRootView();
-        initHFAD(view);
+        initHFAD(view, activity);
     }
 
-    public static void initHFAD(View rootView) {
+    public static void initHFAD(View rootView, Activity activity) {
         try {
             RelativeLayout adContentView = rootView.findViewById(R.id.ad_content_view);
-            if (adContentView != null)
-                adContentView.addView(ZKAD.initADView());
+            if (adContentView != null) {
+                adContentView.addView(ZKAD.initADView(activity));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
