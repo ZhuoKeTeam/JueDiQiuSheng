@@ -19,4 +19,6 @@
     <string name="pic_detail">大图欣赏</string>
     <string name="source_text">来源：ZKTeam</string>
     <string name="question_permission_tip">获取权限失败</string>
+
+    <string name="save_pic">保 存</string>
 </resources>

@@ -47,6 +47,7 @@ import cc.zkteam.juediqiusheng.module.answer.QuestionFragment;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.strategy.StrategyFragment;
 import cc.zkteam.juediqiusheng.ui.main.test.User;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
@@ -151,6 +152,14 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         super.onCreate(savedInstanceState);
 
         getAAID();
+        saveLifeCount();
+    }
+
+    /**
+     * 初始化 X 点生命值
+     */
+    private void saveLifeCount() {
+        ZKSP.init();
     }
 
     // 获取 AAID
@@ -225,7 +234,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                             boolean check = result.isCheck();
                             int version = result.getApp_version();
                             String info = result.getInfo();
-                            if (check && version > 0 && version != AppUtils.getAppVersionCode()) {
+                            if (check && version > 0 && version > AppUtils.getAppVersionCode()) {
 
 
                                 final AlertDialog.Builder normalDialog =

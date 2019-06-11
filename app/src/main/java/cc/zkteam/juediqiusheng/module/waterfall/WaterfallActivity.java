@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.module.waterfall;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.qq.e.ads.rewardvideo.RewardVideoAD;
 import com.qq.e.ads.rewardvideo.RewardVideoADListener;
@@ -34,6 +36,7 @@ import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
+import cc.zkteam.juediqiusheng.utils.ZKSP;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_APP_ID;
@@ -170,12 +173,39 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
         adapter.addHeaderView(headView);
         adapter.addFooterView(footerView);
         adapter.isFirstOnly(false);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                ItemBean itemBean = (ItemBean) adapter.getData().get(position);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            ItemBean itemBean = (ItemBean) adapter.getData().get(position);
+
+
+            if (ZKSP.isLiving()) {
+                ZKSP.save();
+                ToastUtils.showShort("消耗10点生命值");
                 ARouter.getInstance().build("/module/pic/details").withString("url", itemBean.getPicUrl()).navigation();
+            } else {
+                // 2019-05-30 Dialog 提示观看广告赚生命值
+                final AlertDialog.Builder normalDialog =
+                        new AlertDialog.Builder(this);
+                normalDialog.setTitle("是否续命？");
+                normalDialog.setMessage("您的生命值每次启动 App 就会分配了30点。 \r\n 每看一次高清无码大图会消耗10点，目前已经用尽。\r\n 点击 续命 可以自动获取30点。");
+                normalDialog.setPositiveButton("我要续命",
+                        (dialog, which) -> {
+                            // 2019-05-30 启动广告，等广告完成后直接继续操作。
+//                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
+                            // 2. 加载激励视频广告
+                            if (rewardVideoAD != null) {
+                                rewardVideoAD.loadAD();
+                            }
+                        });
+                normalDialog.setNegativeButton("不看了吧",
+                        (dialog, which) -> {
+                            //...To-do
+                        });
+                // 显示
+                normalDialog.show();
+
             }
+
+
         });
         recyclerView.setAdapter(adapter);
     }
@@ -233,6 +263,7 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
     }
 
 
+    //**************************** 腾讯激励视频 *****************************
     private RewardVideoAD rewardVideoAD;
     private boolean adLoaded;//广告加载成功标志
     private boolean videoCached;//视频素材文件下载完成标志
@@ -242,15 +273,17 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
         rewardVideoAD = new RewardVideoAD(this, AD_TENCENT_APP_ID, AD_TENCENT_REWARD_KEY, listener);
         adLoaded = false;
         videoCached = false;
-        // 2. 加载激励视频广告
-        rewardVideoAD.loadAD();
+//        rewardVideoAD.loadAD();
     }
 
     public void showTencentRewardVideoAd() {
         // 3. 展示激励视频广告
-        if (adLoaded && rewardVideoAD != null) {//广告展示检查1：广告成功加载，此处也可以使用videoCached来实现视频预加载完成后再展示激励视频广告的逻辑
-            if (!rewardVideoAD.hasShown()) {//广告展示检查2：当前广告数据还没有展示过
-                long delta = 1000;//建议给广告过期时间加个buffer，单位ms，这里demo采用1000ms的buffer
+        //广告展示检查1：广告成功加载，此处也可以使用videoCached来实现视频预加载完成后再展示激励视频广告的逻辑
+        if (adLoaded && rewardVideoAD != null) {
+            //广告展示检查2：当前广告数据还没有展示过
+            if (!rewardVideoAD.hasShown()) {
+                //建议给广告过期时间加个buffer，单位ms，这里demo采用1000ms的buffer
+                long delta = 1000;
                 //广告展示检查3：展示广告前判断广告数据未过期
                 if (SystemClock.elapsedRealtime() < (rewardVideoAD.getExpireTimestamp() - delta)) {
                     rewardVideoAD.showAD();
@@ -274,6 +307,7 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
         String msg = "load ad success ! expireTime = " + new Date(System.currentTimeMillis() +
                 rewardVideoAD.getExpireTimestamp() - SystemClock.elapsedRealtime());
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        showTencentRewardVideoAd();
     }
 
     /**

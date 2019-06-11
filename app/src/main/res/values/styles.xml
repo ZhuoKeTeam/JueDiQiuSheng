@@ -55,4 +55,43 @@
         <item>@color/colorAccent</item>
     </integer-array>
 
+    <style name="toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--//设置toolbar的最小高度.这样设置的意义,就是解决适配的问题,标准md高度.-->
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <!--//设置沉浸式,-->
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="base_toolbar" parent="toolbar"/>
+
+
+    <!-- ToolBar样式 .-->
+    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:textSize">18sp</item> <!--  字体大小-->
+        <!--这个也正确,用这个吧-->
+        <item name="colorControlNormal">@android:color/holo_red_dark</item>
+
+    </style>
+    <!-- ToolBar菜单样式.-->
+    <style name="popup_theme" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <!--设置不覆盖锚点-->
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <style name="Theme.ToolBar.Base.Title" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="Theme.ToolBar.Base.Subtitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

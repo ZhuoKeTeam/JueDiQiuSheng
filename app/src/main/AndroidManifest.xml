@@ -52,6 +52,7 @@
             android:name=".module.category.BaseCategoryListActivity"
             android:theme="@style/DarkActionBarTheme"/>
         <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".activity.ToolbarActivityDemo"/>
 
         <!--腾讯广告-->
         <service android:name="com.qq.e.comm.DownloadService" android:exported="false" />

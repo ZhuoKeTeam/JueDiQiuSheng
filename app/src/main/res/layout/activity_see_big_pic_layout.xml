@@ -8,8 +8,15 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_pic_detail"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:title="@string/pic_detail" />
+        android:layout_height="50dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@android:color/black"
+            android:text="@string/pic_detail"/>
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
