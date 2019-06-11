@@ -2,11 +2,18 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.baidu.mobads.AdViewListener;
+import com.baidu.mobads.AppActivity;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.Ad;
@@ -22,6 +29,8 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+import org.json.JSONObject;
+
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
@@ -32,12 +41,20 @@ public class ZKAD {
 
     private static final String TAG = "ZKAD";
 
+    // Appid_baidu
+    public static final String AD_BAIDU_APP_ID = "e64ccf7d";
+    // 百度横幅广告ID
+    public static final String AD_BAIDU_RELEASE_DTS_HF_KEY = "6288996";
+    // 百度激励广告ID
+    public static final String AD_BAIDU_RELEASE_DTS_JL_KEY = "6288997";
+
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
     // google 测试广告
     public static final String AD_GOOGLE_TEST_KEY = "ca-app-pub-3940256099942544/6300978111";
     // 横幅广告
     public static final String AD_GOOGLE_RELEASE_DTS_GL_HF_KEY = "ca-app-pub-5576379109949376/8466047413";
+
     // 激励广告
     public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/9427296362";
     public static final String AD_GOOGLE_TEST_GL_DTS_JL_KEY = "ca-app-pub-3940256099942544/5224354917";
@@ -50,17 +67,65 @@ public class ZKAD {
 
     public static void init(Application appContext) {
         application = appContext;
-        // google 广告
-        MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
 
-        // facebook 广告
-        AudienceNetworkAds.initialize(appContext);
+        com.baidu.mobads.AdView.setAppSid(appContext, AD_BAIDU_APP_ID);
+//        AppActivity.setActionBarColorTheme(AppActivity.ActionBarColorTheme.ACTION_BAR_GREEN_THEME);
+        // 设置广告请求是否使用 https 协议
+        // AdSettings.setSupportHttps(true);
+
+//        // google 广告
+//        MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
+//        // facebook 广告
+//        AudienceNetworkAds.initialize(appContext);
     }
 
     public static View initADView() {
-        return initFacebookADView();
+        return initBaiduADView();
+//        return initFacebookADView();
 //        return initGoogleADView();
     }
+
+    public static View initBaiduADView() {
+        com.baidu.mobads.AdView adView = new com.baidu.mobads.AdView(application, AD_BAIDU_RELEASE_DTS_HF_KEY);
+        adView.setListener(new AdViewListener() {
+            @Override
+            public void onAdReady(com.baidu.mobads.AdView adView) {
+                logD("BD->onAdReady");
+            }
+
+            @Override
+            public void onAdShow(JSONObject jsonObject) {
+                logD("BD->onAdShow");
+            }
+
+            @Override
+            public void onAdClick(JSONObject jsonObject) {
+                logD("BD->onAdClick");
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                logD("BD->onAdFailed:" + s);
+            }
+
+            @Override
+            public void onAdSwitch() {
+                logD("BD->onAdSwitch");
+            }
+
+            @Override
+            public void onAdClose(JSONObject jsonObject) {
+                logD("BD->onAdClose");
+            }
+        });
+        return adView;
+
+//把横幅 view 添加到自己的 viewGroup 组件中，必须写，才可以展示横幅广告
+// RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(width, height);
+//        rllp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM) your_original_layout.addView(addView,rllp);
+    }
+
+
 
     public static View initFacebookADView() {
         try {
@@ -186,13 +251,14 @@ public class ZKAD {
         try {
             LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
             if (adContentView != null) {
-                if (isFacebookAd) {
-                    event(EVENT_FB_HF_AD_ADD);
-                    adContentView.addView(ZKAD.initFacebookADView());
-                } else {
-                    event(EVENT_GG_HF_AD_ADD);
-                    adContentView.addView(ZKAD.initGoogleADView());
-                }
+                adContentView.addView(ZKAD.initBaiduADView());
+//                if (isFacebookAd) {
+//                    event(EVENT_FB_HF_AD_ADD);
+//                    adContentView.addView(ZKAD.initFacebookADView());
+//                } else {
+//                    event(EVENT_GG_HF_AD_ADD);
+//                    adContentView.addView(ZKAD.initGoogleADView());
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();

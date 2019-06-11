@@ -38,8 +38,15 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation(name:'Baidu_MobAds_SDK-release', ext:'aar')
     implementation project(':loadingview')
     //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
     // Support libraries
