@@ -94,7 +94,7 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         zkRecyclerView = rootView.findViewById(R.id.zk_recycler_view);
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
 
-        ZKAD.initTencentAD(rootView, getActivity());
+        ZKAD.initTencentBannerAD(rootView, getActivity());
     }
 
     @Override

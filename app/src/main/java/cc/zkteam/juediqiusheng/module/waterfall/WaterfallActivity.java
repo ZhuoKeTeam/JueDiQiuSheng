@@ -3,7 +3,6 @@ package cc.zkteam.juediqiusheng.module.waterfall;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -24,29 +23,23 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.qq.e.ads.rewardvideo.RewardVideoAD;
-import com.qq.e.ads.rewardvideo.RewardVideoADListener;
-import com.qq.e.comm.util.AdError;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_APP_ID;
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_REWARD_KEY;
 
 /**
  * Created by abc on 2017/10/27.
  */
 @Route(path = "/modules/waterfall/WaterfallActivity")
-public class WaterfallActivity extends BaseActivity implements RewardVideoADListener {
+public class WaterfallActivity extends BaseActivity {
 
     private static final String TAG = WaterfallActivity.class.getSimpleName();
 
@@ -86,7 +79,7 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
         ARouter.getInstance().inject(this);
         super.onCreate(savedInstanceState);
         Log.d("param", categoryId);
-        initTencentRewardVideoAd(this);
+        ZKAD.initTencentRewardVideoAd();
     }
 
     private void initWidget() {
@@ -191,10 +184,7 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
                         (dialog, which) -> {
                             // 2019-05-30 启动广告，等广告完成后直接继续操作。
 //                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
-                            // 2. 加载激励视频广告
-                            if (rewardVideoAD != null) {
-                                rewardVideoAD.loadAD();
-                            }
+                            ZKAD.loadTencentRewardVideoAd();
                         });
                 normalDialog.setNegativeButton("不看了吧",
                         (dialog, which) -> {
@@ -260,120 +250,5 @@ public class WaterfallActivity extends BaseActivity implements RewardVideoADList
         } else {
             adapter.loadMoreComplete();
         }
-    }
-
-
-    //**************************** 腾讯激励视频 *****************************
-    private RewardVideoAD rewardVideoAD;
-    private boolean adLoaded;//广告加载成功标志
-    private boolean videoCached;//视频素材文件下载完成标志
-
-    public void initTencentRewardVideoAd(RewardVideoADListener listener) {
-        // 1. 初始化激励视频广告
-        rewardVideoAD = new RewardVideoAD(this, AD_TENCENT_APP_ID, AD_TENCENT_REWARD_KEY, listener);
-        adLoaded = false;
-        videoCached = false;
-//        rewardVideoAD.loadAD();
-    }
-
-    public void showTencentRewardVideoAd() {
-        // 3. 展示激励视频广告
-        //广告展示检查1：广告成功加载，此处也可以使用videoCached来实现视频预加载完成后再展示激励视频广告的逻辑
-        if (adLoaded && rewardVideoAD != null) {
-            //广告展示检查2：当前广告数据还没有展示过
-            if (!rewardVideoAD.hasShown()) {
-                //建议给广告过期时间加个buffer，单位ms，这里demo采用1000ms的buffer
-                long delta = 1000;
-                //广告展示检查3：展示广告前判断广告数据未过期
-                if (SystemClock.elapsedRealtime() < (rewardVideoAD.getExpireTimestamp() - delta)) {
-                    rewardVideoAD.showAD();
-                } else {
-                    Toast.makeText(this, "激励视频广告已过期，请再次请求广告后进行广告展示！", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(this, "此条广告已经展示过，请再次请求广告后进行广告展示！", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(this, "成功加载广告后再进行广告展示！", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    /**
-     * 广告加载成功，可在此回调后进行广告展示
-     **/
-    @Override
-    public void onADLoad() {
-        adLoaded = true;
-        String msg = "load ad success ! expireTime = " + new Date(System.currentTimeMillis() +
-                rewardVideoAD.getExpireTimestamp() - SystemClock.elapsedRealtime());
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-        showTencentRewardVideoAd();
-    }
-
-    /**
-     * 视频素材缓存成功，可在此回调后进行广告展示
-     */
-    @Override
-    public void onVideoCached() {
-        videoCached = true;
-        Log.i(TAG, "onVideoCached");
-    }
-
-    /**
-     * 激励视频广告页面展示
-     */
-    @Override
-    public void onADShow() {
-        Log.i(TAG, "onADShow");
-    }
-
-    /**
-     * 激励视频广告曝光
-     */
-    @Override
-    public void onADExpose() {
-        Log.i(TAG, "onADExpose");
-    }
-
-    /**
-     * 激励视频触发激励（观看视频大于一定时长或者视频播放完毕）
-     */
-    @Override
-    public void onReward() {
-        Log.i(TAG, "onReward");
-    }
-
-    /**
-     * 激励视频广告被点击
-     */
-    @Override
-    public void onADClick() {
-        Log.i(TAG, "onADClick");
-    }
-
-    /**
-     * 激励视频播放完毕
-     */
-    @Override
-    public void onVideoComplete() {
-        Log.i(TAG, "onVideoComplete");
-    }
-
-    /**
-     * 激励视频广告被关闭
-     */
-    @Override
-    public void onADClose() {
-        Log.i(TAG, "onADClose");
-    }
-
-    /**
-     * 广告流程出错
-     */
-    @Override
-    public void onError(AdError adError) {
-        String msg = String.format(Locale.getDefault(), "onError, error code: %d, error msg: %s",
-                adError.getErrorCode(), adError.getErrorMsg());
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 }

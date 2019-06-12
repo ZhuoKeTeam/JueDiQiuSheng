@@ -2,10 +2,12 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
@@ -23,6 +25,13 @@ import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
+import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
+import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
+import com.qq.e.ads.rewardvideo.RewardVideoAD;
+import com.qq.e.ads.rewardvideo.RewardVideoADListener;
+
+import java.util.Date;
+import java.util.Locale;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
@@ -60,9 +69,14 @@ public class ZKAD {
 
     // 腾讯 APP ID
     public static final String AD_TENCENT_APP_ID = "1109306826";
-    public static final String AD_TENCENT_RELEASE_DTS_GL_HF_KEY = "4060363860868383";
+    //腾讯 tencentBanner 2.0
+    public static final String AD_TENCENT_BANNER_KEY = "4060363860868383";
+    //腾讯 激励视频
     public static final String AD_TENCENT_REWARD_KEY = "9070065724358455";
+    //腾讯 开屏广告
     public static final String AD_TENCENT_SPLASH_KEY = "7070864870360301";
+    //腾讯 插屏 2.0
+    public static final String AD_TENCENT_INTERSTITIAL_KEY = "9050361810766342";
 
 
     // Appid
@@ -80,6 +94,9 @@ public class ZKAD {
 
     private static Application application;
     private static com.facebook.ads.AdView fbAdView;
+
+    private static UnifiedBannerView tencentBanner;
+    private static UnifiedInterstitialAD tencentInterstitialAD;
 
     // google 插屏广告，每个 Activity 唯一
     private static InterstitialAd mInterstitialAd;
@@ -105,7 +122,7 @@ public class ZKAD {
     }
 
     public static View initADView(Activity activity) {
-        return initTencentADView(activity);
+        return initTencentBannerADView(activity);
 //        return initFacebookADView();
 //        return initGoogleADView();
     }
@@ -147,13 +164,16 @@ public class ZKAD {
         return null;
     }
 
-    private static View initTencentADView(Activity activity) {
+    private static View initTencentBannerADView(Activity activity) {
         if (activity == null)
             throw new RuntimeException("腾讯广告必须传入 Activity 的上下文，请使用：initADView(Activity activity)。");
 
         try {
+            if (tencentBanner != null) {
+                tencentBanner.destroy();
+            }
             // 创建 Banner 2.0 广告 对象
-            UnifiedBannerView banner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_RELEASE_DTS_GL_HF_KEY, new UnifiedBannerADListener() {
+            tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY, new UnifiedBannerADListener() {
                 @Override
                 public void onNoAD(com.qq.e.comm.util.AdError adError) {
                     Log.i(
@@ -197,30 +217,10 @@ public class ZKAD {
 
                 }
             });
-
-            // 创建 Banner 1.0(旧的已经不再使用) 广告 对象
-//            BannerView banner = new BannerView(activity, ADSize.BANNER, AD_TENCENT_APP_ID, AD_TENCENT_RELEASE_DTS_GL_HF_KEY);
-//            //设置广告轮播时间，为0或30~120之间的数字，单位为s,0标识不自动轮播
-//            banner.setRefresh(30);
-//            banner.setADListener(new AbstractBannerADListener() {
-//
-//                @Override
-//                public void onNoAD(com.qq.e.comm.util.AdError adError) {
-//                    Log.i("AD_DEMO", "BannerNoAD，eCode=" + adError.getErrorCode());
-//                    Log.i(
-//                            "AD_DEMO",
-//                            String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
-//                                    adError.getErrorMsg()));
-//                }
-//
-//                @Override
-//                public void onADReceiv() {
-//                    Log.i("AD_DEMO", "ONBannerReceive");
-//                }
-//            });
-//            /* 发起广告请求，收到广告数据后会展示数据     */
-            banner.loadAD();
-            return banner;
+//            tencentBanner.setRefresh(30);
+            //发起广告请求，收到广告数据后会展示数据
+            tencentBanner.loadAD();
+            return tencentBanner;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -328,11 +328,12 @@ public class ZKAD {
         }
     }
 
-    public static void initTencentAD(View rootView, Activity activity) {
+    public static void initTencentBannerAD(View rootView, Activity activity) {
         try {
             LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
             if (adContentView != null) {
-                adContentView.addView(ZKAD.initTencentADView(activity));
+                adContentView.removeAllViews();
+                adContentView.addView(ZKAD.initTencentBannerADView(activity));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -340,13 +341,206 @@ public class ZKAD {
     }
 
 
+    /**
+     * 插屏广告 2.0
+     *
+     * @param activity
+     */
+    public static void initTencentInterstitialAD(Activity activity) {
+        try {
+            if (tencentInterstitialAD != null) {
+                tencentInterstitialAD.close();
+                tencentInterstitialAD.destroy();
+                tencentInterstitialAD = null;
+            }
+            if (tencentInterstitialAD == null) {
+                tencentInterstitialAD = new UnifiedInterstitialAD(activity, AD_TENCENT_APP_ID, AD_TENCENT_INTERSTITIAL_KEY, new UnifiedInterstitialADListener() {
+                    @Override
+                    public void onADReceive() {
+                        Toast.makeText(activity, "广告加载成功 ！ ", Toast.LENGTH_LONG).show();
+                        if (tencentInterstitialAD != null) {
+                            tencentInterstitialAD.show();
+                        } else {
+                            Toast.makeText(activity, "请加载广告后再进行展示 ！ ", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onNoAD(com.qq.e.comm.util.AdError error) {
+                        String msg = String.format(Locale.getDefault(), "onNoAD, error code: %d, error msg: %s",
+                                error.getErrorCode(), error.getErrorMsg());
+                        Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onADOpened() {
+                        Log.i(TAG, "onADOpened");
+                    }
+
+                    @Override
+                    public void onADExposure() {
+                        Log.i(TAG, "onADExposure");
+                    }
+
+                    @Override
+                    public void onADClicked() {
+                        Log.i(TAG, "onADClicked : " + (tencentInterstitialAD.getExt() != null ? tencentInterstitialAD.getExt().get("clickUrl") : ""));
+                    }
+
+                    @Override
+                    public void onADLeftApplication() {
+                        Log.i(TAG, "onADLeftApplication");
+                    }
+
+                    @Override
+                    public void onADClosed() {
+                        Log.i(TAG, "onADClosed");
+                    }
+                });
+                tencentInterstitialAD.loadAD();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //**************************** 腾讯激励视频 *****************************
+    private static RewardVideoAD rewardVideoAD;
+    private static boolean adLoaded;//广告加载成功标志
+    private static boolean videoCached;//视频素材文件下载完成标志
+
+    public static void initTencentRewardVideoAd() {
+        // 1. 初始化激励视频广告
+        rewardVideoAD = new RewardVideoAD(application, AD_TENCENT_APP_ID, AD_TENCENT_REWARD_KEY, new RewardVideoADListener() {
+            /**
+             * 广告加载成功，可在此回调后进行广告展示
+             **/
+            @Override
+            public void onADLoad() {
+                adLoaded = true;
+                String msg = "load ad success ! expireTime = " + new Date(System.currentTimeMillis() +
+                        rewardVideoAD.getExpireTimestamp() - SystemClock.elapsedRealtime());
+                Toast.makeText(application, msg, Toast.LENGTH_LONG).show();
+                showTencentRewardVideoAd();
+            }
+
+            /**
+             * 视频素材缓存成功，可在此回调后进行广告展示
+             */
+            @Override
+            public void onVideoCached() {
+                videoCached = true;
+                Log.i(TAG, "onVideoCached");
+            }
+
+            /**
+             * 激励视频广告页面展示
+             */
+            @Override
+            public void onADShow() {
+                Log.i(TAG, "onADShow");
+            }
+
+            /**
+             * 激励视频广告曝光
+             */
+            @Override
+            public void onADExpose() {
+                Log.i(TAG, "onADExpose");
+            }
+
+            /**
+             * 激励视频触发激励（观看视频大于一定时长或者视频播放完毕）
+             */
+            @Override
+            public void onReward() {
+                Log.i(TAG, "onReward");
+            }
+
+            /**
+             * 激励视频广告被点击
+             */
+            @Override
+            public void onADClick() {
+                Log.i(TAG, "onADClick");
+            }
+
+            /**
+             * 激励视频播放完毕
+             */
+            @Override
+            public void onVideoComplete() {
+                Log.i(TAG, "onVideoComplete");
+            }
+
+            /**
+             * 激励视频广告被关闭
+             */
+            @Override
+            public void onADClose() {
+                Log.i(TAG, "onADClose");
+            }
+
+            /**
+             * 广告流程出错
+             */
+            @Override
+            public void onError(com.qq.e.comm.util.AdError adError) {
+                String msg = String.format(Locale.getDefault(), "onError, error code: %d, error msg: %s",
+                        adError.getErrorCode(), adError.getErrorMsg());
+                Toast.makeText(application, msg, Toast.LENGTH_LONG).show();
+            }
+        });
+        adLoaded = false;
+        videoCached = false;
+        // 2. 加载激励视频广告
+//        rewardVideoAD.loadAD();
+    }
+
+    public static void loadTencentRewardVideoAd() {
+        // 2. 加载激励视频广告
+        if (rewardVideoAD != null) {
+            rewardVideoAD.loadAD();
+        }
+    }
+
+    private static void showTencentRewardVideoAd() {
+        // 3. 展示激励视频广告
+        //广告展示检查1：广告成功加载，此处也可以使用videoCached来实现视频预加载完成后再展示激励视频广告的逻辑
+        if (adLoaded && rewardVideoAD != null) {
+            //广告展示检查2：当前广告数据还没有展示过
+            if (!rewardVideoAD.hasShown()) {
+                //建议给广告过期时间加个buffer，单位ms，这里demo采用1000ms的buffer
+                long delta = 1000;
+                //广告展示检查3：展示广告前判断广告数据未过期
+                if (SystemClock.elapsedRealtime() < (rewardVideoAD.getExpireTimestamp() - delta)) {
+                    rewardVideoAD.showAD();
+                } else {
+                    Toast.makeText(application, "激励视频广告已过期，请再次请求广告后进行广告展示！", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(application, "此条广告已经展示过，请再次请求广告后进行广告展示！", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(application, "成功加载广告后再进行广告展示！", Toast.LENGTH_LONG).show();
+        }
+    }
+
     private static void event(String event) {
         UMUtils.event(event);
     }
 
     public static void destory() {
-        if (fbAdView != null)
+        if (fbAdView != null) {
             fbAdView.destroy();
+        }
+//        if (tencentBanner != null) {
+//            tencentBanner.destroy();
+//        }
+//        if (tencentInterstitialAD != null) {
+//            tencentInterstitialAD.destroy();
+//        }
     }
 
 

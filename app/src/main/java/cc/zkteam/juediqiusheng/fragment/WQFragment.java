@@ -1,19 +1,14 @@
 package cc.zkteam.juediqiusheng.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.adapter.WQSectionsPagerAdapter;
-import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 
 /**
@@ -59,7 +54,23 @@ public class WQFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         mViewPager.setLifecycle(getLifecycle());
-        mViewPager.setViewPager(null, new WQSectionsPagerAdapter(getChildFragmentManager()));
+        mViewPager.setViewPager(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.i("bro" ,  "切换了");
+                ZKAD.initTencentInterstitialAD(getActivity());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        }, new WQSectionsPagerAdapter(getChildFragmentManager()));
         tabLayout.setupWithViewPager(mViewPager);
     }
 
