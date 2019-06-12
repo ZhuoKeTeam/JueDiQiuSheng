@@ -56,7 +56,7 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
     // TODO: 2017/11/21 去除这个 arrayList
     protected void initZKRecyclerView(ZKRecyclerView zkRecyclerView, List arrayList) {
         if (adapter == null) {
-            adapter = new HotNewsAdapter(arrayList);
+            adapter = new HotNewsAdapter(getActivity() , arrayList);
             adapter.setListener(data -> {
                 Intent intent = new Intent(Utils.getApp(), WebViewActivity.class);
                 String artifactUrl = data.getTjSourceUrl();
@@ -70,6 +70,9 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         zkRecyclerView.setItemAnimator(new DefaultItemAnimator());
         zkRecyclerView.setAdapter(adapter);
     }
+
+
+
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -223,7 +226,7 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
 
     private void getUpdatesData() {
         ZKConnectionManager.getInstance().getZKApi()
-                .getRecommended("10006", "5")
+                .getRecommended("10006", "50")
                 .enqueue(new ZKCallback<List<RecommendedBean>>() {
                     @Override
                     public void onResponse(List<RecommendedBean> result) {

@@ -69,7 +69,7 @@ public class ZKAD {
 
     // 腾讯 APP ID
     public static final String AD_TENCENT_APP_ID = "1109306826";
-    //腾讯 tencentBanner 2.0
+    //腾讯 Banner 2.0
     public static final String AD_TENCENT_BANNER_KEY = "4060363860868383";
     //腾讯 激励视频
     public static final String AD_TENCENT_REWARD_KEY = "9070065724358455";
@@ -77,6 +77,8 @@ public class ZKAD {
     public static final String AD_TENCENT_SPLASH_KEY = "7070864870360301";
     //腾讯 插屏 2.0
     public static final String AD_TENCENT_INTERSTITIAL_KEY = "9050361810766342";
+    //腾讯 原生-左图右文
+    public static final String AD_TENCENT_ORIGINAL_KEY = "3050764842146730";
 
 
     // Appid
