@@ -21,4 +21,6 @@
     <string name="question_permission_tip">获取权限失败</string>
 
     <string name="save_pic">保 存</string>
+
+    <string name="click_to_skip">点击跳过</string>
 </resources>

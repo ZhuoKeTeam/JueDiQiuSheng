@@ -7,38 +7,73 @@
     tools:context="cc.zkteam.juediqiusheng.activity.SplashActivity"
    >
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/ll_splash_holder"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/img1"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg" />
-        <ImageView
-            android:id="@+id/img2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg2" />
-        <ImageView
-            android:id="@+id/img3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg3" />
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg" />
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg2" />
+            <ImageView
+                android:id="@+id/img3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:src="@drawable/bg3" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/id_linear"
-        android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical">
-        <TextView
+        <LinearLayout
+            android:id="@+id/id_linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/cardview_light_background"
-            android:text="吃 鸡 攻 略"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:textSize="40sp"/>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cardview_light_background"
+                android:text="吃 鸡 攻 略"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:textSize="40sp"/>
+        </LinearLayout>
+
     </LinearLayout>
+
+
+    <!-- 2.开屏广告容器区域：-->
+    <!-- 注意：该区域高度不得小于400dp。在本示例中没有写死splash_container的高度值，是因为第1部分的app_logo区域是一个高度很小的图片。 -->
+    <FrameLayout
+        android:id="@+id/splash_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <!-- 3.自定义跳过按钮区域：开发者可以根据需要自己实现不同样式的跳过按钮 -->
+    <!-- 注意1：根据广告法规定，跳过按钮必须在屏幕当中出现。因此广告展示的时候，必须让将SkipView显示出来，即visible，否则将SDK将不展示广告，返回错误码608。。 -->
+    <!-- 注意2：SDK除了会检查跳过按钮的可见性，还将检测它的尺寸，其尺寸不得小于3dp*3dp，否则将SDK将不展示广告，返回错误码608。 -->
+    <TextView
+        android:id="@+id/skip_view"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/background_circle"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:text="@string/click_to_skip"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"/>
+    <!-- 本示例省略了自定义的倒计时，和跳过按钮放在一起实现了。开发者也可以实现自己的倒计时View，方法是在onADTick回调中获得广告剩余的展示时间，并自由决定倒计时View的样式，SDK对倒计时的View没有要求。 -->
+
 
 </RelativeLayout>

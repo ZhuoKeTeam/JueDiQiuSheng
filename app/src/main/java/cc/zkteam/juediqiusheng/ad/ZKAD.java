@@ -21,9 +21,6 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.qq.e.ads.banner.ADSize;
-import com.qq.e.ads.banner.AbstractBannerADListener;
-import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
 
@@ -65,6 +62,7 @@ public class ZKAD {
     public static final String AD_TENCENT_APP_ID = "1109306826";
     public static final String AD_TENCENT_RELEASE_DTS_GL_HF_KEY = "4060363860868383";
     public static final String AD_TENCENT_REWARD_KEY = "9070065724358455";
+    public static final String AD_TENCENT_SPLASH_KEY = "7070864870360301";
 
 
     // Appid
