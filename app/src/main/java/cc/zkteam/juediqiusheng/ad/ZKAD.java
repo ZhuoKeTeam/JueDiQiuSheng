@@ -472,6 +472,7 @@ public class ZKAD {
     public static void loadCPAD() {
         cpAd = new InterstitialAd(application, AD_BAIDU_RELEASE_DTS_CP_KEY);
         cpAd.setListener(new InterstitialAdListener() {
+
             @Override
             public void onAdReady() {
                 logD("BD—CP->onAdReady:");
