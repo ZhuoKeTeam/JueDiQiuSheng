@@ -2,30 +2,24 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.baidu.mobad.video.XAdManager;
 import com.baidu.mobads.AdViewListener;
-import com.baidu.mobads.AppActivity;
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
 import com.baidu.mobads.rewardvideo.RewardVideoAd;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
-import com.facebook.ads.AudienceNetworkAds;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
@@ -37,7 +31,24 @@ import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ERROR;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOGGING_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_FAILED_TO_LOAD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_EARNED_JL;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_SHOW_FAILED;
 
 public class ZKAD {
 
@@ -49,7 +60,10 @@ public class ZKAD {
     public static final String AD_BAIDU_RELEASE_DTS_HF_KEY = "6288996";
     // 百度激励广告ID
     public static final String AD_BAIDU_RELEASE_DTS_JL_KEY = "6288997";
+    // 开屏广告
     public static final String AD_BAIDU_RELEASE_DTS_KP_KEY = "6289086";
+    // 插屏广告
+    public static final String AD_BAIDU_RELEASE_DTS_CP_KEY = "6289360";
 
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
@@ -446,6 +460,45 @@ public class ZKAD {
 //        } else {
 //            ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
 //        }
+    }
+
+
+    // 插屏
+    private static InterstitialAd cpAd;
+    public static void showCPAD(Activity activity) {
+        cpAd.showAd(activity);
+    }
+
+    public static void loadCPAD() {
+        cpAd = new InterstitialAd(application, AD_BAIDU_RELEASE_DTS_CP_KEY);
+        cpAd.setListener(new InterstitialAdListener() {
+            @Override
+            public void onAdReady() {
+                logD("BD—CP->onAdReady:");
+            }
+
+            @Override
+            public void onAdPresent() {
+                logD("BD—CP->onAdPresent:");
+            }
+
+            @Override
+            public void onAdClick(InterstitialAd interstitialAd) {
+                logD("BD—CP->onAdClick:" + interstitialAd.isAdReady());
+            }
+
+            @Override
+            public void onAdDismissed() {
+                logD("BD—CP->onAdReady:");
+                cpAd.loadAd();
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                logD("BD—CP->onAdReady:");
+            }
+        });
+        cpAd.loadAd();
     }
 
 }

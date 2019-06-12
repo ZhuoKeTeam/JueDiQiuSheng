@@ -22,10 +22,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.baidu.mobad.video.XAdManager;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -57,10 +55,6 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import okhttp3.OkHttpClient;
-
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_FILE_NAME;
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_INIT;
-import static cc.zkteam.juediqiusheng.Constant.ZKTEAM_USER_LIFE_COUNT_KEY;
 
 /**
  * 主 MainActivity
@@ -447,5 +441,18 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                 }
             }
         });
+    }
+
+    //退出时的时间
+    private long mExitTime;
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort("再按一次退出");
+            mExitTime = System.currentTimeMillis();
+            ZKAD.showCPAD(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

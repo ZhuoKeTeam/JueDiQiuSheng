@@ -38,6 +38,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         initViews();
         initListener();
         initData();
+
+
+        // todo test
+        ZKAD.loadCPAD();
     }
 
 
@@ -80,6 +84,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+
+        ZKAD.showCPAD(this);
 
 //        if (mFloatMenu == null) {
 //            mFloatMenu = ZKFloatMenuManager.getInstance().getFloatLogoMenu(this, getFragmentManager());
