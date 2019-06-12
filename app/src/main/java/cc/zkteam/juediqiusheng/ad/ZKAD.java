@@ -24,6 +24,8 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner.BannerView;
+import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
@@ -152,15 +154,10 @@ public class ZKAD {
             throw new RuntimeException("腾讯广告必须传入 Activity 的上下文，请使用：initADView(Activity activity)。");
 
         try {
-            // 创建 Banner 广告 AdView 对象
-            BannerView banner = new BannerView(activity, ADSize.BANNER, AD_TENCENT_APP_ID, AD_TENCENT_RELEASE_DTS_GL_HF_KEY);
-            //设置广告轮播时间，为0或30~120之间的数字，单位为s,0标识不自动轮播
-            banner.setRefresh(30);
-            banner.setADListener(new AbstractBannerADListener() {
-
+            // 创建 Banner 2.0 广告 对象
+            UnifiedBannerView banner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_RELEASE_DTS_GL_HF_KEY, new UnifiedBannerADListener() {
                 @Override
                 public void onNoAD(com.qq.e.comm.util.AdError adError) {
-                    Log.i("AD_DEMO", "BannerNoAD，eCode=" + adError.getErrorCode());
                     Log.i(
                             "AD_DEMO",
                             String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
@@ -168,11 +165,62 @@ public class ZKAD {
                 }
 
                 @Override
-                public void onADReceiv() {
+                public void onADReceive() {
                     Log.i("AD_DEMO", "ONBannerReceive");
                 }
+
+                @Override
+                public void onADExposure() {
+
+                }
+
+                @Override
+                public void onADClosed() {
+
+                }
+
+                @Override
+                public void onADClicked() {
+
+                }
+
+                @Override
+                public void onADLeftApplication() {
+
+                }
+
+                @Override
+                public void onADOpenOverlay() {
+
+                }
+
+                @Override
+                public void onADCloseOverlay() {
+
+                }
             });
-            /* 发起广告请求，收到广告数据后会展示数据     */
+
+            // 创建 Banner 1.0(旧的已经不再使用) 广告 对象
+//            BannerView banner = new BannerView(activity, ADSize.BANNER, AD_TENCENT_APP_ID, AD_TENCENT_RELEASE_DTS_GL_HF_KEY);
+//            //设置广告轮播时间，为0或30~120之间的数字，单位为s,0标识不自动轮播
+//            banner.setRefresh(30);
+//            banner.setADListener(new AbstractBannerADListener() {
+//
+//                @Override
+//                public void onNoAD(com.qq.e.comm.util.AdError adError) {
+//                    Log.i("AD_DEMO", "BannerNoAD，eCode=" + adError.getErrorCode());
+//                    Log.i(
+//                            "AD_DEMO",
+//                            String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
+//                                    adError.getErrorMsg()));
+//                }
+//
+//                @Override
+//                public void onADReceiv() {
+//                    Log.i("AD_DEMO", "ONBannerReceive");
+//                }
+//            });
+//            /* 发起广告请求，收到广告数据后会展示数据     */
             banner.loadAD();
             return banner;
         } catch (Exception e) {
@@ -281,7 +329,7 @@ public class ZKAD {
             e.printStackTrace();
         }
     }
-    //    public static void initHFAD(View rootView, Activity activity) {
+
     public static void initTencentAD(View rootView, Activity activity) {
         try {
             LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
