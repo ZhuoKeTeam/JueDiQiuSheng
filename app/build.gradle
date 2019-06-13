@@ -40,7 +40,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':loadingview')
+    implementation "com.github.gdky005:LoadingDrawable:1.0.0"
+//    implementation project(':loadingview')
 
     //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
 
