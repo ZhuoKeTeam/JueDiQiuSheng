@@ -29,7 +29,8 @@
             app:loading_renderer="GhostsEyeLoadingRenderer"
             android:visibility="gone"/>
 
-        <include layout="@layout/ad_rl_view"
+        <RelativeLayout
+            android:id="@+id/ad_content_view_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"/>

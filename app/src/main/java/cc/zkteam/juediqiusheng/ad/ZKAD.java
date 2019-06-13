@@ -103,40 +103,42 @@ public class ZKAD {
 //        return initGoogleADView();
     }
 
-    public static View initBaiduADView() {
-        com.baidu.mobads.AdView adView = new com.baidu.mobads.AdView(application, AD_BAIDU_RELEASE_DTS_HF_KEY);
-        adView.setListener(new AdViewListener() {
+    private static com.baidu.mobads.AdView hfAdView;
+    public static com.baidu.mobads.AdView initBaiduADView() {
+        hfAdView = new com.baidu.mobads.AdView(application, AD_BAIDU_RELEASE_DTS_HF_KEY);
+        hfAdView.setListener(new AdViewListener() {
             @Override
             public void onAdReady(com.baidu.mobads.AdView adView) {
-                logD("BD->onAdReady");
+                logD("BD——HF->onAdReady");
             }
 
             @Override
             public void onAdShow(JSONObject jsonObject) {
-                logD("BD->onAdShow");
+                logD("BD——HF->onAdShow");
             }
 
             @Override
             public void onAdClick(JSONObject jsonObject) {
-                logD("BD->onAdClick");
+                logD("BD——HF->onAdClick");
             }
 
             @Override
             public void onAdFailed(String s) {
-                logD("BD->onAdFailed:" + s);
+                logD("BD——HF->onAdFailed:" + s);
+//                hfAdView = initBaiduADView();
             }
 
             @Override
             public void onAdSwitch() {
-                logD("BD->onAdSwitch");
+                logD("BD——HF->onAdSwitch");
             }
 
             @Override
             public void onAdClose(JSONObject jsonObject) {
-                logD("BD->onAdClose");
+                logD("BD——HF->onAdClose");
             }
         });
-        return adView;
+        return hfAdView;
 
 //把横幅 view 添加到自己的 viewGroup 组件中，必须写，才可以展示横幅广告
 // RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(width, height);
@@ -256,18 +258,14 @@ public class ZKAD {
         return null;
     }
 
+    /**
+     * TODO 横幅这里的使用方式有问题，请根据 现有业务重新调试下。
+     * @param activity
+     */
     public static void initHFAD(Activity activity) {
-        initHFAD(activity, false);
-    }
-
-    public static void initHFAD(Activity activity, boolean isFacebookAd) {
-        View view = activity.getWindow().getDecorView().getRootView();
-        initHFAD(view, isFacebookAd);
-    }
-
-    public static void initHFAD(View rootView, boolean isFacebookAd) {
+//        todo 这里可能有问题，建议使用原生的。
         try {
-            LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
+            LinearLayout adContentView = activity.findViewById(R.id.ad_content_view);
             if (adContentView != null) {
                 adContentView.addView(ZKAD.initBaiduADView());
 //                if (isFacebookAd) {
@@ -455,12 +453,12 @@ public class ZKAD {
     }
 
     public static void showBaiDuJLAD(RewardVideoAd rewardVideoAd) {
-        rewardVideoAd.show();
-//        if (rewardVideoAd.isReady()) {
-//            rewardVideoAd.show();
-//        } else {
-//            ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
-//        }
+        if (rewardVideoAd.isReady()) {
+            rewardVideoAd.show();
+        } else {
+            rewardVideoAd.load();
+            ToastUtils.showShort("奖励视频飞了，倒数5秒，再来一次");
+        }
     }
 
 

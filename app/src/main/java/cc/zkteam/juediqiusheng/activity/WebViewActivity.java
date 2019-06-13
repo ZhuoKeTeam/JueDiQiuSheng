@@ -58,7 +58,7 @@ public class WebViewActivity extends BaseActivity {
     protected void initViews() {
         setTitle("详情");
         webView = findViewById(R.id.wb_sort);
-        ZKAD.initHFAD(this, true);
+//        ZKAD.initHFAD(this);
     }
 
     @Override
@@ -133,32 +133,32 @@ public class WebViewActivity extends BaseActivity {
         adView.setListener(new AdViewListener() {
             @Override
             public void onAdReady(AdView adView) {
-                logD("onAdReady->");
+                logD("BD_HF_onAdReady->");
             }
 
             @Override
             public void onAdShow(JSONObject jsonObject) {
-                logD("onAdShow->");
+                logD("BD_HF_onAdShow->");
             }
 
             @Override
             public void onAdClick(JSONObject jsonObject) {
-                logD("onAdClick->");
+                logD("BD_HF_onAdClick->");
             }
 
             @Override
             public void onAdFailed(String s) {
-                logD("onAdFailed->" + s);
+                logD("BD_HF_onAdFailed->" + s);
             }
 
             @Override
             public void onAdSwitch() {
-                logD("onAdSwitch->");
+                logD("BD_HF_onAdSwitch->");
             }
 
             @Override
             public void onAdClose(JSONObject jsonObject) {
-                logD("onAdClose->");
+                logD("BD_HF_onAdClose->");
             }
         });
 

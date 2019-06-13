@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
+import android.widget.RelativeLayout
 import app.dinus.com.loadingdrawable.LoadingView
 import cc.zkteam.juediqiusheng.R
 import cc.zkteam.juediqiusheng.ad.ZKAD
@@ -14,11 +15,13 @@ import cc.zkteam.juediqiusheng.utils.L
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.baidu.mobads.AdView
+import com.baidu.mobads.AdViewListener
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.imagepipeline.image.ImageInfo
 import kotlinx.android.synthetic.main.activity_see_big_pic_layout.*
-
+import org.json.JSONObject
 
 
 /**
@@ -38,10 +41,52 @@ class JDQSSeeBigPicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_see_big_pic_layout)
         ARouter.getInstance().inject(this)
 
+
+        val adViewContent = findViewById<RelativeLayout>(R.id.ad_content_view_new)
+
+        val adPlaceID = "6294768"//广告位 ID
+        val adView = AdView(this, adPlaceID)
+        adView.setListener(object : AdViewListener {
+            override fun onAdReady(adView: AdView) {
+                ZKAD.logD("BD_HF_onAdReady->")
+            }
+
+            override fun onAdShow(jsonObject: JSONObject) {
+                ZKAD.logD("BD_HF_onAdShow->")
+            }
+
+            override fun onAdClick(jsonObject: JSONObject) {
+                ZKAD.logD("BD_HF_onAdClick->")
+            }
+
+            override fun onAdFailed(s: String) {
+                ZKAD.logD("BD_HF_onAdFailed->$s")
+            }
+
+            override fun onAdSwitch() {
+                ZKAD.logD("BD_HF_onAdSwitch->")
+            }
+
+            override fun onAdClose(jsonObject: JSONObject) {
+                ZKAD.logD("BD_HF_onAdClose->")
+            }
+        })
+
+//        DisplayMetrics dm = new DisplayMetrics();
+//        ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(dm);
+//        int winW = dm.widthPixels;
+//        int winH = dm.heightPixels;
+//        int width = Math.min(winW, winH);
+//        int height = width * 3 / 20;
+//        //把横幅 view 添加到自己的 viewGroup 组件中，必须写，才可以展示横幅广告
+//        RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(width, height);
+//        rllp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        adViewContent.addView(adView)
+
+
         initToolbar()
         loadImg()
 
-        ZKAD.initHFAD(this, false)
     }
 
     private fun loadImg() {
