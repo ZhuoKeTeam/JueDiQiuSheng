@@ -64,24 +64,24 @@ public class SplashActivity extends BaseActivity {
         SplashAdListener listener = new SplashAdListener() {
             @Override
             public void onAdDismissed() {
-                Log.i("RSplashActivity", "onAdDismissed");
+                ZKAD.logD("SplashAdListener_onAdDismissed");
                 splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
             }
 
             @Override
             public void onAdFailed(String arg0) {
-                Log.i("RSplashActivity", "onAdFailed");
+                ZKAD.logD("SplashAdListener_onAdFailed:" + arg0);
                 splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
             }
 
             @Override
             public void onAdPresent() {
-                Log.i("RSplashActivity", "onAdPresent");
+                ZKAD.logD("SplashAdListener_onAdPresent");
             }
 
             @Override
             public void onAdClick() {
-                Log.i("RSplashActivity", "onAdClick");
+                ZKAD.logD("SplashAdListener_onAdClick");
 //设置开屏可接受点击时，该回调可用
             }
         };

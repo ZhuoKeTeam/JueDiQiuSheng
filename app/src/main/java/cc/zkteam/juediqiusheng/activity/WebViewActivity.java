@@ -120,7 +120,7 @@ public class WebViewActivity extends BaseActivity {
 
 
     private static void logD(String msg) {
-        Log.d("WangQing", msg);
+        ZKAD.logD(msg);
     }
 
     @Override

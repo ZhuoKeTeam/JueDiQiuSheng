@@ -1,6 +1,7 @@
 package cc.zkteam.juediqiusheng.ui.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -114,6 +115,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                     break;
             }
 
+            ZKAD.showCPAD(activity);
             navigation.setSelectedItemId(itemId);
         }
 
@@ -147,10 +149,13 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         }
     };
 
+    private Activity activity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+        activity = this;
 
         getAAID();
         saveLifeCount();
@@ -274,6 +279,8 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                     }
                 });
 
+        ZKAD.loadCPAD();
+
 
 
 
@@ -303,7 +310,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public static class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -450,7 +457,6 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
         if ((System.currentTimeMillis() - mExitTime) > 2000) {
             ToastUtils.showShort("再按一次退出");
             mExitTime = System.currentTimeMillis();
-            ZKAD.showCPAD(this);
         } else {
             super.onBackPressed();
         }

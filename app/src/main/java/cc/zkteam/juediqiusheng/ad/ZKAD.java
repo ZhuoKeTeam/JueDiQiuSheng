@@ -63,7 +63,8 @@ public class ZKAD {
     // 开屏广告
     public static final String AD_BAIDU_RELEASE_DTS_KP_KEY = "6289086";
     // 插屏广告
-    public static final String AD_BAIDU_RELEASE_DTS_CP_KEY = "6289360";
+    public static final String AD_BAIDU_RELEASE_DTS_CP_KEY = "6294769";
+//    public static final String AD_BAIDU_RELEASE_DTS_CP_KEY = "6289360";
 
     // Appid
     public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
@@ -181,7 +182,7 @@ public class ZKAD {
         return null;
     }
 
-    private static void logD(String msg) {
+    public static void logD(String msg) {
         Log.d(TAG, msg);
     }
 
@@ -466,7 +467,11 @@ public class ZKAD {
     // 插屏
     private static InterstitialAd cpAd;
     public static void showCPAD(Activity activity) {
-        cpAd.showAd(activity);
+        if (cpAd.isAdReady()) {
+            cpAd.showAd(activity);
+        } else {
+            cpAd.loadAd();
+        }
     }
 
     public static void loadCPAD() {
