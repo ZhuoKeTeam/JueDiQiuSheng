@@ -116,6 +116,4 @@ dependencies {
     //    implementation('com.yanzhenjie.permission:support:2.0.1') {
     //        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
     //    }
-    implementation files('libs/android-query-full.0.26.7.jar')
-    implementation files('libs/GDTSDK.union.4.40.910.jar')
 }
