@@ -18,8 +18,8 @@ android {
         applicationId "cc.zkteam.juediqiusheng"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 100081
-        versionName "1.0.81"
+        versionCode 10012
+        versionName "1.0.12"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -46,8 +46,9 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.github.gdky005:LoadingDrawable:1.0.0"
+//    implementation project(':loadingview')
     implementation(name:'Baidu_MobAds_SDK-release', ext:'aar')
-    implementation project(':loadingview')
     //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
     // Support libraries
     implementation deps.support.app_compat
@@ -55,12 +56,15 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.cardview
     implementation deps.constraint_layout
+
     // retrofit2
     implementation deps.retrofit2
     implementation deps.retrofit2_gson
+
     // kotlin支持
     implementation deps.kotlin
     implementation deps.anko
+
     //Router,参考地址：https://github.com/alibaba/ARouter#fork-destination-box
     implementation deps.arouter
     kapt deps.arouter_compiler
@@ -70,6 +74,7 @@ dependencies {
     implementation deps.okhttp
     implementation deps.floatmenu
     implementation deps.nbs_newlens_agent
+
     //    implementation deps.photo_view
     implementation deps.fresco
     implementation deps.photo_draweeview
@@ -79,43 +84,57 @@ dependencies {
     implementation deps.dagger
     implementation deps.dagger_support
     kapt deps.dagger_processor
+
     //For Lifecycles, LiveData, and ViewModel, 参考：https://developer.android.com/topic/libraries/architecture/adding-components.html
     implementation deps.lifecycle.lifecycle_java8
     implementation deps.lifecycle.extensions
     implementation deps.lifecycle.arch_paging
     implementation deps.lifecycle.room
     kapt deps.lifecycle.room_compiler
+
     //utilcode， 可参考：https://github.com/Blankj/AndroidUtilCode
     implementation deps.utilcode
+
     //    CommonUtil，可以参考：https://github.com/AbrahamCaiJin/CommonUtilLibrary
+
     //    implementation 'com.abrahamcaijin.commonutil:CommonUtil:1.0.1'
     implementation deps.rvh
     implementation deps.okhttp_interceptor
     testImplementation deps.junit
+
     //    Espresso UI Testing
     androidTestImplementation espresso.core
     implementation 'com.google.code.gson:gson:2.8.2'
+
     //    androidTestImplementation espresso.contrib
+
     //    androidTestImplementation espresso.intents
+
     // Resolve conflicts between main and test APK:
+
     //    androidTestImplementation support.annotations
+
     //    androidTestImplementation support.v4
+
     //    androidTestImplementation support.app_compat
+
     //    androidTestImplementation support.design
 
-//    添加统计
-    implementation  'com.umeng.umsdk:analytics:7.5.4'
-    implementation  'com.umeng.umsdk:common:1.5.4'
+    //    添加统计
+    implementation 'com.umeng.umsdk:analytics:7.5.4'
+    implementation 'com.umeng.umsdk:common:1.5.4'
 
-//    接入 google 广告
+    //    接入 google 广告
     implementation 'com.google.android.gms:play-services-ads:17.2.1'
-//    接入 Facebook 广告
-    implementation 'com.facebook.android:audience-network-sdk:5.3.1'
 
+    //    接入 Facebook 广告
+    implementation 'com.facebook.android:audience-network-sdk:5.3.1'
     implementation 'com.android.support:multidex:1.0.3'
 
-//    //动态申请权限
-//    implementation('com.yanzhenjie.permission:support:2.0.1') {
-//        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
-//    }
+    //    //动态申请权限
+    //    implementation('com.yanzhenjie.permission:support:2.0.1') {
+    //        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
+    //    }
+    implementation files('libs/android-query-full.0.26.7.jar')
+    implementation files('libs/GDTSDK.union.4.40.910.jar')
 }
