@@ -21,8 +21,11 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.baidu.mobads.AdSize;
 import com.baidu.mobads.AdView;
 import com.baidu.mobads.AdViewListener;
+import com.baidu.mobads.InterstitialAd;
+import com.baidu.mobads.InterstitialAdListener;
 
 import org.json.JSONObject;
 
@@ -42,6 +45,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.baidu.mobads.AdSize.InterstitialForVideoBeforePlay;
 
 @SuppressLint("SetJavaScriptEnabled")
 
@@ -125,8 +130,54 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
         RelativeLayout adViewContent = findViewById(R.id.ad_content_view_new);
+
+        String adPlaceId = "6294769";//广告位 id
+
+        InterstitialAd interAd=new InterstitialAd(this, adPlaceId);
+        interAd.setListener(new InterstitialAdListener() {
+            @Override
+            public void onAdReady() {
+                logD("BD_CP_onAdReady->");
+                interAd.showAd(WebViewActivity.this);
+            }
+
+            @Override
+            public void onAdPresent() {
+                logD("BD_CP_onAdPresent->");
+            }
+
+            @Override
+            public void onAdClick(InterstitialAd interstitialAd) {
+                logD("BD_CP_onAdClick->");
+            }
+
+            @Override
+            public void onAdDismissed() {
+                logD("BD_CP_onAdDismissed->");
+                interAd.loadAd();
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                logD("BD_CP_onAdFailed->" + s);
+                interAd.loadAd();
+            }
+        });
+
+        interAd.loadAd();
+
+        adViewContent.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(interAd.isAdReady()){
+                    interAd.showAd(WebViewActivity.this);
+                }else{
+                    interAd.loadAd();
+                }
+            }
+        }, 5000);
+
 
         String adPlaceID = "6294768";//广告位 ID
         AdView adView = new AdView(this, adPlaceID);
