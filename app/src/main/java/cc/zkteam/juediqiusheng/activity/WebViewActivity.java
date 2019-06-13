@@ -128,8 +128,7 @@ public class WebViewActivity extends BaseActivity {
 
         RelativeLayout adViewContent = findViewById(R.id.ad_content_view_new);
 
-
-        String adPlaceID = "6288996";//广告位 ID
+        String adPlaceID = "6294768";//广告位 ID
         AdView adView = new AdView(this, adPlaceID);
         adView.setListener(new AdViewListener() {
             @Override
