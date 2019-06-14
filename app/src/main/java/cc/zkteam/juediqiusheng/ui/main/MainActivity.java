@@ -34,6 +34,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
@@ -110,7 +111,13 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                     itemId = R.id.navigation_picture;
                     break;
                 case NAV_TYPE_QUESTION:
-                    ZKAD.showTouTiaoInteractionAD("918599929", MainActivity.this);
+                    //插屏广告
+                    String cpId = "918599929";
+                    if (!BuildConfig.DEBUG) {
+                        cpId = "920203300"; //正式 key
+                    }
+
+                    ZKAD.showTouTiaoInteractionAD(cpId, MainActivity.this);
                     itemId = R.id.navigation_question;
                     break;
             }

@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 
 import com.networkbench.agent.impl.NBSAppAgent;
 
+import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.ad.ToutiaoAd;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
@@ -54,7 +54,13 @@ public class SplashActivity extends BaseActivity {
         initData();
         initAnimation();
 
-        ZKAD.showTouTiaoSplashAD("818599619", this, ad -> splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME));
+        //开屏广告
+        String kpId = "818599619";
+        if (!BuildConfig.DEBUG) {
+            kpId = "820203984"; //正式 key
+        }
+
+        ZKAD.showTouTiaoSplashAD(kpId, this, ad -> splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME));
     }
 
     @Override

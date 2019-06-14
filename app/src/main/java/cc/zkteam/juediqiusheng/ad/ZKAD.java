@@ -420,8 +420,22 @@ public class ZKAD {
 
     public static void showTouTiaoJLAD(String codeId, Activity activity) {
         ToutiaoAd.getsInstance().showJLAD(codeId, activity);
-        showTouTiaoFeedAD("918599296", null, activity);
-        showTouTiaoDrawNativeVideoAD("918599947", null, activity);
+        //信息流广告
+        //Draw信息流广告
+        String msgListId = "918599296";
+        if (!BuildConfig.DEBUG) {
+            msgListId = "920203971"; //正式 key
+        }
+
+        showTouTiaoFeedAD(msgListId, null, activity);
+
+        //Draw信息流广告
+        String drawId = "918599947";
+        if (!BuildConfig.DEBUG) {
+            drawId = "920203404"; //正式 key
+        }
+
+        showTouTiaoDrawNativeVideoAD(drawId, null, activity);
     }
 
     public static void showTouTiaoBannerAd(String codeId, Activity activity) {
