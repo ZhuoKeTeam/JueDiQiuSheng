@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.UMUtils;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
@@ -134,7 +135,8 @@ public class HotNewsAdapter
         mADManager = new NativeExpressAD(activity, adSize, AD_TENCENT_APP_ID, AD_TENCENT_ORIGINAL_KEY, new NativeExpressAD.NativeExpressADListener() {
             @Override
             public void onADLoaded(List<NativeExpressADView> adList) {
-                Log.i(TAG, "onADLoaded: " + adList.size());
+                Log.i("ad_tencent_native", "onADLoaded: " + adList.size());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADLOADED);
                 mAdViewList = adList;
                 for (int i = 0; i < mAdViewList.size(); i++) {
                     int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
@@ -154,27 +156,32 @@ public class HotNewsAdapter
 
             @Override
             public void onRenderFail(NativeExpressADView adView) {
-                Log.i(TAG, "onRenderFail: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_RENDERFAIL);
+                Log.i("ad_tencent_native", "onRenderFail: " + adView.toString());
             }
 
             @Override
             public void onRenderSuccess(NativeExpressADView adView) {
-                Log.i(TAG, "onRenderSuccess: " + adView.toString() + ", adInfo: " + getAdInfo(adView));
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_RENDERSUCCESS);
+                Log.i("ad_tencent_native", "onRenderSuccess: " + adView.toString() + ", adInfo: " + getAdInfo(adView));
             }
 
             @Override
             public void onADExposure(NativeExpressADView adView) {
-                Log.i(TAG, "onADExposure: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADEXPOSURE);
+                Log.i("ad_tencent_native", "onADExposure: " + adView.toString());
             }
 
             @Override
             public void onADClicked(NativeExpressADView adView) {
-                Log.i(TAG, "onADClicked: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLICKED);
+                Log.i("ad_tencent_native", "onADClicked: " + adView.toString());
             }
 
             @Override
             public void onADClosed(NativeExpressADView adView) {
-                Log.i(TAG, "onADClosed: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLOSED);
+                Log.i("ad_tencent_native", "onADClosed: " + adView.toString());
                 if (hotNewsItemAdapter != null) {
                     int removedPosition = mAdViewPositionMap.get(adView);
                     hotNewsItemAdapter.removeADView(removedPosition, adView);
@@ -183,22 +190,26 @@ public class HotNewsAdapter
 
             @Override
             public void onADLeftApplication(NativeExpressADView adView) {
-                Log.i(TAG, "onADLeftApplication: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADLEFTAPPLICATION);
+                Log.i("ad_tencent_native", "onADLeftApplication: " + adView.toString());
             }
 
             @Override
             public void onADOpenOverlay(NativeExpressADView adView) {
-                Log.i(TAG, "onADOpenOverlay: " + adView.toString());
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADOPENOVERLAY);
+                Log.i("ad_tencent_native", "onADOpenOverlay: " + adView.toString());
             }
 
             @Override
             public void onADCloseOverlay(NativeExpressADView adView) {
-                Log.i(TAG, "onADCloseOverlay");
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLOSEOVERLAY);
+                Log.i("ad_tencent_native", "onADCloseOverlay");
             }
 
             @Override
             public void onNoAD(AdError adError) {
-                Log.i(TAG, String.format("onNoAD, error code: %d, error msg: %s", adError.getErrorCode(),
+                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_NOAD);
+                Log.i("ad_tencent_native", String.format("onNoAD, error code: %d, error msg: %s", adError.getErrorCode(),
                         adError.getErrorMsg()));
             }
         });

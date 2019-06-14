@@ -178,45 +178,52 @@ public class ZKAD {
             tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY, new UnifiedBannerADListener() {
                 @Override
                 public void onNoAD(com.qq.e.comm.util.AdError adError) {
-                    Log.i(
-                            "AD_DEMO",
+                    Log.i("ad_tencent_banner",
                             String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
                                     adError.getErrorMsg()));
+                    UMUtils.event(UMUtils.EVENT_TENCENT_BANNER_NOAD);
                 }
 
                 @Override
                 public void onADReceive() {
-                    Log.i("AD_DEMO", "ONBannerReceive");
+                    Log.i("ad_tencent_banner", "ONBannerReceive");
+                    event(UMUtils.EVENT_TENCENT_BANNER_ADRECEIVE);
                 }
 
                 @Override
                 public void onADExposure() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                    event(UMUtils.EVENT_TENCENT_BANNER_ADEXPOSURE);
                 }
 
                 @Override
                 public void onADClosed() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                    event(UMUtils.EVENT_TENCENT_BANNER_ADCLOSED);
                 }
 
                 @Override
                 public void onADClicked() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                   event(UMUtils.EVENT_TENCENT_BANNER_ADCLICKED);
                 }
 
                 @Override
                 public void onADLeftApplication() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                    event(UMUtils.EVENT_TENCENT_BANNER_ADLEFTAPPLICATION);
                 }
 
                 @Override
                 public void onADOpenOverlay() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                    event(UMUtils.EVENT_TENCENT_BANNER_ADOPENOVERLAY);
                 }
 
                 @Override
                 public void onADCloseOverlay() {
-
+                    Log.i("_ad_tencent_banner", "ONBannerReceive");
+                   event(UMUtils.EVENT_TENCENT_BANNER_ADCLOSEOVERLAY);
                 }
             });
 //            tencentBanner.setRefresh(30);
@@ -359,6 +366,8 @@ public class ZKAD {
                 tencentInterstitialAD = new UnifiedInterstitialAD(activity, AD_TENCENT_APP_ID, AD_TENCENT_INTERSTITIAL_KEY, new UnifiedInterstitialADListener() {
                     @Override
                     public void onADReceive() {
+                        Log.i("ad_tencent_incert", "onADReceive");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADRECEIVE);
                         Toast.makeText(activity, "广告加载成功 ！ ", Toast.LENGTH_LONG).show();
                         if (tencentInterstitialAD != null) {
                             tencentInterstitialAD.show();
@@ -369,6 +378,8 @@ public class ZKAD {
 
                     @Override
                     public void onNoAD(com.qq.e.comm.util.AdError error) {
+                        Log.i("ad_tencent_incert", "onNoAD");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_NOAD);
                         String msg = String.format(Locale.getDefault(), "onNoAD, error code: %d, error msg: %s",
                                 error.getErrorCode(), error.getErrorMsg());
                         Toast.makeText(activity, msg, Toast.LENGTH_LONG).show();
@@ -376,27 +387,32 @@ public class ZKAD {
 
                     @Override
                     public void onADOpened() {
-                        Log.i(TAG, "onADOpened");
+                        Log.i("ad_tencent_incert", "onADOpened");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADOPENED);
                     }
 
                     @Override
                     public void onADExposure() {
-                        Log.i(TAG, "onADExposure");
+                        Log.i("ad_tencent_incert", "onADExposure");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADEXPOSURE);
                     }
 
                     @Override
                     public void onADClicked() {
-                        Log.i(TAG, "onADClicked : " + (tencentInterstitialAD.getExt() != null ? tencentInterstitialAD.getExt().get("clickUrl") : ""));
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADCLICKED);
+                        Log.i("ad_tencent_incert", "onADClicked : " + (tencentInterstitialAD.getExt() != null ? tencentInterstitialAD.getExt().get("clickUrl") : ""));
                     }
 
                     @Override
                     public void onADLeftApplication() {
-                        Log.i(TAG, "onADLeftApplication");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADLEFTAPPLICATION);
+                        Log.i("ad_tencent_incert", "onADLeftApplication");
                     }
 
                     @Override
                     public void onADClosed() {
-                        Log.i(TAG, "onADClosed");
+                        UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADCLOSED);
+                        Log.i("ad_tencent_incert", "onADClosed");
                     }
                 });
                 tencentInterstitialAD.loadAD();
@@ -425,6 +441,8 @@ public class ZKAD {
                         rewardVideoAD.getExpireTimestamp() - SystemClock.elapsedRealtime());
                 Toast.makeText(application, msg, Toast.LENGTH_LONG).show();
                 showTencentRewardVideoAd();
+                Log.i("ad_tencent_reward", "onADLoad");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ADLOAD);
             }
 
             /**
@@ -433,7 +451,8 @@ public class ZKAD {
             @Override
             public void onVideoCached() {
                 videoCached = true;
-                Log.i(TAG, "onVideoCached");
+                Log.i("ad_tencent_reward", "onVideoCached");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_VIDEOCACHED);
             }
 
             /**
@@ -441,7 +460,8 @@ public class ZKAD {
              */
             @Override
             public void onADShow() {
-                Log.i(TAG, "onADShow");
+                Log.i("ad_tencent_reward", "onADShow");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ADSHOW);
             }
 
             /**
@@ -449,7 +469,8 @@ public class ZKAD {
              */
             @Override
             public void onADExpose() {
-                Log.i(TAG, "onADExpose");
+                Log.i("ad_tencent_reward", "onADExpose");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ADEXPOSE);
             }
 
             /**
@@ -457,7 +478,8 @@ public class ZKAD {
              */
             @Override
             public void onReward() {
-                Log.i(TAG, "onReward");
+                Log.i("ad_tencent_reward", "onReward");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_REWARD);
             }
 
             /**
@@ -465,7 +487,8 @@ public class ZKAD {
              */
             @Override
             public void onADClick() {
-                Log.i(TAG, "onADClick");
+                Log.i("ad_tencent_reward", "onADClick");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ADCLICK);
             }
 
             /**
@@ -473,7 +496,8 @@ public class ZKAD {
              */
             @Override
             public void onVideoComplete() {
-                Log.i(TAG, "onVideoComplete");
+                Log.i("ad_tencent_reward", "onVideoComplete");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_VIDEOCOMPLETE);
             }
 
             /**
@@ -481,7 +505,8 @@ public class ZKAD {
              */
             @Override
             public void onADClose() {
-                Log.i(TAG, "onADClose");
+                Log.i("ad_tencent_reward", "onADClose");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ADCLOSE);
             }
 
             /**
@@ -492,6 +517,8 @@ public class ZKAD {
                 String msg = String.format(Locale.getDefault(), "onError, error code: %d, error msg: %s",
                         adError.getErrorCode(), adError.getErrorMsg());
                 Toast.makeText(application, msg, Toast.LENGTH_LONG).show();
+                Log.i("ad_tencent_reward", "onError");
+                UMUtils.event(UMUtils.EVENT_TENCENT_REWARD_ERROR);
             }
         });
         adLoaded = false;

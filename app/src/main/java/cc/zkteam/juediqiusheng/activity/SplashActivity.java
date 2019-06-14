@@ -31,6 +31,7 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.UMUtils;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_APP_ID;
@@ -117,16 +118,18 @@ public class SplashActivity extends BaseActivity {
         fetchSplashAD(this, splash_container, skip_view, AD_TENCENT_APP_ID, AD_TENCENT_SPLASH_KEY, new SplashADListener() {
             @Override
             public void onADDismissed() {
-                Log.i("AD_DEMO", "SplashADDismissed");
+                Log.i("ad_tencent_splash", "SplashADDismissed");
                 splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADDISMISSED);
             }
 
             @Override
             public void onNoAD(AdError error) {
                 Log.i(
-                        "AD_DEMO",
+                        "ad_tencent_splash",
                         String.format("LoadSplashADFail, eCode=%d, errorMsg=%s", error.getErrorCode(),
                                 error.getErrorMsg()));
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_NOAD);
                 /**
                  * 为防止无广告时造成视觉上类似于"闪退"的情况，设定无广告时页面跳转根据需要延迟一定时间，demo
                  * 给出的延时逻辑是从拉取广告开始算开屏最少持续多久，仅供参考，开发者可自定义延时逻辑，如果开发者采用demo
@@ -141,14 +144,16 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onADPresent() {
-                Log.i("AD_DEMO", "SplashADPresent");
+                Log.i("ad_tencent_splash", "SplashADPresent");
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADPRESENT);
                 ll_splash_holder.setVisibility(View.GONE);
             }
 
             @Override
             public void onADClicked() {
-                Log.i("AD_DEMO", "SplashADClicked clickUrl: "
+                Log.i("ad_tencent_splash", "SplashADClicked clickUrl: "
                         + (splashAD.getExt() != null ? splashAD.getExt().get("clickUrl") : ""));
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADCLICKED);
             }
 
             /**
@@ -159,13 +164,15 @@ public class SplashActivity extends BaseActivity {
              */
             @Override
             public void onADTick(long millisUntilFinished) {
-                Log.i("AD_DEMO", "SplashADTick " + millisUntilFinished + "ms");
+                Log.i("ad_tencent_splash", "SplashADTick " + millisUntilFinished + "ms");
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADTICK);
                 skip_view.setText(String.format(SKIP_TEXT, Math.round(millisUntilFinished / 1000f)));
             }
 
             @Override
             public void onADExposure() {
-                Log.i("AD_DEMO", "SplashADExposure");
+                Log.i("ad_tencent_splash", "SplashADExposure");
+                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADEXPOSURE);
             }
         }, 0);
     }
