@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,10 +20,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.networkbench.agent.impl.NBSAppAgent;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
+
+import java.util.List;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
@@ -78,8 +83,33 @@ public class SplashActivity extends BaseActivity {
         initView();
         initData();
         initAnimation();
-        initTencentSplashAD();
 
+
+    }
+
+    private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    //####################################### 权限 startActivity ############################################
+    private void permissionCheck() {
+        if (!PermissionUtils.isGranted(permissions)){
+            PermissionUtils.permission(permissions)
+                    .callback(new PermissionUtils.FullCallback() {
+                        @Override
+                        public void onGranted(List<String> permissionsGranted) {
+                            initTencentSplashAD();
+                        }
+
+                        @Override
+                        public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                            ToastUtils.showShort(getString(R.string.question_permission_tip));
+
+                        }
+                    })
+                    .request();
+        }else {
+            initTencentSplashAD();
+        }
     }
 
     private void initTencentSplashAD() {
@@ -244,26 +274,6 @@ public class SplashActivity extends BaseActivity {
     }
 
 
-    //####################################### 权限 startActivity ############################################
-    private void permissionCheck() {
-//        if (PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
-//            PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
-//
-//                @Override
-//                public void onPermissionGranted() {
-//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//                }
-//
-//                @Override
-//                public void onPermissionDenied(String[] deniedPermissions) {
-//                    ToastUtils.showShort(getString(R.string.question_permission_tip));
-//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//                }
-//            });
-//        } else {
-//            splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//        }
-    }
 
     @Override
     protected void onDestroy() {
