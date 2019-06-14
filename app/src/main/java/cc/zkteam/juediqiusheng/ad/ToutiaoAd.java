@@ -3,11 +3,9 @@ package cc.zkteam.juediqiusheng.ad;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.graphics.BitmapFactory;
 import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -29,9 +27,28 @@ import com.bytedance.sdk.openadsdk.TTSplashAd;
 
 import java.util.List;
 
+import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_BN_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_BN_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_BN_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_CP_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_CP_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_CP_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_DV_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_DV_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_FD_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_FD_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_FV_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_FV_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_FV_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_JL_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_JL_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_JL_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_SP_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_SP_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_SP_AD_LOADED;
 
 public class ToutiaoAd {
 
@@ -69,7 +86,7 @@ public class ToutiaoAd {
 
     public static void initAd(Context application) {
         String appId;
-        if (isApkDebugable(application)) {
+        if (BuildConfig.DEBUG) {
             appId = AD_TOUTIAO_TEST_APP_ID;
         } else {
             appId = AD_TOUTIAO_APP_ID;
