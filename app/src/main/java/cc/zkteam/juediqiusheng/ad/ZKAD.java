@@ -216,7 +216,14 @@ public class ZKAD {
     public static void initHFAD(Activity activity, boolean isFacebookAd) {
 //        View view = activity.getWindow().getDecorView().getRootView();
 //        initHFAD(view, isFacebookAd);
-        showTouTiaoBannerAd("918599611", activity);
+
+        //Banner 广告
+        String bannerId = "918599611";
+        if (!BuildConfig.DEBUG) {
+            bannerId = "920203186"; //正式 key
+        }
+
+        showTouTiaoBannerAd(bannerId, activity);
     }
 
     public static void initHFAD(View rootView, boolean isFacebookAd) {
