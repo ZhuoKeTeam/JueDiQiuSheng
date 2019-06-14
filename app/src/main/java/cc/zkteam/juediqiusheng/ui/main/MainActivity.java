@@ -1,6 +1,5 @@
 package cc.zkteam.juediqiusheng.ui.main;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -23,8 +22,6 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
-import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -78,15 +75,6 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     public static final int NAV_TYPE_QUESTION= 3;
 
     public static int [] NAV_TYPE = new int[]{NAV_TYPE_RECOMMEND, NAV_TYPE_STRATEGY, NAV_TYPE_GALLERY, NAV_TYPE_QUESTION};
-
-
-    private static final int FLAG_REQUEST_PERMISSION =  100;
-
-
-    private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
 
     private ZKViewPager mViewPager;
     private BottomNavigationView navigation;
@@ -218,20 +206,6 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
     @Override
     protected void initData() {
 //        demo();
-        PermissionUtils.permission(permissions)
-                .callback(new PermissionUtils.FullCallback() {
-                    @Override
-                    public void onGranted(List<String> permissionsGranted) {
-
-                    }
-
-                    @Override
-                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
-                        ToastUtils.showShort(getString(R.string.question_permission_tip));
-                    }
-                })
-                .request();
-
 
         Context context = this;
         ZKConnectionManager.getInstance().getZKApi().update()

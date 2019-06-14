@@ -1,5 +1,6 @@
 package cc.zkteam.juediqiusheng.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +14,11 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.PermissionUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.networkbench.agent.impl.NBSAppAgent;
+
+import java.util.List;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.Constant;
@@ -25,7 +30,15 @@ public class SplashActivity extends BaseActivity {
 
 
     private static final int DELAY_TIME =  3000;
+    private static final int DELAY_AD_TIME =  1000;
     private static final int FLAG_ENTER_MAIN =  0;
+    private static final int FLAG_REQUEST_PERMISSION =  100;
+
+
+    private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 
     @SuppressLint("HandlerLeak")
     private Handler splashHandler = new Handler() {
@@ -60,7 +73,7 @@ public class SplashActivity extends BaseActivity {
             kpId = "820203984"; //正式 key
         }
 
-        ZKAD.showTouTiaoSplashAD(kpId, this, ad -> splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME));
+        ZKAD.showTouTiaoSplashAD(kpId, this, ad -> splashHandler.sendEmptyMessage(FLAG_ENTER_MAIN));
     }
 
     @Override
@@ -94,7 +107,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initAnimation() {
-//        permissionCheck();
+        permissionCheck();
 
         WindowManager wm = (WindowManager)
                 getSystemService(this.WINDOW_SERVICE);
@@ -144,23 +157,21 @@ public class SplashActivity extends BaseActivity {
 
     //####################################### 权限 startActivity ############################################
     private void permissionCheck() {
-//        if (PermissionUtils.shouldShowRequestPermissionRationale(this, permissions)) {
-//            PermissionUtils.requestPermissions(this, FLAG_REQUEST_PERMISSION, permissions, new PermissionUtils.OnPermissionListener() {
-//
-//                @Override
-//                public void onPermissionGranted() {
-//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//                }
-//
-//                @Override
-//                public void onPermissionDenied(String[] deniedPermissions) {
-//                    ToastUtils.showShort(getString(R.string.question_permission_tip));
-//                    splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//                }
-//            });
-//        } else {
-            splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
-//        }
+        PermissionUtils.permission(permissions)
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
+//                        splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
+                        ToastUtils.showShort(getString(R.string.question_permission_tip));
+//                        splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME);
+                    }
+                })
+                .request();
+
     }
 
     @Override
