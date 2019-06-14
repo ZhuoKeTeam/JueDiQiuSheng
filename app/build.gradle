@@ -18,8 +18,8 @@ android {
         applicationId "cc.zkteam.juediqiusheng"
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
-        versionCode 10011
-        versionName "1.0.11"
+        versionCode 10012
+        versionName "1.0.12"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -40,7 +40,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':loadingview')
+    implementation "com.github.gdky005:LoadingDrawable:1.0.0"
+//    implementation project(':loadingview')
 
     //    参考格式地址：https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/build.gradle
 
