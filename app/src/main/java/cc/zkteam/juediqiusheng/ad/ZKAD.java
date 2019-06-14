@@ -10,16 +10,8 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.bytedance.sdk.openadsdk.AdSlot;
-import com.bytedance.sdk.openadsdk.TTAdConfig;
-import com.bytedance.sdk.openadsdk.TTAdConstant;
-import com.bytedance.sdk.openadsdk.TTAdDislike;
-import com.bytedance.sdk.openadsdk.TTAdManager;
-import com.bytedance.sdk.openadsdk.TTAdNative;
-import com.bytedance.sdk.openadsdk.TTAdSdk;
-import com.bytedance.sdk.openadsdk.TTAppDownloadListener;
-import com.bytedance.sdk.openadsdk.TTBannerAd;
-import com.bytedance.sdk.openadsdk.TTRewardVideoAd;
+import com.bytedance.sdk.openadsdk.TTDrawFeedAd;
+import com.bytedance.sdk.openadsdk.TTFeedAd;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
@@ -32,6 +24,8 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+
+import java.util.List;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
@@ -100,25 +94,7 @@ public class ZKAD {
 
 //        // facebook 广告
 //        AudienceNetworkAds.initialize(appContext);
-
-        toutiaoADInit();
-    }
-
-    private static void toutiaoADInit() {
-        //强烈建议在应用对应的Application#onCreate()方法中调用，避免出现content为null的异常
-        TTAdSdk.init(application,
-                new TTAdConfig.Builder()
-                        .appId(AD_TOUTIAO_TEST_APP_ID)
-                        .useTextureView(false) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
-                        .appName("大逃杀游戏攻略")
-                        .titleBarTheme(TTAdConstant.TITLE_BAR_THEME_DARK)
-                        .allowShowNotify(true) //是否允许sdk展示通知栏提示
-                        .allowShowPageWhenScreenLock(true) //是否在锁屏场景支持展示广告落地页
-                        .debug(true) //测试阶段打开，可以通过日志排查问题，上线时去除该调用
-                        .directDownloadNetworkType(TTAdConstant.NETWORK_STATE_WIFI, TTAdConstant.NETWORK_STATE_3G) //允许直接下载的网络状态集合
-                        .supportMultiProcess(false) //是否支持多进程，true支持
-                        .build());
-
+        ToutiaoAd.initAd(appContext);
     }
 
     public static View initADView() {
@@ -242,10 +218,9 @@ public class ZKAD {
     }
 
     public static void initHFAD(Activity activity, boolean isFacebookAd) {
-        View view = activity.getWindow().getDecorView().getRootView();
+//        View view = activity.getWindow().getDecorView().getRootView();
 //        initHFAD(view, isFacebookAd);
-        LinearLayout adContentView = view.findViewById(R.id.ad_content_view);
-        showTouTiaoBannerAd(adContentView, "918599611", activity);
+        showTouTiaoBannerAd("918599611", activity);
     }
 
     public static void initHFAD(View rootView, boolean isFacebookAd) {
@@ -444,217 +419,37 @@ public class ZKAD {
     private static RewardedAd rewardedAD;
 
     /**
-     * ---------------------------------------------头条激励广告与 Banner -----------------------------------------------------------
+     * ---------------------------------------------头条-----------------------------------------------------------
      */
 
-    private static TTAdNative mTTAdNative;
-    private static TTRewardVideoAd mttRewardVideoAd;
-    private static boolean mHasShowDownloadActive = false;
-
     public static void showTouTiaoJLAD(String codeId, Activity activity) {
-        //step1:初始化sdk
-        TTAdManager ttAdManager = TTAdSdk.getAdManager();
-        //step2:(可选，强烈建议在合适的时机调用):申请部分权限，如read_phone_state,防止获取不了imei时候，下载类广告没有填充的问题。
-        ttAdManager.requestPermissionIfNecessary(activity);
-        //step3:创建TTAdNative对象,用于调用广告请求接口
-        mTTAdNative = ttAdManager.createAdNative(activity);
-        //step4:创建广告请求参数AdSlot,具体参数含义参考文档
-        AdSlot adSlot = new AdSlot.Builder()
-                .setCodeId(codeId)
-                .setSupportDeepLink(true)
-                .setImageAcceptedSize(1080, 1920)
-                .setRewardName("Test") //奖励的名称
-                .setRewardAmount(3)  //奖励的数量
-                .setUserID("user123")//用户id,必传参数
-                .setMediaExtra("media_extra") //附加参数，可选
-                .setOrientation(TTAdConstant.VERTICAL) //必填参数，期望视频的播放方向：TTAdConstant.HORIZONTAL 或 TTAdConstant.VERTICAL
-                .build();
-        //step5:请求广告
-        mTTAdNative.loadRewardVideoAd(adSlot, new TTAdNative.RewardVideoAdListener() {
-            @Override
-            public void onError(int code, String message) {
-                logD("showTouTiaoJLAD onError -> " + message);
-                logD("showTouTiaoJLAD onError -> " + code);
-            }
-
-            //视频广告加载后，视频资源缓存到本地的回调，在此回调后，播放本地视频，流畅不阻塞。
-            @Override
-            public void onRewardVideoCached() {
-                logD("showTouTiaoJLAD rewardVideoAd video cached");
-                mttRewardVideoAd.showRewardVideoAd(activity);
-                mttRewardVideoAd = null;
-            }
-
-            //视频广告的素材加载完毕，比如视频url等，在此回调后，可以播放在线视频，网络不好可能出现加载缓冲，影响体验。
-            @Override
-            public void onRewardVideoAdLoad(TTRewardVideoAd ad) {
-                logD("showTouTiaoJLAD rewardVideoAd loadedd");
-                mttRewardVideoAd = ad;
-//                mttRewardVideoAd.setShowDownLoadBar(false);
-                mttRewardVideoAd.setRewardAdInteractionListener(new TTRewardVideoAd.RewardAdInteractionListener() {
-
-                    @Override
-                    public void onAdShow() {
-                        logD("showTouTiaoJLAD rewardVideoAd show");
-                    }
-
-                    @Override
-                    public void onAdVideoBarClick() {
-                        logD("showTouTiaoJLAD rewardVideoAd bar click");
-                    }
-
-                    @Override
-                    public void onAdClose() {
-                        logD("showTouTiaoJLAD rewardVideoAd close");
-                    }
-
-                    //视频播放完成回调
-                    @Override
-                    public void onVideoComplete() {
-                        logD("showTouTiaoJLAD rewardVideoAd complete");
-                    }
-
-                    @Override
-                    public void onVideoError() {
-                        logD("showTouTiaoJLAD rewardVideoAd error");
-                    }
-
-                    //视频播放完成后，奖励验证回调，rewardVerify：是否有效，rewardAmount：奖励梳理，rewardName：奖励名称
-                    @Override
-                    public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
-                        logD("showTouTiaoJLAD onRewardVerify -> " + "verify:" + rewardVerify + " amount:" + rewardAmount +
-                                " name:" + rewardName);
-                    }
-                });
-                mttRewardVideoAd.setDownloadListener(new TTAppDownloadListener() {
-                    @Override
-                    public void onIdle() {
-                        mHasShowDownloadActive = false;
-                    }
-
-                    @Override
-                    public void onDownloadActive(long totalBytes, long currBytes, String fileName, String appName) {
-                        if (!mHasShowDownloadActive) {
-                            mHasShowDownloadActive = true;
-                            logD("showTouTiaoJLAD 下载中，点击下载区域暂停");
-                        }
-                    }
-
-                    @Override
-                    public void onDownloadPaused(long totalBytes, long currBytes, String fileName, String appName) {
-                        logD("showTouTiaoJLAD 下载暂停，点击下载区域继续");
-                    }
-
-                    @Override
-                    public void onDownloadFailed(long totalBytes, long currBytes, String fileName, String appName) {
-                        logD("showTouTiaoJLAD 下载失败，点击下载区域重新下载");
-                    }
-
-                    @Override
-                    public void onDownloadFinished(long totalBytes, String fileName, String appName) {
-                        logD("showTouTiaoJLAD 下载完成，点击下载区域重新下载");
-                        mttRewardVideoAd.showRewardVideoAd(activity);
-                        mttRewardVideoAd = null;
-                    }
-
-                    @Override
-                    public void onInstalled(String fileName, String appName) {
-                        logD("安装完成，点击下载区域打开");
-                    }
-                });
-            }
-        });
+        ToutiaoAd.getsInstance().showJLAD(codeId, activity);
     }
 
-    private static ViewGroup mBannerContainer;
-
-    public static void showTouTiaoBannerAd(ViewGroup root, String codeId, Activity activity) {
-        mBannerContainer = root;
-        if (mTTAdNative == null) {
-            mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
-        }
-        TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
-        //step4:创建广告请求参数AdSlot,具体参数含义参考文档
-        AdSlot adSlot = new AdSlot.Builder()
-                .setCodeId(codeId) //广告位id
-                .setSupportDeepLink(true)
-                .setImageAcceptedSize(600, 257)
-                .build();
-        //step5:请求广告，对请求回调的广告作渲染处理
-        mTTAdNative.loadBannerAd(adSlot, new TTAdNative.BannerAdListener() {
-
-            @Override
-            public void onError(int code, String message) {
-//                mBannerContainer.removeAllViews();
-                logD("showTouTiaoBannerAd onError -> " + message);
-                logD("showTouTiaoBannerAd onError -> " + code);
-            }
-
-            @Override
-            public void onBannerAdLoad(final TTBannerAd ad) {
-                if (ad == null) {
-                    return;
-                }
-                View bannerView = ad.getBannerView();
-                if (bannerView == null) {
-                    return;
-                }
-                //设置轮播的时间间隔  间隔在30s到120秒之间的值，不设置默认不轮播
-                ad.setSlideIntervalTime(30 * 1000);
-//                mBannerContainer.removeAllViews();
-                mBannerContainer.addView(bannerView);
-                //设置广告互动监听回调
-                ad.setBannerInteractionListener(new TTBannerAd.AdInteractionListener() {
-                    @Override
-                    public void onAdClicked(View view, int type) {
-                        logD("showTouTiaoJLAD 广告被点击");
-                    }
-
-                    @Override
-                    public void onAdShow(View view, int type) {
-                        logD("showTouTiaoJLAD 广告展示");
-                    }
-                });
-//                //（可选）设置下载类广告的下载监听
-//                bindDownloadListener(ad);
-                //在banner中显示网盟提供的dislike icon，有助于广告投放精准度提升
-                ad.setShowDislikeIcon(new TTAdDislike.DislikeInteractionCallback() {
-                    @Override
-                    public void onSelected(int position, String value) {
-                        logD("showTouTiaoJLAD 点击 -> " + value);
-                        //用户选择不喜欢原因后，移除广告展示
-//                        mBannerContainer.removeAllViews();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        logD("showTouTiaoJLAD 点击取消");
-                    }
-                });
-
-                //获取网盟dislike dialog，您可以在您应用中本身自定义的dislike icon 按钮中设置 mTTAdDislike.showDislikeDialog();
-                /*mTTAdDislike = ad.getDislikeDialog(new TTAdDislike.DislikeInteractionCallback() {
-                        @Override
-                        public void onSelected(int position, String value) {
-                            TToast.show(mContext, "点击 " + value);
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            TToast.show(mContext, "点击取消 ");
-                        }
-                    });
-                if (mTTAdDislike != null) {
-                    XXX.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mTTAdDislike.showDislikeDialog();
-                        }
-                    });
-                } */
-
-            }
-        });
+    public static void showTouTiaoBannerAd(String codeId, Activity activity) {
+        ToutiaoAd.getsInstance().showBannerAd(codeId, activity);
+        showTouTiaoFeedAD("918599296", null, activity);
+        showTouTiaorawNativeVideoAD("918599947", null, activity);
     }
 
+    public static void showTouTiaoFeedAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTFeedAd>> callback, Activity activity) {
+        ToutiaoAd.getsInstance().showFeedAD(codeId, callback, activity);
+    }
+
+    public static void showTouTiaoInteractionAD(String codeId, Activity activity) {
+        ToutiaoAd.getsInstance().showInteractionAD(codeId, activity);
+    }
+
+
+    public static void showTouTiaoFullVideoAD(String codeId, Activity activity, int orientation) {
+        ToutiaoAd.getsInstance().showFullVideoAD(codeId, activity, orientation);
+    }
+
+    public static void showTouTiaoSplashAD(String codeId, Activity activity, ToutiaoAd.IADLoadCallback<String> callback) {
+        ToutiaoAd.getsInstance().showSplashAD(codeId, callback, activity);
+    }
+
+    public static void showTouTiaorawNativeVideoAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTDrawFeedAd>> callback, Activity activity) {
+        ToutiaoAd.getsInstance().showDrawNativeVideoAD(codeId, callback, activity);
+    }
 }

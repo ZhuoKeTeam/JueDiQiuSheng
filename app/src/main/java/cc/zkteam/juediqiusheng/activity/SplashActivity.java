@@ -17,6 +17,8 @@ import com.networkbench.agent.impl.NBSAppAgent;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.ad.ToutiaoAd;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 public class SplashActivity extends BaseActivity {
@@ -51,6 +53,8 @@ public class SplashActivity extends BaseActivity {
         initView();
         initData();
         initAnimation();
+
+        ZKAD.showTouTiaoSplashAD("818599619", this, ad -> splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, DELAY_TIME));
     }
 
     @Override
@@ -84,7 +88,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initAnimation() {
-        permissionCheck();
+//        permissionCheck();
 
         WindowManager wm = (WindowManager)
                 getSystemService(this.WINDOW_SERVICE);

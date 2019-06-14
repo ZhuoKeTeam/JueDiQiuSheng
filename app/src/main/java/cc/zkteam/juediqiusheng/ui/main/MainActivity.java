@@ -36,6 +36,7 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.bean.UpdateBean;
 import cc.zkteam.juediqiusheng.fragment.WQFragment;
@@ -109,6 +110,7 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
                     itemId = R.id.navigation_picture;
                     break;
                 case NAV_TYPE_QUESTION:
+                    ZKAD.showTouTiaoInteractionAD("918599929", MainActivity.this);
                     itemId = R.id.navigation_question;
                     break;
             }
