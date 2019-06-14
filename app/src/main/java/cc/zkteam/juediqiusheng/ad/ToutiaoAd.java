@@ -27,7 +27,6 @@ import com.bytedance.sdk.openadsdk.TTSplashAd;
 
 import java.util.List;
 
-import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 
 import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_TT_BN_AD_ADD;
@@ -86,11 +85,11 @@ public class ToutiaoAd {
 
     public static void initAd(Context application) {
         String appId;
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             appId = AD_TOUTIAO_TEST_APP_ID;
-        } else {
-            appId = AD_TOUTIAO_APP_ID;
-        }
+//        } else {
+//            appId = AD_TOUTIAO_APP_ID;
+//        }
         Log.d(TAG, appId);
         //强烈建议在应用对应的Application#onCreate()方法中调用，避免出现content为null的异常
         TTAdSdk.init(application,

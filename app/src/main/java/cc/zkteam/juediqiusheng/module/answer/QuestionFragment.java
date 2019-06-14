@@ -14,7 +14,6 @@ import com.cjj.MaterialRefreshListener;
 
 import javax.inject.Inject;
 
-import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
@@ -118,9 +117,9 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     public void onClick(View v) {
         //全屏广告
         String qpId = "918599340";
-        if (!BuildConfig.DEBUG) {
-            qpId = "920203200"; //正式 key
-        }
+//        if (!BuildConfig.DEBUG) {
+//            qpId = "920203200"; //正式 key
+//        }
 
         ZKAD.showTouTiaoFullVideoAD(qpId, getActivity(), TTAdConstant.VERTICAL);
         switch (v.getId()) {

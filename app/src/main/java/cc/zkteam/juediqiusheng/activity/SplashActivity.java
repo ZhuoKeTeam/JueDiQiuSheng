@@ -20,7 +20,6 @@ import com.networkbench.agent.impl.NBSAppAgent;
 
 import java.util.List;
 
-import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
@@ -69,9 +68,9 @@ public class SplashActivity extends BaseActivity {
 
         //开屏广告
         String kpId = "818599619";
-        if (!BuildConfig.DEBUG) {
-            kpId = "820203984"; //正式 key
-        }
+//        if (!BuildConfig.DEBUG) {
+//            kpId = "820203984"; //正式 key
+//        }
 
         ZKAD.showTouTiaoSplashAD(kpId, this, ad -> splashHandler.sendEmptyMessage(FLAG_ENTER_MAIN));
     }

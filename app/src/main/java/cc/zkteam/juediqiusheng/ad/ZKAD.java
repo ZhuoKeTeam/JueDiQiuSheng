@@ -219,9 +219,9 @@ public class ZKAD {
 
         //Banner 广告
         String bannerId = "918599611";
-        if (!BuildConfig.DEBUG) {
-            bannerId = "920203186"; //正式 key
-        }
+//        if (!BuildConfig.DEBUG) {
+//            bannerId = "920203186"; //正式 key
+//        }
 
         showTouTiaoBannerAd(bannerId, activity);
     }
@@ -430,17 +430,17 @@ public class ZKAD {
         //信息流广告
         //Draw信息流广告
         String msgListId = "918599296";
-        if (!BuildConfig.DEBUG) {
-            msgListId = "920203971"; //正式 key
-        }
+//        if (!BuildConfig.DEBUG) {
+//            msgListId = "920203971"; //正式 key
+//        }
 
         showTouTiaoFeedAD(msgListId, null, activity);
 
         //Draw信息流广告
         String drawId = "918599947";
-        if (!BuildConfig.DEBUG) {
-            drawId = "920203404"; //正式 key
-        }
+//        if (!BuildConfig.DEBUG) {
+//            drawId = "920203404"; //正式 key
+//        }
 
         showTouTiaoDrawNativeVideoAD(drawId, null, activity);
     }

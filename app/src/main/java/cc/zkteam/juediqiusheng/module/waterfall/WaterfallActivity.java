@@ -1,10 +1,7 @@
 package cc.zkteam.juediqiusheng.module.waterfall;
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,7 +23,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.android.gms.ads.rewarded.RewardedAd;
 
 import java.util.List;
 
@@ -35,7 +31,6 @@ import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
-import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
 import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
@@ -188,12 +183,13 @@ public class WaterfallActivity extends BaseActivity {
                         (dialog, which) -> {
                             // 2019-05-30 启动广告，等广告完成后直接继续操作。
 //                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
-                            //  TODO 918599496 是测试 Id 新建的广告
-                            ZKAD.showTouTiaoJLAD("918599496", this);
+                            // 头条的 激励视频
+                            String jlVideoId = "918599496";
+                            ZKAD.showTouTiaoJLAD(jlVideoId, this);
                         });
                 normalDialog.setNegativeButton("不看了吧",
                         (dialog, which) -> {
-                            //...To-do
+                 //...To-do
                         });
                 // 显示
                 normalDialog.show();
