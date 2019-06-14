@@ -5,7 +5,6 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
@@ -72,9 +71,6 @@ public class ZKAD {
 
     // facebook 的横幅广告
     public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "2457797387617458_2458180154245848";
-
-    //
-    public static final String AD_TOUTIAO_TEST_APP_ID = "5018599";
 
     private static Application application;
     private static com.facebook.ads.AdView fbAdView;
@@ -424,12 +420,12 @@ public class ZKAD {
 
     public static void showTouTiaoJLAD(String codeId, Activity activity) {
         ToutiaoAd.getsInstance().showJLAD(codeId, activity);
+        showTouTiaoFeedAD("918599296", null, activity);
+        showTouTiaoDrawNativeVideoAD("918599947", null, activity);
     }
 
     public static void showTouTiaoBannerAd(String codeId, Activity activity) {
         ToutiaoAd.getsInstance().showBannerAd(codeId, activity);
-        showTouTiaoFeedAD("918599296", null, activity);
-        showTouTiaorawNativeVideoAD("918599947", null, activity);
     }
 
     public static void showTouTiaoFeedAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTFeedAd>> callback, Activity activity) {
@@ -449,7 +445,7 @@ public class ZKAD {
         ToutiaoAd.getsInstance().showSplashAD(codeId, callback, activity);
     }
 
-    public static void showTouTiaorawNativeVideoAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTDrawFeedAd>> callback, Activity activity) {
+    public static void showTouTiaoDrawNativeVideoAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTDrawFeedAd>> callback, Activity activity) {
         ToutiaoAd.getsInstance().showDrawNativeVideoAD(codeId, callback, activity);
     }
 }

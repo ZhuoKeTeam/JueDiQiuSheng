@@ -48,6 +48,36 @@ public class UMUtils {
     public static final String EVENT_GG_CP_AD_IMPRESSION= "event_gg_cp_ad_impression"; // GG插屏日志Impression
 
 
+    // 头条 广告统计
+    //  插片广告相关
+    public static final String EVENT_TT_CP_AD_ADD = "event_tt_cp_ad_add";
+    public static final String EVENT_TT_CP_AD_LOADED= "event_tt_cp_ad_loaded";
+    public static final String EVENT_TT_CP_AD_CLICKED= "event_tt_cp_ad_clicked";
+    //  激励广告相关
+    public static final String EVENT_TT_JL_AD_ADD = "event_tt_jl_ad_add";
+    public static final String EVENT_TT_JL_AD_LOADED= "event_tt_jl_ad_loaded";
+    public static final String EVENT_TT_JL_AD_CLICKED= "event_tt_jl_ad_clicked";
+    //  Banner 广告
+    public static final String EVENT_TT_BN_AD_ADD = "event_tt_bn_ad_add";
+    public static final String EVENT_TT_BN_AD_LOADED= "event_tt_bn_ad_loaded";
+    public static final String EVENT_TT_BN_AD_CLICKED= "event_tt_bn_ad_clicked";
+    //  Feed 广告
+    public static final String EVENT_TT_FD_AD_ADD = "event_tt_fd_ad_add";
+    public static final String EVENT_TT_FD_AD_LOADED= "event_tt_fd_ad_loaded";
+    public static final String EVENT_TT_FD_AD_CLICKED= "event_tt_fd_ad_clicked";
+    //  全屏视频广告
+    public static final String EVENT_TT_FV_AD_ADD = "event_tt_fv_ad_add";
+    public static final String EVENT_TT_FV_AD_LOADED= "event_tt_fv_ad_loaded";
+    public static final String EVENT_TT_FV_AD_CLICKED= "event_tt_fv_ad_clicked";
+    //  启动页广告
+    public static final String EVENT_TT_SP_AD_ADD = "event_tt_sp_ad_add";
+    public static final String EVENT_TT_SP_AD_LOADED= "event_tt_sp_ad_loaded";
+    public static final String EVENT_TT_SP_AD_CLICKED= "event_tt_sp_ad_clicked";
+    //  视频流广告
+    public static final String EVENT_TT_DV_AD_ADD = "event_tt_dv_ad_add";
+    public static final String EVENT_TT_DV_AD_LOADED= "event_tt_dv_ad_loaded";
+    public static final String EVENT_TT_DV_AD_CLICKED= "event_tt_dv_ad_clicked";
+
     /**
      * 友盟统计事件
      * @param event event

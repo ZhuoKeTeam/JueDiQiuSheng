@@ -2,6 +2,7 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.graphics.BitmapFactory;
 import android.support.annotation.MainThread;
 import android.util.Log;
@@ -30,9 +31,12 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TOUTIAO_TEST_APP_ID;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
 
 public class ToutiaoAd {
+
+    public static final String AD_TOUTIAO_TEST_APP_ID = "5018599";
+    public static final String AD_TOUTIAO_APP_ID = "5020203";
     private static final String TAG = "ZKAD_TTAD";
 
     private static volatile ToutiaoAd sInstance;
@@ -64,10 +68,17 @@ public class ToutiaoAd {
     }
 
     public static void initAd(Context application) {
+        String appId;
+        if (isApkDebugable(application)) {
+            appId = AD_TOUTIAO_TEST_APP_ID;
+        } else {
+            appId = AD_TOUTIAO_APP_ID;
+        }
+        Log.d(TAG, appId);
         //强烈建议在应用对应的Application#onCreate()方法中调用，避免出现content为null的异常
         TTAdSdk.init(application,
                 new TTAdConfig.Builder()
-                        .appId(AD_TOUTIAO_TEST_APP_ID)
+                        .appId(appId)
                         .useTextureView(false) //使用TextureView控件播放视频,默认为SurfaceView,当有SurfaceView冲突的场景，可以使用TextureView
                         .appName("大逃杀游戏攻略")
                         .titleBarTheme(TTAdConstant.TITLE_BAR_THEME_DARK)
@@ -79,6 +90,17 @@ public class ToutiaoAd {
                         .build());
     }
 
+
+    public static boolean isApkDebugable(Context context) {
+        try {
+            ApplicationInfo info = context.getApplicationInfo();
+            return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
     /**
      * 激励广告
      *
@@ -86,6 +108,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showJLAD(String codeId, Activity activity) {
+        UMUtils.event(EVENT_TT_JL_AD_ADD);
         //step1:初始化sdk
         TTAdManager ttAdManager = TTAdSdk.getAdManager();
         //step2:(可选，强烈建议在合适的时机调用):申请部分权限，如read_phone_state,防止获取不了imei时候，下载类广告没有填充的问题。
@@ -130,6 +153,7 @@ public class ToutiaoAd {
                     @Override
                     public void onAdShow() {
                         logD("showJLAD rewardVideoAd show");
+                        UMUtils.event(EVENT_TT_JL_AD_LOADED);
                     }
 
                     @Override
@@ -158,6 +182,9 @@ public class ToutiaoAd {
                     public void onRewardVerify(boolean rewardVerify, int rewardAmount, String rewardName) {
                         logD("showJLAD onRewardVerify -> " + "verify:" + rewardVerify + " amount:" + rewardAmount +
                                 " name:" + rewardName);
+                        if (rewardVerify) {
+                            UMUtils.event(EVENT_TT_JL_AD_CLICKED);
+                        }
                     }
                 });
                 mttRewardVideoAd.setDownloadListener(new TTAppDownloadListener() {
@@ -208,6 +235,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showBannerAd(String codeId, Activity activity) {
+        UMUtils.event(EVENT_TT_BN_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //step4:创建广告请求参数AdSlot,具体参数含义参考文档
@@ -242,12 +270,13 @@ public class ToutiaoAd {
                 ad.setBannerInteractionListener(new TTBannerAd.AdInteractionListener() {
                     @Override
                     public void onAdClicked(View view, int type) {
-                        logD("showJLAD 广告被点击");
+                        logD("showBannerAd 广告被点击");
                     }
 
                     @Override
                     public void onAdShow(View view, int type) {
-                        logD("showJLAD 广告展示");
+                        logD("showBannerAd 广告展示");
+                        UMUtils.event(EVENT_TT_BN_AD_LOADED);
                     }
                 });
 //                //（可选）设置下载类广告的下载监听
@@ -256,14 +285,15 @@ public class ToutiaoAd {
                 ad.setShowDislikeIcon(new TTAdDislike.DislikeInteractionCallback() {
                     @Override
                     public void onSelected(int position, String value) {
-                        logD("showJLAD 点击 -> " + value);
+                        logD("showBannerAd 点击 -> " + value);
                         //用户选择不喜欢原因后，移除广告展示
 //                        mBannerContainer.removeAllViews();
+                        UMUtils.event(EVENT_TT_BN_AD_CLICKED);
                     }
 
                     @Override
                     public void onCancel() {
-                        logD("showJLAD 点击取消");
+                        logD("showBannerAd 点击取消");
                     }
                 });
                 View view = activity.getWindow().getDecorView().getRootView();
@@ -302,6 +332,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showFeedAD(String codeId, IADLoadCallback<List<TTFeedAd>> callback, Activity activity) {
+        UMUtils.event(EVENT_TT_FD_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //feed广告请求类型参数
@@ -331,6 +362,7 @@ public class ToutiaoAd {
                 //  TODO 数据设置到 RV 中
                 if (callback != null) {
                     callback.onAdLoad(ads);
+                    UMUtils.event(EVENT_TT_FD_AD_LOADED);
                 }
             }
         });
@@ -343,6 +375,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showInteractionAD(String codeId, Activity activity) {
+        UMUtils.event(EVENT_TT_CP_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //step4:创建插屏广告请求参数AdSlot,具体参数含义参考文档
@@ -365,11 +398,13 @@ public class ToutiaoAd {
                     @Override
                     public void onAdClicked() {
                         logD("showInteractionAD 广告被点击");
+                        UMUtils.event(EVENT_TT_CP_AD_CLICKED);
                     }
 
                     @Override
                     public void onAdShow() {
                         logD("showInteractionAD 广告被展示");
+                        UMUtils.event(EVENT_TT_CP_AD_LOADED);
                     }
 
                     @Override
@@ -424,6 +459,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showFullVideoAD(String codeId, Activity activity, int orientation) {
+        UMUtils.event(EVENT_TT_FV_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //step4:创建广告请求参数AdSlot,具体参数含义参考文档
@@ -449,11 +485,13 @@ public class ToutiaoAd {
                     @Override
                     public void onAdShow() {
                         logD("showFullVideoAD FullVideoAd show");
+                        UMUtils.event(EVENT_TT_FV_AD_LOADED);
                     }
 
                     @Override
                     public void onAdVideoBarClick() {
                         logD("showFullVideoAD FullVideoAd bar click");
+                        UMUtils.event(EVENT_TT_FV_AD_CLICKED);
                     }
 
                     @Override
@@ -496,6 +534,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showSplashAD(String codeId, IADLoadCallback<String> callback, Activity activity) {
+        UMUtils.event(EVENT_TT_SP_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //step3:创建开屏广告请求参数AdSlot,具体参数含义参考文档
@@ -552,11 +591,13 @@ public class ToutiaoAd {
                     @Override
                     public void onAdClicked(View view, int type) {
                         logD("showSplashAD 开屏广告点击");
+                        UMUtils.event(EVENT_TT_SP_AD_CLICKED);
                     }
 
                     @Override
                     public void onAdShow(View view, int type) {
                         logD("showSplashAD 开屏广告展示");
+                        UMUtils.event(EVENT_TT_SP_AD_LOADED);
                     }
 
                     @Override
@@ -588,6 +629,7 @@ public class ToutiaoAd {
      * @param activity
      */
     public void showDrawNativeVideoAD(String codeId, IADLoadCallback<List<TTDrawFeedAd>> callback, Activity activity) {
+        UMUtils.event(EVENT_TT_DV_AD_ADD);
         mTTAdNative = TTAdSdk.getAdManager().createAdNative(activity);
         TTAdSdk.getAdManager().requestPermissionIfNecessary(activity);
         //step3:创建广告请求参数AdSlot,具体参数含义参考文档
@@ -616,6 +658,7 @@ public class ToutiaoAd {
                 //  TODO 数据设置到列表中
                 if (callback != null) {
                     callback.onAdLoad(ads);
+                    UMUtils.event(EVENT_TT_DV_AD_LOADED);
                 }
             }
         });
