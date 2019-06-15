@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -14,6 +15,7 @@ import com.cjj.MaterialRefreshListener;
 import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.MineActivity;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
@@ -27,7 +29,7 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class QuestionFragment extends BaseRecyclerViewFragment implements QFView, View.OnClickListener {
 
-    LinearLayout llAbout;
+    LinearLayout llMine;
 
     @Inject
     QFPresenterImpl presenter;
@@ -52,7 +54,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
 
     @Override
     public void initView(View rootView) {
-        llAbout = rootView.findViewById(R.id.ll_about);
+        llMine = rootView.findViewById(R.id.ll_mine);
 
     }
 
@@ -78,7 +80,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
 
     @Override
     public void initListener() {
-        llAbout.setOnClickListener(this);
+        llMine.setOnClickListener(this);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -115,11 +117,10 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.ll_about:
-                String url = "file:///android_asset/about_rules.html";
-                Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra("url", url);
-                mContext.startActivity(intent);
+            case R.id.ll_mine:
+                ActivityUtils.startActivity(MineActivity.class);
+
+//
                 break;
         }
 
