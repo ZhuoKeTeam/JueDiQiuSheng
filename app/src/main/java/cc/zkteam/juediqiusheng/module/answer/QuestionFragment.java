@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.bytedance.sdk.openadsdk.TTAdConstant;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
+import cc.zkteam.juediqiusheng.ad.ZKAD;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
 import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.fragment.BaseRecyclerViewFragment;
@@ -113,7 +115,13 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
 
     @Override
     public void onClick(View v) {
+        //全屏广告
+        String qpId = "918599340";
+//        if (!BuildConfig.DEBUG) {
+//            qpId = "920203200"; //正式 key
+//        }
 
+        ZKAD.showTouTiaoFullVideoAD(qpId, getActivity(), TTAdConstant.VERTICAL);
         switch (v.getId()) {
             case R.id.ll_about:
                 String url = "file:///android_asset/about_rules.html";

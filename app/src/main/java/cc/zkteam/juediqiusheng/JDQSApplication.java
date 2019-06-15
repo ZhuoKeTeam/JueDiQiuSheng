@@ -40,7 +40,7 @@ public class JDQSApplication extends MultiDexApplication implements HasActivityI
                 .builder()
                 .inject(this);
 
-        UMConfigure.init(this, "5ce947420cafb23dee000572", "google_play", UMConfigure.DEVICE_TYPE_PHONE, null);
+        UMConfigure.init(this, "5ce947420cafb23dee000572", "TouTiao_AD", UMConfigure.DEVICE_TYPE_PHONE, null);
         ZKAD.init(this);
     }
 

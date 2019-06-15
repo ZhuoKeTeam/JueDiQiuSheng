@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
+import com.bytedance.sdk.openadsdk.TTDrawFeedAd;
+import com.bytedance.sdk.openadsdk.TTFeedAd;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
@@ -22,11 +24,36 @@ import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
+import java.util.List;
+
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static cc.zkteam.juediqiusheng.ad.UMUtils.*;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_ERROR;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_FB_HF_AD_LOGGING_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_CP_AD_LOAD_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLICKED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_FAILED_TO_LOAD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_IMPRESSION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LEFT_APPLICATION;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_HF_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_ADD;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_CLOSED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_EARNED_JL;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_LOADED_FAILED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_OPENED;
+import static cc.zkteam.juediqiusheng.ad.UMUtils.EVENT_GG_JL_AD_SHOW_FAILED;
 
 public class ZKAD {
 
@@ -63,6 +90,7 @@ public class ZKAD {
 
 //        // facebook 广告
 //        AudienceNetworkAds.initialize(appContext);
+        ToutiaoAd.initAd(appContext);
     }
 
     public static View initADView() {
@@ -186,8 +214,16 @@ public class ZKAD {
     }
 
     public static void initHFAD(Activity activity, boolean isFacebookAd) {
-        View view = activity.getWindow().getDecorView().getRootView();
-        initHFAD(view, isFacebookAd);
+//        View view = activity.getWindow().getDecorView().getRootView();
+//        initHFAD(view, isFacebookAd);
+
+        //Banner 广告
+        String bannerId = "918599611";
+//        if (!BuildConfig.DEBUG) {
+//            bannerId = "920203186"; //正式 key
+//        }
+
+        showTouTiaoBannerAd(bannerId, activity);
     }
 
     public static void initHFAD(View rootView, boolean isFacebookAd) {
@@ -217,12 +253,9 @@ public class ZKAD {
     }
 
 
-
-
-    /**---------------------------------------------google 激励广告-----------------------------------------------------------*/
-
-    private static RewardedAd rewardedAD;
-
+    /**
+     * ---------------------------------------------google 激励广告-----------------------------------------------------------
+     */
     public static void initGoogleRewardedAd() {
         rewardedAD = getGoogleRewardedAd();
     }
@@ -233,6 +266,7 @@ public class ZKAD {
 
     /**
      * 获取 google 激励广告
+     *
      * @return 返回激励广告
      */
     public static RewardedAd getGoogleRewardedAd() {
@@ -270,8 +304,9 @@ public class ZKAD {
 
     /**
      * 展示 google 激励广告
-     * @param activity      Activity
-     * @param rewardedAd    激励广告
+     *
+     * @param activity   Activity
+     * @param rewardedAd 激励广告
      */
     public static void showGoogleJLAD(Activity activity, RewardedAd rewardedAd) {
         if (rewardedAd.isLoaded()) {
@@ -314,6 +349,7 @@ public class ZKAD {
     }
 
     // load google 插屏广告
+
     public static void loadGoogleCPAD() {
         mInterstitialAd.setAdListener(new com.google.android.gms.ads.AdListener() {
             @Override
@@ -372,8 +408,8 @@ public class ZKAD {
         event(EVENT_GG_CP_AD_ADD);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
     }
-
     // show google 插屏广告
+
     public static void showGoogleCPAD() {
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
@@ -383,4 +419,54 @@ public class ZKAD {
         }
     }
 
+    private static RewardedAd rewardedAD;
+
+    /**
+     * ---------------------------------------------头条-----------------------------------------------------------
+     */
+
+    public static void showTouTiaoJLAD(String codeId, Activity activity) {
+        ToutiaoAd.getsInstance().showJLAD(codeId, activity);
+        //信息流广告
+        //Draw信息流广告
+        String msgListId = "918599296";
+//        if (!BuildConfig.DEBUG) {
+//            msgListId = "920203971"; //正式 key
+//        }
+
+        showTouTiaoFeedAD(msgListId, null, activity);
+
+        //Draw信息流广告
+        String drawId = "918599947";
+//        if (!BuildConfig.DEBUG) {
+//            drawId = "920203404"; //正式 key
+//        }
+
+        showTouTiaoDrawNativeVideoAD(drawId, null, activity);
+    }
+
+    public static void showTouTiaoBannerAd(String codeId, Activity activity) {
+        ToutiaoAd.getsInstance().showBannerAd(codeId, activity);
+    }
+
+    public static void showTouTiaoFeedAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTFeedAd>> callback, Activity activity) {
+        ToutiaoAd.getsInstance().showFeedAD(codeId, callback, activity);
+    }
+
+    public static void showTouTiaoInteractionAD(String codeId, Activity activity) {
+        ToutiaoAd.getsInstance().showInteractionAD(codeId, activity);
+    }
+
+
+    public static void showTouTiaoFullVideoAD(String codeId, Activity activity, int orientation) {
+        ToutiaoAd.getsInstance().showFullVideoAD(codeId, activity, orientation);
+    }
+
+    public static void showTouTiaoSplashAD(String codeId, Activity activity, ToutiaoAd.IADLoadCallback<String> callback) {
+        ToutiaoAd.getsInstance().showSplashAD(codeId, callback, activity);
+    }
+
+    public static void showTouTiaoDrawNativeVideoAD(String codeId, ToutiaoAd.IADLoadCallback<List<TTDrawFeedAd>> callback, Activity activity) {
+        ToutiaoAd.getsInstance().showDrawNativeVideoAD(codeId, callback, activity);
+    }
 }
