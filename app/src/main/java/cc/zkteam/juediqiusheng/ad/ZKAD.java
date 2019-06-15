@@ -32,15 +32,16 @@ public class ZKAD {
 
     private static final String TAG = "ZKAD";
 
+//    google 的 测试广告列表：https://developers.google.com/admob/android/test-ads
     // Appid
-    public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~6821793256";
-    // google 测试广告
-    public static final String AD_GOOGLE_TEST_KEY = "ca-app-pub-3940256099942544/6300978111";
+    public static final String AD_GOOGLE_APP_ID = "ca-app-pub-5576379109949376~9602236352";
+    public static final String AD_GOOGLE_TEST_APP_ID = "ca-app-pub-3940256099942544~3347511713";
     // 横幅广告
-    public static final String AD_GOOGLE_RELEASE_DTS_GL_HF_KEY = "ca-app-pub-5576379109949376/8466047413";
+    public static final String AD_GOOGLE_TEST_DTS_GL_HF_KEY = "ca-app-pub-3940256099942544/6300978111";
+    public static final String AD_GOOGLE_RELEASE_DTS_GL_HF_KEY = "ca-app-pub-5576379109949376/4426587838";
     // 激励广告
-    public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/9427296362";
     public static final String AD_GOOGLE_TEST_GL_DTS_JL_KEY = "ca-app-pub-3940256099942544/5224354917";
+    public static final String AD_GOOGLE_RELEASE_GL_DTS_JL_KEY = "ca-app-pub-5576379109949376/1907579168";
 
     // facebook 的横幅广告
     public static final String AD_FACEBOOK_RELEASE_GL_DTS_JL_KEY = "2457797387617458_2458180154245848";
@@ -54,7 +55,11 @@ public class ZKAD {
     public static void init(Application appContext) {
         application = appContext;
         // google 广告
-        MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
+        String appId = ZKAD.AD_GOOGLE_TEST_APP_ID;
+        if (!BuildConfig.DEBUG) {
+            appId = ZKAD.AD_GOOGLE_APP_ID;
+        }
+        MobileAds.initialize(appContext, appId);
         // init google 插页广告
 //        mInterstitialAd = new InterstitialAd(appContext);
 //        if (BuildConfig.DEBUG) {
@@ -116,7 +121,7 @@ public class ZKAD {
             AdView adView = new AdView(Utils.getApp());
             adView.setAdSize(AdSize.SMART_BANNER);
             if (BuildConfig.DEBUG) {
-                adView.setAdUnitId(AD_GOOGLE_TEST_KEY);
+                adView.setAdUnitId(AD_GOOGLE_TEST_DTS_GL_HF_KEY);
             } else {
                 adView.setAdUnitId(AD_GOOGLE_RELEASE_DTS_GL_HF_KEY);
             }

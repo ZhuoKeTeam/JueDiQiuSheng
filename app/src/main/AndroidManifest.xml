@@ -50,12 +50,12 @@
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".activity.ToolbarActivityDemo"/>
 
-
-
         <!--添加 google 广告-->
+        <!--测试 id: ca-app-pub-3940256099942544~3347511713-->
+        <!--正式 id: ca-app-pub-5576379109949376~9602236352-->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5576379109949376~6821793256"/>
+            android:value="ca-app-pub-5576379109949376~9602236352"/>
 
     </application>
 
