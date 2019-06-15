@@ -19,6 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.UsActivity"></activity>
+        <activity android:name=".activity.SettingActivity" />
         <activity
             android:name=".ui.main.WelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
@@ -46,12 +48,11 @@
             android:name=".module.category.BaseCategoryListActivity"
             android:theme="@style/DarkActionBarTheme" />
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".activity.ToolbarActivityDemo" /> <!-- 添加 google 广告 -->
-        <!-- 测试 id: ca-app-pub-3940256099942544~3347511713 -->
-        <!-- 正式 id: ca-app-pub-5576379109949376~9602236352 -->
+        <activity android:name=".activity.ToolbarActivityDemo" />
+        <activity android:name=".activity.MineActivity" /> <!-- 添加 google 广告 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5576379109949376~9602236352" />
+            android:value="ca-app-pub-5576379109949376~6821793256" />
     </application>
 
 </manifest>

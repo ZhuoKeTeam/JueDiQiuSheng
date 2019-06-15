@@ -94,4 +94,29 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="cons_height_mine" >
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <style name="image_left_mine" >
+        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+
+    <style name="text_left_mine" >
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="image_right_mine" >
+        <item name="android:layout_marginRight">18dp</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">#333</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+    </style>
+
 </resources>

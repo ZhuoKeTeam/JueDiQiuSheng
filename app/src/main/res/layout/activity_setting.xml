@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <include
+        layout="@layout/widget_toolbar"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_about"
+        style="@style/cons_height_mine"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/color_pic_bg">
+
+        <ImageView
+            android:id="@+id/iv_about"
+            style="@style/image_left_mine"
+            android:src="@drawable/icon_about_us"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text_left_mine"
+            android:text="关于我们"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_about"
+            app:layout_constraintLeft_toRightOf="@+id/iv_about"
+            app:layout_constraintTop_toTopOf="@+id/iv_about" />
+
+
+        <ImageView
+            android:id="@+id/iv_arrow_about"
+            style="@style/image_right_mine"
+            android:src="@drawable/icon_arrow_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cons_about" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cons_setting"
+        style="@style/cons_height_mine"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:background="@color/color_pic_bg">
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            style="@style/image_left_mine"
+            android:src="@drawable/icon_setting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text_left_mine"
+            android:text="我的设置"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_setting"
+            app:layout_constraintLeft_toRightOf="@+id/iv_setting"
+            app:layout_constraintTop_toTopOf="@+id/iv_setting" />
+
+
+        <ImageView
+            android:id="@+id/iv_arrow_setting"
+            style="@style/image_right_mine"
+            android:src="@drawable/icon_arrow_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>

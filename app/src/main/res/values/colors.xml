@@ -8,4 +8,5 @@
     <color name="color_pic_bg">#88D5904C</color>
     <color name="color_pic_text">#FFFFFF</color>
     <color name="colorDark">#323232</color>
+    <color name="colorWhite">#FFF</color>
 </resources>
