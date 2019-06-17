@@ -8,6 +8,8 @@ import android.view.View;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
+import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
 import cc.zkteam.juediqiusheng.adapter.WQSectionsPagerAdapter;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 
@@ -63,7 +65,8 @@ public class WQFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
                 Log.i("bro" ,  "切换了");
-                ZKAD.initTencentInterstitialAD(getActivity());
+                ZKContext zkTencentContext = new ZKContext(ZKTencentAD.getInstance());
+                zkTencentContext.initInterstitialAD(getActivity());
             }
 
             @Override

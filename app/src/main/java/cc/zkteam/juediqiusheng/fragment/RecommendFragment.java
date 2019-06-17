@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.Utils;
 import com.cjj.MaterialRefreshLayout;
@@ -20,6 +21,8 @@ import java.util.List;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
+import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
@@ -96,8 +99,10 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         zkBanner = rootView.findViewById(R.id.zk_banner);
         zkRecyclerView = rootView.findViewById(R.id.zk_recycler_view);
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
+        LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
 
-        ZKAD.initTencentBannerAD(rootView, getActivity());
+        ZKContext zkTencentContext = new ZKContext(ZKTencentAD.getInstance());
+        zkTencentContext.initBannerAD(adContentView , getActivity());
     }
 
     @Override

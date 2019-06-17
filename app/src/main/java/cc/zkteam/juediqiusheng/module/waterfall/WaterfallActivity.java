@@ -29,6 +29,8 @@ import java.util.List;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
+import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
 import cc.zkteam.juediqiusheng.retrofit2.ZKCallback;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
@@ -53,6 +55,7 @@ public class WaterfallActivity extends BaseActivity {
 
     @Autowired(name = "categoryId")
     public String categoryId;
+    private ZKContext zkContext;
 
     @Override
     protected int getLayoutId() {
@@ -79,7 +82,8 @@ public class WaterfallActivity extends BaseActivity {
         ARouter.getInstance().inject(this);
         super.onCreate(savedInstanceState);
         Log.d("param", categoryId);
-        ZKAD.initTencentRewardVideoAd();
+        zkContext = new ZKContext(ZKTencentAD.getInstance());
+        zkContext.initRewardVideoAd(getApplicationContext());
     }
 
     private void initWidget() {
@@ -184,7 +188,9 @@ public class WaterfallActivity extends BaseActivity {
                         (dialog, which) -> {
                             // 2019-05-30 启动广告，等广告完成后直接继续操作。
 //                            ZKAD.showGoogleJLAD(this, ZKAD.getCurrentRewardedAd());
-                            ZKAD.loadTencentRewardVideoAd();
+                            if (zkContext != null) {
+                                zkContext.loadRewardVideoAd();
+                            }
                         });
                 normalDialog.setNegativeButton("不看了吧",
                         (dialog, which) -> {

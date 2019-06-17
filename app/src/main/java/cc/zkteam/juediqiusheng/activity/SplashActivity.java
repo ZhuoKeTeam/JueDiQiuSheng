@@ -32,10 +32,11 @@ import java.util.List;
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ad.UMUtils;
+import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKSplashListener;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_APP_ID;
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_SPLASH_KEY;
 
 public class SplashActivity extends BaseActivity {
 
@@ -92,106 +93,31 @@ public class SplashActivity extends BaseActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     //####################################### 权限 startActivity ############################################
-    private void permissionCheck() {
-        if (!PermissionUtils.isGranted(permissions)){
-            PermissionUtils.permission(permissions)
-                    .callback(new PermissionUtils.FullCallback() {
-                        @Override
-                        public void onGranted(List<String> permissionsGranted) {
-                            initTencentSplashAD();
-                        }
+    private void initSplashAD() {
 
-                        @Override
-                        public void onDenied(List<String> permissionsDeniedForever, List<String> permissionsDenied) {
-                            ToastUtils.showShort(getString(R.string.question_permission_tip));
-
-                        }
-                    })
-                    .request();
-        }else {
-            initTencentSplashAD();
-        }
-    }
-
-    private void initTencentSplashAD() {
-        skip_view.setVisibility(View.VISIBLE);
-        fetchSplashAD(this, splash_container, skip_view, AD_TENCENT_APP_ID, AD_TENCENT_SPLASH_KEY, new SplashADListener() {
-            @Override
-            public void onADDismissed() {
-                Log.i("ad_tencent_splash", "SplashADDismissed");
-                splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADDISMISSED);
-            }
-
-            @Override
-            public void onNoAD(AdError error) {
-                Log.i(
-                        "ad_tencent_splash",
-                        String.format("LoadSplashADFail, eCode=%d, errorMsg=%s", error.getErrorCode(),
-                                error.getErrorMsg()));
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_NOAD);
-                /**
-                 * 为防止无广告时造成视觉上类似于"闪退"的情况，设定无广告时页面跳转根据需要延迟一定时间，demo
-                 * 给出的延时逻辑是从拉取广告开始算开屏最少持续多久，仅供参考，开发者可自定义延时逻辑，如果开发者采用demo
-                 * 中给出的延时逻辑，也建议开发者考虑自定义minSplashTimeWhenNoAD的值
-                 **/
-                long alreadyDelayMills = System.currentTimeMillis() - fetchSplashADTime;//从拉广告开始到onNoAD已经消耗了多少时间
-                long shouldDelayMills = alreadyDelayMills > minSplashTimeWhenNoAD ? 0 : minSplashTimeWhenNoAD
-                        - alreadyDelayMills;//为防止加载广告失败后立刻跳离开屏可能造成的视觉上类似于"闪退"的情况，根据设置的minSplashTimeWhenNoAD
-                // 计算出还需要延时多久
-                splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, shouldDelayMills);
-            }
-
+        ZKContext zkContext = new ZKContext(ZKTencentAD.getInstance());
+        zkContext.initSplashAD(this, skip_view, splash_container, new ZKSplashListener() {
             @Override
             public void onADPresent() {
-                Log.i("ad_tencent_splash", "SplashADPresent");
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADPRESENT);
                 ll_splash_holder.setVisibility(View.GONE);
             }
 
             @Override
-            public void onADClicked() {
-                Log.i("ad_tencent_splash", "SplashADClicked clickUrl: "
-                        + (splashAD.getExt() != null ? splashAD.getExt().get("clickUrl") : ""));
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADCLICKED);
+            public void onADDismissed() {
+                splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
             }
 
-            /**
-             * 倒计时回调，返回广告还将被展示的剩余时间。
-             * 通过这个接口，开发者可以自行决定是否显示倒计时提示，或者还剩几秒的时候显示倒计时
-             *
-             * @param millisUntilFinished 剩余毫秒数
-             */
             @Override
-            public void onADTick(long millisUntilFinished) {
-                Log.i("ad_tencent_splash", "SplashADTick " + millisUntilFinished + "ms");
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADTICK);
-                skip_view.setText(String.format(SKIP_TEXT, Math.round(millisUntilFinished / 1000f)));
+            public void onNoAD() {
+                splashHandler.sendEmptyMessageDelayed(FLAG_ENTER_MAIN, 0);
             }
 
             @Override
-            public void onADExposure() {
-                Log.i("ad_tencent_splash", "SplashADExposure");
-                UMUtils.event(UMUtils.EVENT_TENCENT_SPLASH_ADEXPOSURE);
-            }
-        }, 0);
-    }
+            public void onADTick(long millisUntilFinished) {
 
-    /**
-     * 拉取开屏广告，开屏广告的构造方法有3种，详细说明请参考开发者文档。
-     *
-     * @param activity      展示广告的 activity
-     * @param adContainer   展示广告的大容器
-     * @param skipContainer 自定义的跳过按钮：传入该 view 给 SDK 后，SDK 会自动给它绑定点击跳过事件。SkipView 的样式可以由开发者自由定制，其尺寸限制请参考 activity_splash.xml 或下面的注意事项。
-     * @param appId         应用 ID
-     * @param posId         广告位 ID
-     * @param adListener    广告状态监听器
-     * @param fetchDelay    拉取广告的超时时长：即开屏广告从请求到展示所花的最大时长（并不是指广告曝光时长）取值范围[3000, 5000]，设为0表示使用广点通 SDK 默认的超时时长。
-     */
-    private void fetchSplashAD(Activity activity, ViewGroup adContainer, View skipContainer,
-                               String appId, String posId, SplashADListener adListener, int fetchDelay) {
-        fetchSplashADTime = System.currentTimeMillis();
-        splashAD = new SplashAD(activity, adContainer, skipContainer, appId, posId, adListener, fetchDelay);
+            }
+        });
+
     }
 
     @Override
@@ -230,7 +156,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initAnimation() {
-        permissionCheck();
+        initSplashAD();
 
         WindowManager wm = (WindowManager)
                 getSystemService(this.WINDOW_SERVICE);

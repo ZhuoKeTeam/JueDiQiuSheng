@@ -25,12 +25,15 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ad.UMUtils;
+import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
+import cc.zkteam.juediqiusheng.ad.strategy.ZKNativeListener;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
 
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_APP_ID;
-import static cc.zkteam.juediqiusheng.ad.ZKAD.AD_TENCENT_ORIGINAL_KEY;
+import static cc.zkteam.juediqiusheng.ad.ZKTencentAD.AD_TENCENT_APP_ID;
+import static cc.zkteam.juediqiusheng.ad.ZKTencentAD.AD_TENCENT_ORIGINAL_KEY;
 
 /**
  * HotNewsAdapter
@@ -118,183 +121,40 @@ public class HotNewsAdapter
         zkRecyclerView.setAdapter(hotNewsItemAdapter);
     }
 
-    private NativeExpressAD mADManager;
     public static int FIRST_AD_POSITION = 1; // 第一条广告的位置
     public static int ITEMS_PER_AD = 2;     // 每间隔10个条目插入一条广告
     public static final int AD_COUNT = 1;    // 加载广告的条数，取值范围为[1, 10]
     private List<NativeExpressADView> mAdViewList;
-    private List<Object> mNormalDataList = new ArrayList<Object>();
-    private static final String TAG = HotNewsAdapter.class.getSimpleName();
+    private List<Object> mNormalDataList = new ArrayList<>();
     private HashMap<NativeExpressADView, Integer> mAdViewPositionMap = new HashMap<NativeExpressADView, Integer>();
 
     /**
      *
      */
     private void initNativeExpressAD() {
-        ADSize adSize = new ADSize(ADSize.FULL_WIDTH, ADSize.AUTO_HEIGHT); // 消息流中用AUTO_HEIGHT
-        mADManager = new NativeExpressAD(activity, adSize, AD_TENCENT_APP_ID, AD_TENCENT_ORIGINAL_KEY, new NativeExpressAD.NativeExpressADListener() {
+        ZKContext zkContext = new ZKContext(ZKTencentAD.getInstance());
+        zkContext.initNativeExpressAD(activity.getApplicationContext(), 3, new ZKNativeListener() {
             @Override
-            public void onADLoaded(List<NativeExpressADView> adList) {
-                Log.i("ad_tencent_native", "onADLoaded: " + adList.size());
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADLOADED);
-                mAdViewList = adList;
-                for (int i = 0; i < mAdViewList.size(); i++) {
-                    int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
-                    if (position < mNormalDataList.size()) {
-                        NativeExpressADView view = mAdViewList.get(i);
-                        GDTLogger.i("ad load[" + i + "]: " + getAdInfo(view));
-                        if (view.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-                            view.setMediaListener(mediaListener);
+            public void onNativeCallBack(List adList) {
+                if(!adList.isEmpty() && adList.get(0) instanceof NativeExpressADView){
+                    mAdViewList = adList;
+                    for (int i = 0; i < mAdViewList.size(); i++) {
+                        int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
+                        if (position < mNormalDataList.size()) {
+                            NativeExpressADView view = mAdViewList.get(i);
+//                            GDTLogger.i("ad load[" + i + "]: " + getAdInfo(view));
+//                            if (view.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
+//                                view.setMediaListener(mediaListener);
+//                            }
+                            mAdViewPositionMap.put(view, position); // 把每个广告在列表中位置记录下来
+                            hotNewsItemAdapter.addADViewToPosition(position, mAdViewList.get(i));
                         }
-                        mAdViewPositionMap.put(view, position); // 把每个广告在列表中位置记录下来
-                        hotNewsItemAdapter.addADViewToPosition(position, mAdViewList.get(i));
                     }
+                    hotNewsItemAdapter.notifyDataSetChanged();
                 }
-                hotNewsItemAdapter.notifyDataSetChanged();
-            }
 
-
-            @Override
-            public void onRenderFail(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_RENDERFAIL);
-                Log.i("ad_tencent_native", "onRenderFail: " + adView.toString());
-            }
-
-            @Override
-            public void onRenderSuccess(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_RENDERSUCCESS);
-                Log.i("ad_tencent_native", "onRenderSuccess: " + adView.toString() + ", adInfo: " + getAdInfo(adView));
-            }
-
-            @Override
-            public void onADExposure(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADEXPOSURE);
-                Log.i("ad_tencent_native", "onADExposure: " + adView.toString());
-            }
-
-            @Override
-            public void onADClicked(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLICKED);
-                Log.i("ad_tencent_native", "onADClicked: " + adView.toString());
-            }
-
-            @Override
-            public void onADClosed(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLOSED);
-                Log.i("ad_tencent_native", "onADClosed: " + adView.toString());
-                if (hotNewsItemAdapter != null) {
-                    int removedPosition = mAdViewPositionMap.get(adView);
-                    hotNewsItemAdapter.removeADView(removedPosition, adView);
-                }
-            }
-
-            @Override
-            public void onADLeftApplication(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADLEFTAPPLICATION);
-                Log.i("ad_tencent_native", "onADLeftApplication: " + adView.toString());
-            }
-
-            @Override
-            public void onADOpenOverlay(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADOPENOVERLAY);
-                Log.i("ad_tencent_native", "onADOpenOverlay: " + adView.toString());
-            }
-
-            @Override
-            public void onADCloseOverlay(NativeExpressADView adView) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_ADCLOSEOVERLAY);
-                Log.i("ad_tencent_native", "onADCloseOverlay");
-            }
-
-            @Override
-            public void onNoAD(AdError adError) {
-                UMUtils.event(UMUtils.EVENT_TENCENT_NATIVE_NOAD);
-                Log.i("ad_tencent_native", String.format("onNoAD, error code: %d, error msg: %s", adError.getErrorCode(),
-                        adError.getErrorMsg()));
             }
         });
-        mADManager.setMaxVideoDuration(30000);
-        mADManager.loadAD(AD_COUNT);
     }
-
-    private String getAdInfo(NativeExpressADView nativeExpressADView) {
-        AdData adData = nativeExpressADView.getBoundData();
-        if (adData != null) {
-            StringBuilder infoBuilder = new StringBuilder();
-            infoBuilder.append("title:").append(adData.getTitle()).append(",")
-                    .append("desc:").append(adData.getDesc()).append(",")
-                    .append("patternType:").append(adData.getAdPatternType());
-            if (adData.getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
-                infoBuilder.append(", video info: ")
-                        .append(getVideoInfo(adData.getProperty(AdData.VideoPlayer.class)));
-            }
-            return infoBuilder.toString();
-        }
-        return null;
-    }
-
-    private String getVideoInfo(AdData.VideoPlayer videoPlayer) {
-        if (videoPlayer != null) {
-            StringBuilder videoBuilder = new StringBuilder();
-            videoBuilder.append("state:").append(videoPlayer.getVideoState()).append(",")
-                    .append("duration:").append(videoPlayer.getDuration()).append(",")
-                    .append("position:").append(videoPlayer.getCurrentPosition());
-            return videoBuilder.toString();
-        }
-        return null;
-    }
-
-    private NativeExpressMediaListener mediaListener = new NativeExpressMediaListener() {
-        @Override
-        public void onVideoInit(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoInit: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoLoading(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoLoading: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoReady(NativeExpressADView nativeExpressADView, long l) {
-            Log.i(TAG, "onVideoReady: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoStart(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoStart: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoPause(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPause: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoComplete(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoComplete: "
-                    + getVideoInfo(nativeExpressADView.getBoundData().getProperty(AdData.VideoPlayer.class)));
-        }
-
-        @Override
-        public void onVideoError(NativeExpressADView nativeExpressADView, AdError adError) {
-            Log.i(TAG, "onVideoError");
-        }
-
-        @Override
-        public void onVideoPageOpen(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPageOpen");
-        }
-
-        @Override
-        public void onVideoPageClose(NativeExpressADView nativeExpressADView) {
-            Log.i(TAG, "onVideoPageClose");
-        }
-    };
 
 }
