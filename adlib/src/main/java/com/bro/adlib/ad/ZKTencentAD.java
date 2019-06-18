@@ -170,24 +170,28 @@ public class ZKTencentAD implements ZKStrategy {
     }
 
     @Override
-    public void initInterstitialAD(final Activity activity) {
+    public void initInterstitialAD(final Activity activity, final boolean isAutoShow) {
         try {
             if (tencentInterstitialAD != null) {
                 tencentInterstitialAD.close();
                 tencentInterstitialAD.destroy();
                 tencentInterstitialAD = null;
             }
+            hasInterstitialShown = false;
             if (tencentInterstitialAD == null) {
                 tencentInterstitialAD = new UnifiedInterstitialAD(activity, AD_TENCENT_APP_ID, AD_TENCENT_INTERSTITIAL_KEY, new UnifiedInterstitialADListener() {
                     @Override
                     public void onADReceive() {
                         Log.i("ad_tencent_incert", "onADReceive");
                         UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_ADRECEIVE);
-                        Toast.makeText(activity, "广告加载成功 ！ ", Toast.LENGTH_LONG).show();
-                        if (tencentInterstitialAD != null) {
-                            tencentInterstitialAD.show();
-                        } else {
-                            Toast.makeText(activity, "请加载广告后再进行展示 ！ ", Toast.LENGTH_LONG).show();
+                        if (isAutoShow) {
+                            if (tencentInterstitialAD != null) {
+                                Toast.makeText(activity, "广告加载成功 ！ ", Toast.LENGTH_LONG).show();
+                                tencentInterstitialAD.show();
+                                hasInterstitialShown = true;
+                            } else {
+                                Toast.makeText(activity, "请加载广告后再进行展示 ！ ", Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
 
@@ -234,6 +238,21 @@ public class ZKTencentAD implements ZKStrategy {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    // 插屏广告是否显示过
+    boolean hasInterstitialShown = false;
+
+    @Override
+    public void loadInterstitialAd(Activity activity) {
+        if (tencentInterstitialAD != null && !hasInterstitialShown) {
+            Toast.makeText(activity, "广告加载成功 ！ ", Toast.LENGTH_LONG).show();
+            tencentInterstitialAD.show();
+            hasInterstitialShown = true;
+        } else {
+            initInterstitialAD(activity, true);
+            Toast.makeText(activity, "重新加载广告 ！", Toast.LENGTH_LONG).show();
         }
     }
 

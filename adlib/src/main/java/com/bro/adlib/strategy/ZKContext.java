@@ -26,7 +26,7 @@ public class ZKContext {
     public ZKContext(int type) {
         if (type == 1) {
             this.strategy = ZKTencentAD.getInstance();
-        } else  if (type == 2){
+        } else if (type == 2) {
             this.strategy = ZKBaiduAD.getInstance();
         }
 //        this.strategy = strategy;
@@ -48,12 +48,19 @@ public class ZKContext {
 
 
     /**
-     * 插屏广告
+     * 初始化插屏广告
      *
      * @param activity
      */
     public void initInterstitialAD(Activity activity) {
-        strategy.initInterstitialAD(activity);
+        strategy.initInterstitialAD(activity, false);
+    }
+
+    /**
+     * 显示插屏广告
+     */
+    public void loadInterstitialAD(Activity activity) {
+        strategy.loadInterstitialAd(activity);
     }
 
     /**

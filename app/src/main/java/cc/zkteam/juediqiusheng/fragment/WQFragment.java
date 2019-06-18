@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
-import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.strategy.ZKContext;
 
 import cc.zkteam.juediqiusheng.Constant;
@@ -26,6 +25,7 @@ public class WQFragment extends BaseFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ZKViewPager mViewPager;
     private TabLayout tabLayout;
+    private ZKContext zkTencentContext;
 
     public WQFragment() {
     }
@@ -56,6 +56,10 @@ public class WQFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
+        zkTencentContext = new ZKContext(Constant.ADTYPE);
+        zkTencentContext.initInterstitialAD(getActivity());
+
         mViewPager.setLifecycle(getLifecycle());
         mViewPager.setViewPager(new ViewPager.OnPageChangeListener() {
             @Override
@@ -67,8 +71,7 @@ public class WQFragment extends BaseFragment {
             public void onPageSelected(int position) {
                 Log.i("bro" ,  "切换了");
 //                ZKContext zkTencentContext = new ZKContext(ZKTencentAD.getInstance());
-                ZKContext zkTencentContext = new ZKContext(Constant.ADTYPE);
-                zkTencentContext.initInterstitialAD(getActivity());
+                zkTencentContext.loadInterstitialAD(getActivity());
             }
 
             @Override

@@ -2,14 +2,12 @@ package cc.zkteam.juediqiusheng.ad;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bro.adlib.util.UMUtils;
@@ -25,17 +23,9 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
-import com.qq.e.ads.banner2.UnifiedBannerADListener;
-import com.qq.e.ads.banner2.UnifiedBannerView;
-import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
-import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
-import com.qq.e.ads.rewardvideo.RewardVideoAD;
-import com.qq.e.ads.rewardvideo.RewardVideoADListener;
-
-import java.util.Date;
-import java.util.Locale;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
@@ -73,6 +63,8 @@ public class ZKAD {
 
         com.baidu.mobads.AdView.setAppSid(appContext, AD_BAIDU_APP_ID);
 
+        initAdType();
+
         // init google 插页广告
 //        mInterstitialAd = new InterstitialAd(appContext);
 //        if (BuildConfig.DEBUG) {
@@ -81,6 +73,10 @@ public class ZKAD {
 
 //        // facebook 广告
 //        AudienceNetworkAds.initialize(appContext);
+    }
+
+    private static void initAdType() {
+        Constant.ADTYPE = SPUtils.getInstance().getInt("ad_type", 1);
     }
 
 //    public static View initADView() {

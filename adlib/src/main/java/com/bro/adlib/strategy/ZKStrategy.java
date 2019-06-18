@@ -27,7 +27,12 @@ public interface ZKStrategy {
      *
      * @param activity
      */
-    void initInterstitialAD(Activity activity);
+    void initInterstitialAD(Activity activity , boolean isAutoShow);
+
+    /**
+     * 加载插屏广告
+     */
+    void loadInterstitialAd(Activity activity);
 
     /**
      * 初始化激励广告

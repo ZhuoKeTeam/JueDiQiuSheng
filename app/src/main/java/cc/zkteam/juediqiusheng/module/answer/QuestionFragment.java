@@ -5,14 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 
 import javax.inject.Inject;
 
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.SortAdapter;
@@ -28,6 +32,7 @@ import dagger.android.support.AndroidSupportInjection;
 public class QuestionFragment extends BaseRecyclerViewFragment implements QFView, View.OnClickListener {
 
     LinearLayout llAbout;
+    Button btn_change_ad;
 
     @Inject
     QFPresenterImpl presenter;
@@ -53,15 +58,16 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     @Override
     public void initView(View rootView) {
         llAbout = rootView.findViewById(R.id.ll_about);
-
+        btn_change_ad = rootView.findViewById(R.id.btn_change_ad);
+        initBtn();
     }
+
 
     @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
     }
-
 
 
     @Override
@@ -79,6 +85,7 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
     @Override
     public void initListener() {
         llAbout.setOnClickListener(this);
+        btn_change_ad.setOnClickListener(this);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
@@ -121,7 +128,34 @@ public class QuestionFragment extends BaseRecyclerViewFragment implements QFView
                 intent.putExtra("url", url);
                 mContext.startActivity(intent);
                 break;
+            case R.id.btn_change_ad:
+                changeAd();
+                break;
+        }
+    }
+
+    private void changeAd() {
+//        int ad_type = SPUtils.getInstance().getInt("ad_type", -1);
+        if (Constant.ADTYPE == 1) {
+            btn_change_ad.setText("当前广告:" + "百度");
+            Constant.ADTYPE = 2;
+            SPUtils.getInstance().put("ad_type", 2, true);
+            ToastUtils.showShort("广告切换成百度");
+        } else if (Constant.ADTYPE == 2) {
+            btn_change_ad.setText("当前广告:" + "腾讯");
+            Constant.ADTYPE = 1;
+            SPUtils.getInstance().put("ad_type", 1, true);
+            ToastUtils.showShort("广告切换成腾讯");
         }
 
     }
+
+    private void initBtn() {
+        if (Constant.ADTYPE == 1) {
+            btn_change_ad.setText("当前广告:" + "腾讯");
+        } else if (Constant.ADTYPE == 2) {
+            btn_change_ad.setText("当前广告:" + "百度");
+        }
+    }
+
 }

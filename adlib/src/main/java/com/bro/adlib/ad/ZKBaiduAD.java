@@ -53,6 +53,7 @@ public class ZKBaiduAD implements ZKStrategy {
     private Handler handler = new Handler();
 
     private static ZKBaiduAD mSingleton = null;
+    private InterstitialAd interAd;
 
     private ZKBaiduAD() {
     }
@@ -109,14 +110,14 @@ public class ZKBaiduAD implements ZKStrategy {
     }
 
     @Override
-    public void initInterstitialAD(final Activity activity) {
+    public void initInterstitialAD(final Activity activity , boolean isAutoShow) {
 
-        final InterstitialAd interAd = new InterstitialAd(activity, AD_BAIDU_RELEASE_DTS_CP_KEY);
+        interAd = new InterstitialAd(activity, AD_BAIDU_RELEASE_DTS_CP_KEY);
         interAd.setListener(new InterstitialAdListener() {
             @Override
             public void onAdReady() {
                 logD("BD_CP_onAdReady->");
-                interAd.showAd(activity);
+//                interAd.showAd(activity);
             }
 
             @Override
@@ -138,22 +139,27 @@ public class ZKBaiduAD implements ZKStrategy {
             @Override
             public void onAdFailed(String s) {
                 logD("BD_CP_onAdFailed->" + s);
-                interAd.loadAd();
+//                interAd.loadAd();
             }
         });
 
         interAd.loadAd();
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (interAd.isAdReady()) {
-                    interAd.showAd(activity);
-                } else {
-                    interAd.loadAd();
-                }
-            }
-        }, 5000);
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }, 5000);
+    }
+
+    @Override
+    public void loadInterstitialAd(Activity activity) {
+        if (interAd.isAdReady()) {
+            interAd.showAd(activity);
+        } else {
+            interAd.loadAd();
+        }
     }
 
     @Override

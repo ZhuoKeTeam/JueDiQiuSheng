@@ -20,6 +20,6 @@ public class Constant {
     public static final int ZKTEAM_USER_LIFE_SPEND_ONE = 10;
 
     //广告类型
-    public static final int ADTYPE = ZKContext.BaiduType;
+    public static int ADTYPE = ZKContext.BaiduType;
 
 }
