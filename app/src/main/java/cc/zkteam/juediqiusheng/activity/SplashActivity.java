@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.strategy.ZKContext;
-import com.bro.adlib.strategy.ZKSplashListener;
+import com.bro.adlib.listener.ZKSplashListener;
 import com.networkbench.agent.impl.NBSAppAgent;
 import com.qq.e.ads.splash.SplashAD;
 
@@ -84,8 +84,8 @@ public class SplashActivity extends BaseActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     //####################################### 权限 startActivity ############################################
     private void initSplashAD() {
-
-        ZKContext zkContext = new ZKContext(ZKTencentAD.getInstance());
+//        ZKContext zkContext = new ZKContext(ZKTencentAD.getInstance());
+        ZKContext zkContext = new ZKContext(Constant.ADTYPE);
         zkContext.initSplashAD(this, skip_view, splash_container, new ZKSplashListener() {
             @Override
             public void onADPresent() {

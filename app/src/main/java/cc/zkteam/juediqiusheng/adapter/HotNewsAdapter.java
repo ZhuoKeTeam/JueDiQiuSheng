@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.strategy.ZKContext;
-import com.bro.adlib.strategy.ZKNativeListener;
+import com.bro.adlib.listener.ZKNativeListener;
 import com.qq.e.ads.nativ.NativeExpressADView;
 
 import java.util.ArrayList;

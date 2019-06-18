@@ -20,6 +20,7 @@ import com.youth.banner.listener.OnBannerListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
@@ -100,8 +101,11 @@ public class RecommendFragment extends BaseFragment implements OnBannerListener 
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
         LinearLayout adContentView = rootView.findViewById(R.id.ad_content_view);
 
-        ZKContext zkTencentContext = new ZKContext(ZKTencentAD.getInstance());
-        zkTencentContext.initBannerAD(adContentView , getActivity());
+//        ZKContext zkTencentContext = new ZKContext(ZKTencentAD.getInstance());
+//        zkTencentContext.initBannerAD(adContentView , getActivity());
+
+        new ZKContext(Constant.ADTYPE).initBannerAD(adContentView , getActivity());
+
     }
 
     @Override

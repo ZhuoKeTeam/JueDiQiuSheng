@@ -39,6 +39,7 @@ import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
+import static com.bro.adlib.ad.ZKBaiduAD.AD_BAIDU_APP_ID;
 import static com.bro.adlib.util.UMUtils.*;
 
 
@@ -69,6 +70,9 @@ public class ZKAD {
         application = appContext;
         // google 广告
         MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
+
+        com.baidu.mobads.AdView.setAppSid(appContext, AD_BAIDU_APP_ID);
+
         // init google 插页广告
 //        mInterstitialAd = new InterstitialAd(appContext);
 //        if (BuildConfig.DEBUG) {

@@ -37,5 +37,6 @@ dependencies {
     implementation 'com.umeng.umsdk:common:1.5.4'
 
     api files('libs/GDTSDK.union.4.40.910.jar')
+    api files('libs/Baidu_MobAds_SDK-release.aar')
 
 }

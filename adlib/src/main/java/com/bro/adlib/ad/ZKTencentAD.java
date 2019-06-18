@@ -10,14 +10,14 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bro.adlib.strategy.ZKNativeListener;
-import com.bro.adlib.strategy.ZKSplashListener;
+import com.bro.adlib.listener.ZKNativeListener;
+import com.bro.adlib.listener.ZKRewardListener;
+import com.bro.adlib.listener.ZKSplashListener;
 import com.bro.adlib.strategy.ZKStrategy;
 import com.bro.adlib.util.UMUtils;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
@@ -44,6 +44,8 @@ import java.util.Locale;
  * Created by zhangshan on 2019-06-17 15:56.
  */
 public class ZKTencentAD implements ZKStrategy {
+
+    private final String TAG = "ZKTencentAD";
 
     private UnifiedBannerView tencentBanner;
     private UnifiedInterstitialAD tencentInterstitialAD;
@@ -236,7 +238,7 @@ public class ZKTencentAD implements ZKStrategy {
     }
 
     @Override
-    public void initRewardVideoAd(final Context context) {
+    public void initRewardVideoAd(final Context context, ZKRewardListener rewardListener) {
         // 1. 初始化激励视频广告
         rewardVideoAD = new RewardVideoAD(context, AD_TENCENT_APP_ID, AD_TENCENT_REWARD_KEY, new RewardVideoADListener() {
             /**
@@ -366,14 +368,13 @@ public class ZKTencentAD implements ZKStrategy {
     }
 
     @Override
-    public void initSplashAD(Activity activity, TextView skipView, FrameLayout splashContainer, ZKSplashListener zkSplashListener) {
+    public void initSplashAD(Activity activity, TextView skipView, ViewGroup splashContainer, ZKSplashListener zkSplashListener) {
         permissionCheck(activity, skipView, splashContainer, zkSplashListener);
     }
 
 
     private NativeExpressAD mADManager;
     public int AD_COUNT = 1;    // 加载广告的条数，取值范围为[1, 10]
-    private final String TAG = ZKTencentAD.class.getSimpleName();
 
     /**
      * @param ad_count 加载原生广告
@@ -557,7 +558,7 @@ public class ZKTencentAD implements ZKStrategy {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     //####################################### 权限 startActivity ############################################
-    private void permissionCheck(final Activity activity, final TextView skipView, final FrameLayout splashContainer,final  ZKSplashListener zkSplashListener) {
+    private void permissionCheck(final Activity activity, final TextView skipView, final ViewGroup splashContainer, final ZKSplashListener zkSplashListener) {
         if (!PermissionUtils.isGranted(permissions)) {
             PermissionUtils.permission(permissions)
                     .callback(new PermissionUtils.FullCallback() {
@@ -591,7 +592,7 @@ public class ZKTencentAD implements ZKStrategy {
     private int width, height;
     private final String SKIP_TEXT = "点击跳过 %d";
 
-    private void initTencentSplashAD(final Activity activity,final  TextView skipView,final  FrameLayout splashContainer,final  ZKSplashListener zkSplashListener) {
+    private void initTencentSplashAD(final Activity activity, final TextView skipView, final ViewGroup splashContainer, final ZKSplashListener zkSplashListener) {
         skipView.setVisibility(View.VISIBLE);
         fetchSplashAD(activity, splashContainer, skipView, AD_TENCENT_APP_ID, AD_TENCENT_SPLASH_KEY, new SplashADListener() {
             @Override

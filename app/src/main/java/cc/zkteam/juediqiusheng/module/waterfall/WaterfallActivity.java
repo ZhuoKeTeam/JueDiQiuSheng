@@ -23,11 +23,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.ad.ZKTencentAD;
+import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.strategy.ZKContext;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.List;
 
+import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.managers.ZKConnectionManager;
@@ -81,8 +83,10 @@ public class WaterfallActivity extends BaseActivity {
         ARouter.getInstance().inject(this);
         super.onCreate(savedInstanceState);
         Log.d("param", categoryId);
-        zkContext = new ZKContext(ZKTencentAD.getInstance());
-        zkContext.initRewardVideoAd(getApplicationContext());
+
+//        zkContext = new ZKContext(ZKTencentAD.getInstance());
+        zkContext = new ZKContext(Constant.ADTYPE);
+        zkContext.initRewardVideoAd(getApplicationContext(), () -> ZKSP.reset());
     }
 
     private void initWidget() {

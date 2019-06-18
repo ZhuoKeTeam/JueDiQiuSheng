@@ -3,8 +3,11 @@ package com.bro.adlib.strategy;
 import android.app.Activity;
 import android.content.Context;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.bro.adlib.listener.ZKNativeListener;
+import com.bro.adlib.listener.ZKRewardListener;
+import com.bro.adlib.listener.ZKSplashListener;
 
 /**
  * Created by zhangshan on 2019-06-17 14:56.
@@ -29,7 +32,7 @@ public interface ZKStrategy {
     /**
      * 初始化激励广告
      */
-    void initRewardVideoAd(Context context);
+    void initRewardVideoAd(Context context , ZKRewardListener rewardListener);
 
     /**
      * 加载激励广告
@@ -40,7 +43,7 @@ public interface ZKStrategy {
      * 加载激励广告
      */
     void initSplashAD(Activity activity, TextView skipView,
-                      FrameLayout splashContainer, ZKSplashListener zkSplashListener);
+                      ViewGroup splashContainer, ZKSplashListener zkSplashListener);
 
 
     /**
