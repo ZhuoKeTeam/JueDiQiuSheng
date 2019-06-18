@@ -1,8 +1,7 @@
-package cc.zkteam.juediqiusheng.ad;
+package com.bro.adlib.util;
 
 import com.blankj.utilcode.util.Utils;
 import com.umeng.analytics.MobclickAgent;
-import com.youth.banner.Banner;
 
 public class UMUtils {
 

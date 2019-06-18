@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.Utils;
+import com.bro.adlib.ad.ZKTencentAD;
+import com.bro.adlib.strategy.ZKContext;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.youth.banner.BannerConfig;
@@ -20,9 +22,6 @@ import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
-import cc.zkteam.juediqiusheng.ad.ZKAD;
-import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
 import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;

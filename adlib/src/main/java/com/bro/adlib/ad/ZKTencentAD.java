@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.ad;
+package com.bro.adlib.ad;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,6 +16,10 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.bro.adlib.strategy.ZKNativeListener;
+import com.bro.adlib.strategy.ZKSplashListener;
+import com.bro.adlib.strategy.ZKStrategy;
+import com.bro.adlib.util.UMUtils;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
@@ -31,18 +35,10 @@ import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.constants.AdPatternType;
 import com.qq.e.comm.pi.AdData;
 import com.qq.e.comm.util.AdError;
-import com.qq.e.comm.util.GDTLogger;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import cc.zkteam.juediqiusheng.ad.strategy.ZKNativeListener;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKSplashListener;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKStrategy;
-import cc.zkteam.juediqiusheng.adapter.HotNewsAdapter;
 
 /**
  * Created by zhangshan on 2019-06-17 15:56.
@@ -112,7 +108,7 @@ public class ZKTencentAD implements ZKStrategy {
             // 创建 Banner 2.0 广告 对象
             tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY, new UnifiedBannerADListener() {
                 @Override
-                public void onNoAD(com.qq.e.comm.util.AdError adError) {
+                public void onNoAD(AdError adError) {
                     Log.i("ad_tencent_banner",
                             String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
                                     adError.getErrorMsg()));
@@ -172,7 +168,7 @@ public class ZKTencentAD implements ZKStrategy {
     }
 
     @Override
-    public void initInterstitialAD(Activity activity) {
+    public void initInterstitialAD(final Activity activity) {
         try {
             if (tencentInterstitialAD != null) {
                 tencentInterstitialAD.close();
@@ -194,7 +190,7 @@ public class ZKTencentAD implements ZKStrategy {
                     }
 
                     @Override
-                    public void onNoAD(com.qq.e.comm.util.AdError error) {
+                    public void onNoAD(AdError error) {
                         Log.i("ad_tencent_incert", "onNoAD");
                         UMUtils.event(UMUtils.EVENT_TENCENT_INCERT_NOAD);
                         String msg = String.format(Locale.getDefault(), "onNoAD, error code: %d, error msg: %s",
@@ -240,7 +236,7 @@ public class ZKTencentAD implements ZKStrategy {
     }
 
     @Override
-    public void initRewardVideoAd(Context context) {
+    public void initRewardVideoAd(final Context context) {
         // 1. 初始化激励视频广告
         rewardVideoAD = new RewardVideoAD(context, AD_TENCENT_APP_ID, AD_TENCENT_REWARD_KEY, new RewardVideoADListener() {
             /**
@@ -325,7 +321,7 @@ public class ZKTencentAD implements ZKStrategy {
              * 广告流程出错
              */
             @Override
-            public void onError(com.qq.e.comm.util.AdError adError) {
+            public void onError(AdError adError) {
                 String msg = String.format(Locale.getDefault(), "onError, error code: %d, error msg: %s",
                         adError.getErrorCode(), adError.getErrorMsg());
                 Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
@@ -383,7 +379,7 @@ public class ZKTencentAD implements ZKStrategy {
      * @param ad_count 加载原生广告
      */
     @Override
-    public void initNativeExpressAD(Context context, int ad_count, ZKNativeListener zkNativeListener) {
+    public void initNativeExpressAD(final Context context, int ad_count, final ZKNativeListener zkNativeListener) {
         if (ad_count != -1) {
             AD_COUNT = ad_count;
         }
@@ -561,7 +557,7 @@ public class ZKTencentAD implements ZKStrategy {
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
     //####################################### 权限 startActivity ############################################
-    private void permissionCheck(Activity activity, TextView skipView, FrameLayout splashContainer, ZKSplashListener zkSplashListener) {
+    private void permissionCheck(final Activity activity, final TextView skipView, final FrameLayout splashContainer,final  ZKSplashListener zkSplashListener) {
         if (!PermissionUtils.isGranted(permissions)) {
             PermissionUtils.permission(permissions)
                     .callback(new PermissionUtils.FullCallback() {
@@ -595,7 +591,7 @@ public class ZKTencentAD implements ZKStrategy {
     private int width, height;
     private final String SKIP_TEXT = "点击跳过 %d";
 
-    private void initTencentSplashAD(Activity activity, TextView skipView, FrameLayout splashContainer, ZKSplashListener zkSplashListener) {
+    private void initTencentSplashAD(final Activity activity,final  TextView skipView,final  FrameLayout splashContainer,final  ZKSplashListener zkSplashListener) {
         skipView.setVisibility(View.VISIBLE);
         fetchSplashAD(activity, splashContainer, skipView, AD_TENCENT_APP_ID, AD_TENCENT_SPLASH_KEY, new SplashADListener() {
             @Override

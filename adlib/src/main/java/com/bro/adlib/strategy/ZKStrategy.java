@@ -1,8 +1,7 @@
-package cc.zkteam.juediqiusheng.ad.strategy;
+package com.bro.adlib.strategy;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;

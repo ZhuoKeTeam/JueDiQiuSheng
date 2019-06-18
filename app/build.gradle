@@ -133,6 +133,11 @@ dependencies {
     //        exclude group: 'android.support.design.widget', module: 'CoordinatorLayout'
 
     //    }
-    implementation files('libs/android-query-full.0.26.7.jar')
-    implementation files('libs/GDTSDK.union.4.40.910.jar')
+//    implementation files('libs/android-query-full.0.26.7.jar')
+//    implementation files('libs/GDTSDK.union.4.40.910.jar')
+
+    implementation (project(path: ':adlib')){
+        exclude group:'com.android.support'
+    }
+
 }

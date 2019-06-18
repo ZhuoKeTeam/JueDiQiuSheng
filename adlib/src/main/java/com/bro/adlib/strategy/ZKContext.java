@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.ad.strategy;
+package com.bro.adlib.strategy;
 
 import android.app.Activity;
 import android.content.Context;

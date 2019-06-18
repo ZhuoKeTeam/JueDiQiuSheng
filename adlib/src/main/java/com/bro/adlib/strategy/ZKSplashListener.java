@@ -1,4 +1,4 @@
-package cc.zkteam.juediqiusheng.ad.strategy;
+package com.bro.adlib.strategy;
 
 /**
  * Created by zhangshan on 2019-06-17 15:53.

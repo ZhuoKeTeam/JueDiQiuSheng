@@ -2,15 +2,12 @@ package cc.zkteam.juediqiusheng.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationSet;
@@ -20,21 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.PermissionUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.bro.adlib.ad.ZKTencentAD;
+import com.bro.adlib.strategy.ZKContext;
+import com.bro.adlib.strategy.ZKSplashListener;
 import com.networkbench.agent.impl.NBSAppAgent;
 import com.qq.e.ads.splash.SplashAD;
-import com.qq.e.ads.splash.SplashADListener;
-import com.qq.e.comm.util.AdError;
-
-import java.util.List;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.ad.UMUtils;
-import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKSplashListener;
 import cc.zkteam.juediqiusheng.ui.main.MainActivity;
 
 

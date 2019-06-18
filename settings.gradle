@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':adlib'
 //include ':lifecyclermodule'
 //include ':loadingview'  //去除该库，直接使用依赖的方式。
 //include ':dagger2'

@@ -4,36 +4,24 @@ import android.app.Activity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.qq.e.ads.nativ.ADSize;
-import com.qq.e.ads.nativ.NativeExpressAD;
+import com.bro.adlib.ad.ZKTencentAD;
+import com.bro.adlib.strategy.ZKContext;
+import com.bro.adlib.strategy.ZKNativeListener;
 import com.qq.e.ads.nativ.NativeExpressADView;
-import com.qq.e.ads.nativ.NativeExpressMediaListener;
-import com.qq.e.comm.constants.AdPatternType;
-import com.qq.e.comm.pi.AdData;
-import com.qq.e.comm.util.AdError;
-import com.qq.e.comm.util.GDTLogger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.ad.UMUtils;
-import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKNativeListener;
 import cc.zkteam.juediqiusheng.bean.HotNewsBean;
 import cc.zkteam.juediqiusheng.bean.RecommendedBean;
 import cc.zkteam.juediqiusheng.view.ZKRecyclerView;
-
-import static cc.zkteam.juediqiusheng.ad.ZKTencentAD.AD_TENCENT_APP_ID;
-import static cc.zkteam.juediqiusheng.ad.ZKTencentAD.AD_TENCENT_ORIGINAL_KEY;
 
 /**
  * HotNewsAdapter

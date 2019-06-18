@@ -6,10 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
+import com.bro.adlib.ad.ZKTencentAD;
+import com.bro.adlib.strategy.ZKContext;
+
 import cc.zkteam.juediqiusheng.R;
-import cc.zkteam.juediqiusheng.ad.ZKAD;
-import cc.zkteam.juediqiusheng.ad.ZKTencentAD;
-import cc.zkteam.juediqiusheng.ad.strategy.ZKContext;
 import cc.zkteam.juediqiusheng.adapter.WQSectionsPagerAdapter;
 import cc.zkteam.juediqiusheng.view.ZKViewPager;
 
