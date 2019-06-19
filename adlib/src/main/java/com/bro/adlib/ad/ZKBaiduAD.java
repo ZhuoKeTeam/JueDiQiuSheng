@@ -117,11 +117,13 @@ public class ZKBaiduAD implements ZKStrategy {
             @Override
             public void onAdReady() {
                 logD("BD_CP_onAdReady->");
+                ToastUtils.showShort("onAdReady");
 //                interAd.showAd(activity);
             }
 
             @Override
             public void onAdPresent() {
+                ToastUtils.showShort("onAdPresent");
                 logD("BD_CP_onAdPresent->");
             }
 
@@ -156,8 +158,10 @@ public class ZKBaiduAD implements ZKStrategy {
     @Override
     public void loadInterstitialAd(Activity activity) {
         if (interAd.isAdReady()) {
+            ToastUtils.showShort("Ad is Ready");
             interAd.showAd(activity);
         } else {
+            ToastUtils.showShort("Ad not Ready");
             interAd.loadAd();
         }
     }

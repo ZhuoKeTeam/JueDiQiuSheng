@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,7 +16,6 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.strategy.ZKContext;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.qq.e.ads.nativ.NativeExpressADView;
@@ -29,10 +29,7 @@ import javax.inject.Inject;
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
-import cc.zkteam.juediqiusheng.adapter.HotNewsItemAdapter;
 import cc.zkteam.juediqiusheng.adapter.QuestionAdapter;
-import cc.zkteam.juediqiusheng.adapter.SortAdapter;
-import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.fragment.BaseFragment;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFPresenterImpl;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
@@ -79,8 +76,15 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
         btn_change_ad = rootView.findViewById(R.id.btn_change_ad);
         initBtn();
 
+        initZKRefreshLayout();
         initAdapter();
     }
+
+    public void initZKRefreshLayout() {
+        zkRefreshLayout.setWaveColor(0x555555);
+        zkRefreshLayout.setLoadMore(true);
+    }
+
     private void initAdapter() {
         questionAdapter = new QuestionAdapter();
         questionAdapter.setADViewPositionMap(mAdViewPositionMap);
@@ -104,9 +108,10 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
             public void onNativeCallBack(List adList) {
                 if (!adList.isEmpty() && adList.get(0) instanceof NativeExpressADView) {
                     mAdViewList = adList;
+                    ToastUtils.showShort("广告个数是: " + adList.size());
                     for (int i = 0; i < mAdViewList.size(); i++) {
                         int position = FIRST_AD_POSITION + ITEMS_PER_AD * i;
-                        if (position < mNormalDataList.size()) {
+                        if (position < mNormalDataList.size() + i) {
                             NativeExpressADView view = mAdViewList.get(i);
 //                            GDTLogger.i("ad load[" + i + "]: " + getAdInfo(view));
 //                            if (view.getBoundData().getAdPatternType() == AdPatternType.NATIVE_VIDEO) {
@@ -114,6 +119,7 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 //                            }
                             mAdViewPositionMap.put(view, position); // 把每个广告在列表中位置记录下来
                             questionAdapter.addADViewToPosition(position, mAdViewList.get(i));
+                            Log.i("bro", "mNormalDataList 数量是: " + mNormalDataList.size() + "\n插入位置是: " + position);
                         }
                     }
                     questionAdapter.notifyDataSetChanged();
@@ -161,14 +167,14 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
             }
         });
         questionAdapter.setListener(sortDetailBean -> {
-                Intent intent = new Intent();
-                intent.setClass(mContext, WebViewActivity.class);
-                String url = sortDetailBean.getArtifactUrl();
-                //url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
-                url = url.substring(url.lastIndexOf("\">") + 2, url.lastIndexOf("</a>"));
-                intent.putExtra("url", url);
-                startActivity(intent);
-            });
+            Intent intent = new Intent();
+            intent.setClass(mContext, WebViewActivity.class);
+            String url = sortDetailBean.getArtifactUrl();
+            //url = "<p><a href=\"http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861\">http://www.zkteam.cc/JueDiQiuSheng/detail.html?jid=968861</a></p>";
+            url = url.substring(url.lastIndexOf("\">") + 2, url.lastIndexOf("</a>"));
+            intent.putExtra("url", url);
+            startActivity(intent);
+        });
 
     }
 
