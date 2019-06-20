@@ -22,6 +22,8 @@ public class UsActivity extends BaseActivity {
     TextView tvContact;
     @BindView(R.id.tv_company)
     TextView tvCompany;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected int getLayoutId() {
@@ -30,11 +32,10 @@ public class UsActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        tvTitle.setText("关于我们 ");
         tvAppName.setText(AppUtils.getAppName());
         tvVersion.setText("版本号: "+AppUtils.getAppVersionName());
-//        tvSlogan.setText("");
-//        tvContact.setText("");
-//        tvCompany.setText("");
+
     }
 
     @Override
