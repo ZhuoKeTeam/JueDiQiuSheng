@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tvLoadText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@null"
+            android:gravity="center"
+            android:textColor="#FF999999"
+            android:textSize="14dp" />
+
+        <com.androidex.view.progress.ProgressWheel
+            android:id="@+id/pwLoading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/tvLoadText"
+            android:visibility="gone"
+            wheel:matProg_barWidth="2dp"
+            wheel:matProg_progressIndeterminate="true" />
+
+        <TextView
+            android:id="@+id/tvNoDataText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11.5dp"
+            android:textColor="#FFBFBFBF"
+            android:layout_centerInParent="true"
+            android:drawablePadding="9.5dp"/>
+    </RelativeLayout>
+</FrameLayout>
+
