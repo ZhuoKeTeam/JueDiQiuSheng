@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.yw.game.floatmenu.FloatLogoMenu;
 
+import butterknife.ButterKnife;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.ad.ZKAD;
 
@@ -34,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(getLayoutId());
+        ButterKnife.bind(this);
         initToolbar();
         initViews();
         initListener();
