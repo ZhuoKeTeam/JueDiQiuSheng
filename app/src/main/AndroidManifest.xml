@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activity.UsActivity"></activity>
+        <activity android:name=".activity.AdActivity"></activity>
+        <activity android:name=".activity.UsActivity" />
         <activity android:name=".activity.SettingActivity" />
         <activity
             android:name=".ui.main.WelcomeActivity"

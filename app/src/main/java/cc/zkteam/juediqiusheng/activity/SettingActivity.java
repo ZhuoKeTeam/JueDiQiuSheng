@@ -31,4 +31,10 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked() {
         ActivityUtils.startActivity(UsActivity.class);
     }
+
+    @OnClick(R.id.cons_money)
+    public void onMoneyClick() {
+        ActivityUtils.startActivity(AdActivity.class);
+    }
+
 }
