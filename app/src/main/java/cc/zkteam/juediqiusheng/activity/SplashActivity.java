@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.PermissionUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.strategy.ZKContext;
 import com.bro.adlib.listener.ZKSplashListener;
 import com.networkbench.agent.impl.NBSAppAgent;
@@ -41,9 +40,6 @@ public class SplashActivity extends BaseActivity {
     private static final String FIRST_START = "first_start";
     private static final int DELAY_TIME =  3000;
     private static final int FLAG_ENTER_MAIN =  0;
-
-    private static final int DELAY_TIME = 3000;
-    private static final int FLAG_ENTER_MAIN = 0;
 
     private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -112,10 +108,6 @@ public class SplashActivity extends BaseActivity {
 
 
     }
-
-    private String[] permissions = new String[]{Manifest.permission.READ_PHONE_STATE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
     //####################################### 权限 startActivity ############################################
     private void initSplashAD() {
 //        ZKContext zkContext = new ZKContext(ZKTencentAD.getInstance());

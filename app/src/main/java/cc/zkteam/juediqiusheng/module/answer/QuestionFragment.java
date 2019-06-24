@@ -10,12 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.strategy.ZKContext;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.qq.e.ads.nativ.NativeExpressADView;
@@ -28,11 +28,9 @@ import javax.inject.Inject;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.MineActivity;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
-import cc.zkteam.juediqiusheng.adapter.HotNewsItemAdapter;
 import cc.zkteam.juediqiusheng.adapter.QuestionAdapter;
-import cc.zkteam.juediqiusheng.adapter.SortAdapter;
-import cc.zkteam.juediqiusheng.bean.SortDetailBean;
 import cc.zkteam.juediqiusheng.fragment.BaseFragment;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFPresenterImpl;
 import cc.zkteam.juediqiusheng.module.answer.mvp.QFView;
@@ -45,6 +43,7 @@ import dagger.android.support.AndroidSupportInjection;
  */
 public class QuestionFragment extends BaseFragment implements QFView, View.OnClickListener {
 
+    LinearLayout llMine;
     ZKRefreshLayout zkRefreshLayout;
     ZKRecyclerView zkRecyclerView;
     LinearLayout llAbout;
@@ -73,7 +72,7 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 
     @Override
     public void initView(View rootView) {
-        llAbout = rootView.findViewById(R.id.ll_about);
+        llMine = rootView.findViewById(R.id.ll_mine);
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
         zkRecyclerView = rootView.findViewById(R.id.zk_recycler_view);
         btn_change_ad = rootView.findViewById(R.id.btn_change_ad);
@@ -146,7 +145,7 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 
     @Override
     public void initListener() {
-        llAbout.setOnClickListener(this);
+        llMine.setOnClickListener(this);
         btn_change_ad.setOnClickListener(this);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -176,11 +175,8 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.ll_about:
-                String url = "file:///android_asset/about_rules.html";
-                Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra("url", url);
-                mContext.startActivity(intent);
+            case R.id.ll_mine:
+                ActivityUtils.startActivity(MineActivity.class);
                 break;
             case R.id.btn_change_ad:
                 changeAd();
