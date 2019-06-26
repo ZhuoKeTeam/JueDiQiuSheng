@@ -441,4 +441,19 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
             }
         });
     }
+
+
+    //退出时的时间
+    private long mExitTime;
+    @Override
+    public void onBackPressed() {
+        if ((System.currentTimeMillis() - mExitTime) > 2000) {
+            ToastUtils.showShort("再按一次退出");
+            mExitTime = System.currentTimeMillis();
+//            ZKAD.showCPAD(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 }

@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.ad.ZKTencentAD;
@@ -24,10 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
+import cc.zkteam.juediqiusheng.activity.RvAdActivity;
 import cc.zkteam.juediqiusheng.activity.WebViewActivity;
 import cc.zkteam.juediqiusheng.adapter.QuestionAdapter;
 import cc.zkteam.juediqiusheng.fragment.BaseFragment;
@@ -45,12 +47,13 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
     ZKRefreshLayout zkRefreshLayout;
     ZKRecyclerView zkRecyclerView;
     LinearLayout llAbout;
+    TextView tv_enter_ad_activity;
     Button btn_change_ad;
 
-    @Inject
+//    @Inject
     QFPresenterImpl presenter;
 
-    @Inject
+//    @Inject
     QuestionViewModel questionViewModel;
 
 
@@ -70,7 +73,10 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 
     @Override
     public void initView(View rootView) {
+        questionViewModel = new QuestionViewModel();
+        presenter = new QFPresenterImpl(this , questionViewModel);
         llAbout = rootView.findViewById(R.id.ll_about);
+        tv_enter_ad_activity = rootView.findViewById(R.id.tv_enter_ad_activity);
         zkRefreshLayout = rootView.findViewById(R.id.zk_refresh_layout);
         zkRecyclerView = rootView.findViewById(R.id.zk_recycler_view);
         btn_change_ad = rootView.findViewById(R.id.btn_change_ad);
@@ -131,8 +137,13 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 
     @Override
     public void onAttach(Context context) {
-        AndroidSupportInjection.inject(this);
-        super.onAttach(context);
+        try {
+            AndroidSupportInjection.inject(this);
+        } catch (Exception e) {
+            LogUtils.i(" -- Exception --");
+        }finally {
+            super.onAttach(context);
+        }
     }
 
 
@@ -153,6 +164,7 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
     @Override
     public void initListener() {
         llAbout.setOnClickListener(this);
+        tv_enter_ad_activity.setOnClickListener(this);
         btn_change_ad.setOnClickListener(this);
         zkRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -191,18 +203,21 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
             case R.id.btn_change_ad:
                 changeAd();
                 break;
+            case R.id.tv_enter_ad_activity:
+                ActivityUtils.startActivity(RvAdActivity.class);
+                break;
         }
     }
 
     private void changeAd() {
 //        int ad_type = SPUtils.getInstance().getInt("ad_type", -1);
         if (Constant.ADTYPE == 1) {
-            btn_change_ad.setText("当前广告:" + "百度");
+            btn_change_ad.setText("当前 AD:" + "百度");
             Constant.ADTYPE = 2;
             SPUtils.getInstance().put("ad_type", 2, true);
             ToastUtils.showShort("广告切换成百度");
         } else if (Constant.ADTYPE == 2) {
-            btn_change_ad.setText("当前广告:" + "腾讯");
+            btn_change_ad.setText("当前 AD:" + "腾讯");
             Constant.ADTYPE = 1;
             SPUtils.getInstance().put("ad_type", 1, true);
             ToastUtils.showShort("广告切换成腾讯");
@@ -212,9 +227,9 @@ public class QuestionFragment extends BaseFragment implements QFView, View.OnCli
 
     private void initBtn() {
         if (Constant.ADTYPE == 1) {
-            btn_change_ad.setText("当前广告:" + "腾讯");
+            btn_change_ad.setText("当前 AD:" + "腾讯");
         } else if (Constant.ADTYPE == 2) {
-            btn_change_ad.setText("当前广告:" + "百度");
+            btn_change_ad.setText("当前 AD:" + "百度");
         }
     }
 
