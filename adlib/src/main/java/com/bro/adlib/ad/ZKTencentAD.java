@@ -19,6 +19,7 @@ import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.listener.ZKSplashListener;
 import com.bro.adlib.statisticsAndLogs.SALContext;
+import com.bro.adlib.statisticsAndLogsTypeTwo.ProxyFactory;
 import com.bro.adlib.strategy.ZKStrategy;
 import com.bro.adlib.util.UMUtils;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
@@ -73,8 +74,6 @@ public class ZKTencentAD implements ZKStrategy {
 
     private static ZKTencentAD mSingleton = null;
 
-    private SALContext salContext;
-
     private ZKTencentAD() {
     }
 
@@ -111,56 +110,41 @@ public class ZKTencentAD implements ZKStrategy {
                 tencentBanner.destroy();
             }
             // 创建 Banner 2.0 广告 对象
-            tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY, new UnifiedBannerADListener() {
-                @Override
-                public void onNoAD(AdError adError) {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_NOAD,
-                            String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
-                                    adError.getErrorMsg()));
-                }
+            tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY,
+                    ProxyFactory.getsInstance().createProxyObj(UnifiedBannerADListener.class, new UnifiedBannerADListener() {
+                        //  这里面的日志和统计通过动态代理拦截完成
+                        @Override
+                        public void onNoAD(AdError adError) {
+                        }
 
-                @Override
-                public void onADReceive() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADRECEIVE,
-                            "ONBannerReceive");
-                }
+                        @Override
+                        public void onADReceive() {
+                        }
 
-                @Override
-                public void onADExposure() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADEXPOSURE,
-                            "onADExposure");
-                }
+                        @Override
+                        public void onADExposure() {
+                        }
 
-                @Override
-                public void onADClosed() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLOSED,
-                            "onADClosed");
-                }
+                        @Override
+                        public void onADClosed() {
+                        }
 
-                @Override
-                public void onADClicked() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLICKED,
-                            "onADClicked");
-                }
+                        @Override
+                        public void onADClicked() {
+                        }
 
-                @Override
-                public void onADLeftApplication() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADLEFTAPPLICATION,
-                            "onADLeftApplication");
-                }
+                        @Override
+                        public void onADLeftApplication() {
+                        }
 
-                @Override
-                public void onADOpenOverlay() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADOPENOVERLAY,
-                            "onADOpenOverlay");
-                }
+                        @Override
+                        public void onADOpenOverlay() {
+                        }
 
-                @Override
-                public void onADCloseOverlay() {
-                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLOSEOVERLAY,
-                            "onADCloseOverlay");
-                }
-            });
+                        @Override
+                        public void onADCloseOverlay() {
+                        }
+                    }));
 //            tencentBanner.setRefresh(30);
             //发起广告请求，收到广告数据后会展示数据
             tencentBanner.loadAD();
@@ -492,11 +476,6 @@ public class ZKTencentAD implements ZKStrategy {
         });
         mADManager.setMaxVideoDuration(30000);
         mADManager.loadAD(AD_COUNT);
-    }
-
-    @Override
-    public void setSALContext(SALContext context) {
-        salContext = context;
     }
 
     private String getAdInfo(NativeExpressADView nativeExpressADView) {

@@ -49,7 +49,6 @@ public class ZKBaiduAD implements ZKStrategy {
      * ---------------------------------------------BaiDu 激励广告-----------------------------------------------------------
      */
     private static RewardVideoAd rewardVideoAd;
-    private SALContext salContext;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler();
@@ -81,27 +80,27 @@ public class ZKBaiduAD implements ZKStrategy {
                 AdView adView = new AdView(activity, adPlaceID);
                 adView.setListener(new AdViewListener() {
                     public void onAdReady(AdView adView) {
-                        salContext.requestLogOnlu("BD_HF_onAdReady");
+                        logD("BD_HF_onAdReady->");
                     }
 
                     public void onAdShow(JSONObject jsonObject) {
-                        salContext.requestLogOnlu("BD_HF_onAdShow");
+                        logD("BD_HF_onAdShow->");
                     }
 
                     public void onAdClick(JSONObject jsonObject) {
-                        salContext.requestLogOnlu("BD_HF_onAdClick");
+                        logD("BD_HF_onAdClick->");
                     }
 
                     public void onAdFailed(String s) {
-                        salContext.requestLogOnlu("BD_HF_onAdFailed -> " + s);
+                        logD("BD_HF_onAdFailed->" + s);
                     }
 
                     public void onAdSwitch() {
-                        salContext.requestLogOnlu("BD_HF_onAdSwitch");
+                        logD("BD_HF_onAdSwitch->");
                     }
 
                     public void onAdClose(JSONObject jsonObject) {
-                        salContext.requestLogOnlu("BD_HF_onAdClose");
+                        logD("BD_HF_onAdClose->");
                     }
                 });
                 bannerView.addView(adView);
@@ -287,11 +286,6 @@ public class ZKBaiduAD implements ZKStrategy {
     @Override
     public void initNativeExpressAD(Context context, int ad_count, ZKNativeListener zkNativeListener) {
 
-    }
-
-    @Override
-    public void setSALContext(SALContext context) {
-        salContext = context;
     }
 
     //统计事件

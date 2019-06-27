@@ -59,11 +59,4 @@ public interface ZKStrategy {
      */
     void initNativeExpressAD(Context context, int ad_count, ZKNativeListener zkNativeListener);
 
-
-    /**
-     * 设置状态类
-     * @param context 统计和日志的上下文
-     */
-    void setSALContext(SALContext context);
-
 }

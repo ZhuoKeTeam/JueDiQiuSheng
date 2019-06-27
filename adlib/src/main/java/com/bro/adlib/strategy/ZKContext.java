@@ -25,16 +25,12 @@ public class ZKContext {
 
 
     private ZKStrategy strategy;
-    private SALContext salContext;
 
     public ZKContext(int type) {
-        salContext = new SALContext();
         if (type == 1) {
             this.strategy = ZKTencentAD.getInstance();
-            salContext.setState(new TencentSALState());
         } else if (type == 2) {
             this.strategy = ZKBaiduAD.getInstance();
-            salContext.setState(new BaiduSALState());
         }
 //        this.strategy = strategy;
     }
