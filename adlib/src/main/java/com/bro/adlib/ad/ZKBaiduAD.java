@@ -20,6 +20,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.listener.ZKSplashListener;
+import com.bro.adlib.statisticsAndLogs.SALContext;
 import com.bro.adlib.strategy.ZKStrategy;
 import com.bro.adlib.util.UMUtils;
 
@@ -48,6 +49,7 @@ public class ZKBaiduAD implements ZKStrategy {
      * ---------------------------------------------BaiDu 激励广告-----------------------------------------------------------
      */
     private static RewardVideoAd rewardVideoAd;
+    private SALContext salContext;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler();
@@ -79,27 +81,27 @@ public class ZKBaiduAD implements ZKStrategy {
                 AdView adView = new AdView(activity, adPlaceID);
                 adView.setListener(new AdViewListener() {
                     public void onAdReady(AdView adView) {
-                        logD("BD_HF_onAdReady->");
+                        salContext.requestLogOnlu("BD_HF_onAdReady");
                     }
 
                     public void onAdShow(JSONObject jsonObject) {
-                        logD("BD_HF_onAdShow->");
+                        salContext.requestLogOnlu("BD_HF_onAdShow");
                     }
 
                     public void onAdClick(JSONObject jsonObject) {
-                        logD("BD_HF_onAdClick->");
+                        salContext.requestLogOnlu("BD_HF_onAdClick");
                     }
 
                     public void onAdFailed(String s) {
-                        logD("BD_HF_onAdFailed->" + s);
+                        salContext.requestLogOnlu("BD_HF_onAdFailed -> " + s);
                     }
 
                     public void onAdSwitch() {
-                        logD("BD_HF_onAdSwitch->");
+                        salContext.requestLogOnlu("BD_HF_onAdSwitch");
                     }
 
                     public void onAdClose(JSONObject jsonObject) {
-                        logD("BD_HF_onAdClose->");
+                        salContext.requestLogOnlu("BD_HF_onAdClose");
                     }
                 });
                 bannerView.addView(adView);
@@ -285,6 +287,11 @@ public class ZKBaiduAD implements ZKStrategy {
     @Override
     public void initNativeExpressAD(Context context, int ad_count, ZKNativeListener zkNativeListener) {
 
+    }
+
+    @Override
+    public void setSALContext(SALContext context) {
+        salContext = context;
     }
 
     //统计事件

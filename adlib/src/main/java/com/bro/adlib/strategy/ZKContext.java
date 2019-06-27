@@ -11,6 +11,9 @@ import com.bro.adlib.ad.ZKTencentAD;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.listener.ZKSplashListener;
+import com.bro.adlib.statisticsAndLogs.BaiduSALState;
+import com.bro.adlib.statisticsAndLogs.SALContext;
+import com.bro.adlib.statisticsAndLogs.TencentSALState;
 
 /**
  * Created by zhangshan on 2019-06-17 16:36.
@@ -22,12 +25,16 @@ public class ZKContext {
 
 
     private ZKStrategy strategy;
+    private SALContext salContext;
 
     public ZKContext(int type) {
+        salContext = new SALContext();
         if (type == 1) {
             this.strategy = ZKTencentAD.getInstance();
+            salContext.setState(new TencentSALState());
         } else if (type == 2) {
             this.strategy = ZKBaiduAD.getInstance();
+            salContext.setState(new BaiduSALState());
         }
 //        this.strategy = strategy;
     }

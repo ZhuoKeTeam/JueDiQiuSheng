@@ -18,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.listener.ZKSplashListener;
+import com.bro.adlib.statisticsAndLogs.SALContext;
 import com.bro.adlib.strategy.ZKStrategy;
 import com.bro.adlib.util.UMUtils;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
@@ -72,6 +73,8 @@ public class ZKTencentAD implements ZKStrategy {
 
     private static ZKTencentAD mSingleton = null;
 
+    private SALContext salContext;
+
     private ZKTencentAD() {
     }
 
@@ -111,52 +114,51 @@ public class ZKTencentAD implements ZKStrategy {
             tencentBanner = new UnifiedBannerView(activity, AD_TENCENT_APP_ID, AD_TENCENT_BANNER_KEY, new UnifiedBannerADListener() {
                 @Override
                 public void onNoAD(AdError adError) {
-                    Log.i("ad_tencent_banner",
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_NOAD,
                             String.format("Banner onNoAD，eCode = %d, eMsg = %s", adError.getErrorCode(),
                                     adError.getErrorMsg()));
-                    UMUtils.event(UMUtils.EVENT_TENCENT_BANNER_NOAD);
                 }
 
                 @Override
                 public void onADReceive() {
-                    Log.i("ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADRECEIVE);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADRECEIVE,
+                            "ONBannerReceive");
                 }
 
                 @Override
                 public void onADExposure() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADEXPOSURE);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADEXPOSURE,
+                            "onADExposure");
                 }
 
                 @Override
                 public void onADClosed() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADCLOSED);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLOSED,
+                            "onADClosed");
                 }
 
                 @Override
                 public void onADClicked() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADCLICKED);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLICKED,
+                            "onADClicked");
                 }
 
                 @Override
                 public void onADLeftApplication() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADLEFTAPPLICATION);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADLEFTAPPLICATION,
+                            "onADLeftApplication");
                 }
 
                 @Override
                 public void onADOpenOverlay() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADOPENOVERLAY);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADOPENOVERLAY,
+                            "onADOpenOverlay");
                 }
 
                 @Override
                 public void onADCloseOverlay() {
-                    Log.i("_ad_tencent_banner", "ONBannerReceive");
-                    event(UMUtils.EVENT_TENCENT_BANNER_ADCLOSEOVERLAY);
+                    salContext.requestStatisticsAndLog(UMUtils.EVENT_TENCENT_BANNER_ADCLOSEOVERLAY,
+                            "onADCloseOverlay");
                 }
             });
 //            tencentBanner.setRefresh(30);
@@ -490,6 +492,11 @@ public class ZKTencentAD implements ZKStrategy {
         });
         mADManager.setMaxVideoDuration(30000);
         mADManager.loadAD(AD_COUNT);
+    }
+
+    @Override
+    public void setSALContext(SALContext context) {
+        salContext = context;
     }
 
     private String getAdInfo(NativeExpressADView nativeExpressADView) {

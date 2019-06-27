@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.bro.adlib.listener.ZKNativeListener;
 import com.bro.adlib.listener.ZKRewardListener;
 import com.bro.adlib.listener.ZKSplashListener;
+import com.bro.adlib.statisticsAndLogs.SALContext;
+import com.bro.adlib.statisticsAndLogs.State;
 
 /**
  * Created by zhangshan on 2019-06-17 14:56.
@@ -58,6 +60,10 @@ public interface ZKStrategy {
     void initNativeExpressAD(Context context, int ad_count, ZKNativeListener zkNativeListener);
 
 
-
+    /**
+     * 设置状态类
+     * @param context 统计和日志的上下文
+     */
+    void setSALContext(SALContext context);
 
 }
