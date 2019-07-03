@@ -22,10 +22,8 @@ import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.ToastUtils;
-import com.bro.adlib.ad.ZKTencentAD;
-import com.bro.adlib.listener.ZKRewardListener;
-import com.bro.adlib.strategy.ZKContext;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.zkteam.ad.strategy.ZKContext;
 
 import java.util.List;
 

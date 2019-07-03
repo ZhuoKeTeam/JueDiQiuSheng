@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
-import com.bro.adlib.util.UMUtils;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
@@ -23,14 +22,15 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.zkteam.ad.util.UMUtils;
 
 import cc.zkteam.juediqiusheng.BuildConfig;
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
 import cc.zkteam.juediqiusheng.utils.ZKSP;
 
-import static com.bro.adlib.ad.ZKBaiduAD.AD_BAIDU_APP_ID;
-import static com.bro.adlib.util.UMUtils.*;
+import static com.zkteam.ad.ad.ZKBaiduAD.*;
+import static com.zkteam.ad.util.UMUtils.*;
 
 
 public class ZKAD {
@@ -62,6 +62,7 @@ public class ZKAD {
         MobileAds.initialize(appContext, ZKAD.AD_GOOGLE_APP_ID);
 
         com.baidu.mobads.AdView.setAppSid(appContext, AD_BAIDU_APP_ID);
+
 
         initAdType();
 

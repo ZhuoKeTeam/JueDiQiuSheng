@@ -39,7 +39,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation "com.github.gdky005:LoadingDrawable:1.0.0"
 //    implementation project(':loadingview')
 
@@ -137,7 +138,11 @@ dependencies {
 //    implementation files('libs/android-query-full.0.26.7.jar')
 //    implementation files('libs/GDTSDK.union.4.40.910.jar')
 
-    implementation(project(path: ':adlib')) {
+//    implementation(project(path: ':adlib')) {
+//        exclude group: 'com.android.support'
+//    }
+
+    implementation ('com.github.ZhuoKeTeam:ZKAD:1.0.1'){
         exclude group: 'com.android.support'
     }
 

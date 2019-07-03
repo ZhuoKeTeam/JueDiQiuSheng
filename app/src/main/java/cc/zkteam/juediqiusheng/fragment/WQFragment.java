@@ -6,7 +6,8 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 
-import com.bro.adlib.strategy.ZKContext;
+
+import com.zkteam.ad.strategy.ZKContext;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;

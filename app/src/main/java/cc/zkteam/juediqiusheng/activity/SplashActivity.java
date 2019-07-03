@@ -17,11 +17,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bro.adlib.ad.ZKTencentAD;
-import com.bro.adlib.strategy.ZKContext;
-import com.bro.adlib.listener.ZKSplashListener;
 import com.networkbench.agent.impl.NBSAppAgent;
 import com.qq.e.ads.splash.SplashAD;
+import com.zkteam.ad.listener.ZKSplashListener;
+import com.zkteam.ad.strategy.ZKContext;
 
 import cc.zkteam.juediqiusheng.Constant;
 import cc.zkteam.juediqiusheng.R;
