@@ -32,7 +32,7 @@
             android:name=".activity.WebViewActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="cc.zkteam.juediqiusheng.activity.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

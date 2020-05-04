@@ -279,6 +279,8 @@ public class ZKAD {
      * @param rewardedAd    激励广告
      */
     public static void showGoogleJLAD(Activity activity, RewardedAd rewardedAd) {
+        if (checkAd()) return;
+
         if (rewardedAd.isLoaded()) {
             RewardedAdCallback adCallback = new RewardedAdCallback() {
                 public void onRewardedAdOpened() {
@@ -320,6 +322,8 @@ public class ZKAD {
 
     // load google 插屏广告
     public static void loadGoogleCPAD() {
+        if (checkAd()) return;
+
         mInterstitialAd.setAdListener(new com.google.android.gms.ads.AdListener() {
             @Override
             public void onAdClosed() {
@@ -380,12 +384,21 @@ public class ZKAD {
 
     // show google 插屏广告
     public static void showGoogleCPAD() {
+        if (checkAd()) return;
+
         if (mInterstitialAd.isLoaded()) {
             mInterstitialAd.show();
         } else {
             logD("插屏广告飞了: The interstitial wasn't loaded yet.");
             ToastUtils.showShort("插屏广告飞了");
         }
+    }
+
+    /**
+     * 检查广告是否为空
+     */
+    private static boolean checkAd() {
+        return mInterstitialAd == null;
     }
 
 }

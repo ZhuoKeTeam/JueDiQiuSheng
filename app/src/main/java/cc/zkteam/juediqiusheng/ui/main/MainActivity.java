@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -36,6 +37,7 @@ import cc.zkteam.juediqiusheng.activity.BaseActivity;
 import cc.zkteam.juediqiusheng.bean.CategoryBean;
 import cc.zkteam.juediqiusheng.bean.UpdateBean;
 import cc.zkteam.juediqiusheng.fragment.WQFragment;
+import cc.zkteam.juediqiusheng.fragment.ZKProDialog;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKLiveData;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKText;
 import cc.zkteam.juediqiusheng.lifecycle.components.demo.ZKViewModule;
@@ -144,6 +146,14 @@ public class MainActivity extends BaseActivity implements HasSupportFragmentInje
 
         getAAID();
         saveLifeCount();
+        checkPrivacyAgreement();
+    }
+
+    private void checkPrivacyAgreement() {
+        boolean isAgree = SPUtils.getInstance("first_data_file").getBoolean("agree");
+        if (!isAgree) {
+            new ZKProDialog().show(getSupportFragmentManager(), "ZKProDialog");
+        }
     }
 
     /**

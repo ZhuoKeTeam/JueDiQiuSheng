@@ -119,4 +119,11 @@
         <item name="android:layout_height">30dp</item>
     </style>
 
+    <style name="DialogFullScreen" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <!--        <item name="android:windowFullscreen">true</item>-->
+        <!--        <item name="android:windowBackground">@color/transparent</item>-->
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
 </resources>
