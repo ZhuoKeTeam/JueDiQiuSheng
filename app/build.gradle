@@ -70,7 +70,7 @@ dependencies {
     //    implementation deps.photo_view
     implementation deps.fresco
     implementation deps.photo_draweeview
-    implementation deps.wave_swipe_refresh_layout
+//    implementation deps.wave_swipe_refresh_layout
     implementation deps.material_refesh_layout
     implementation deps.banners
     implementation deps.dagger
